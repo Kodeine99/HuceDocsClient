@@ -6,7 +6,7 @@
 
 <p>&nbsp;</p>
 
-[<img alt="Horizon UI" src="https://i.ibb.co/fdyTwz1/introduction-image-2.png" /> ](https://github.com/horizon-ui/horizon-ui-chakra)
+<!-- [<img alt="Horizon UI" src="https://i.ibb.co/fdyTwz1/introduction-image-2.png" /> ](https://github.com/horizon-ui/horizon-ui-chakra) -->
 
 <p>&nbsp;</p>
 
@@ -51,7 +51,7 @@ Install Horizon UI by running either of the following:
 Clone the repository with the following command:
 
 ```bash
-git clone https://github.com/horizon-ui/horizon-ui-chakra.git
+git clone https://github.com/Kodeine99/HuceDocsClient
 ```
 
 Run in terminal this command:
@@ -73,12 +73,6 @@ you can jump start your development with our pre-built example pages. You will
 be able to quickly set up the basic structure for your web project. View
 <a href="https://horizon-ui.com/horizon-ui-chakra/?ref=readme-horizon" target="_blank">example
 pages here.</a>
-
-### Versions
-
-| Free Version                                                                                                       | PRO Version                                                                                                               |
-| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| [![Horizon UI](https://i.ibb.co/fdyTwz1/introduction-image-2.png)](https://www.horizon-ui.com/?ref=readme-horizon) | [![Horizon UI PRO](https://i.ibb.co/R6jFKRM/introduction-image-1.png)](https://www.horizon-ui.com/pro?ref=readme-horizon) |
 
 ### Figma Version
 
@@ -103,13 +97,13 @@ some advices for our users that want to report an issue:
 
 ### Community
 
-Connect with the community! Feel free to ask questions, report issues, and meet
+<!-- Connect with the community! Feel free to ask questions, report issues, and meet
 new people that already use Horizon UI!
 
-💬 [Join the #HorizonUI Discord Community!](https://discord.gg/f6tEKFBd4m)
+💬 [Join the #HorizonUI Discord Community!](https://discord.gg/f6tEKFBd4m) -->
 
 ### Copyright and license
 
-⭐️ [Copyright 2022 Simmmple ](https://www.simmmple.com/?ref=readme-horizon)
+<!-- ⭐️ [Copyright 2022 Simmmple ](https://www.simmmple.com/?ref=readme-horizon)
 
-📄 [Horizon UI License](https://www.simmmple.com/licenses?ref=readme-horizon)
+📄 [Horizon UI License](https://www.simmmple.com/licenses?ref=readme-horizon) -->
