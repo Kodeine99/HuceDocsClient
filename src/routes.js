@@ -24,14 +24,14 @@ import SignInCentered from "views/auth/signIn";
 
 const routes = [
   {
-    name: "Home",
+    name: "Trang chủ",
     layout: "/admin",
     path: "/default",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: MainDashboard,
   },
   {
-    name: "Services",
+    name: "Bóc tách tài liệu",
     layout: "/admin",
     path: "/nft-marketplace",
     icon: (
@@ -46,7 +46,7 @@ const routes = [
     secondary: true,
   },
   {
-    name: "Data Tables",
+    name: "Lịch sử bóc tách",
     layout: "/admin",
     icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
     path: "/data-tables",
@@ -60,14 +60,14 @@ const routes = [
     component: Kanban,
   },
   {
-    name: "Profile",
+    name: "Thông tin cá nhân",
     layout: "/admin",
     path: "/profile",
     icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
     component: Profile,
   },
   {
-    name: "Sign In",
+    name: "Đăng nhập",
     layout: "/auth",
     path: "/sign-in",
     icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
