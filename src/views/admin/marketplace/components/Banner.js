@@ -30,7 +30,7 @@ export default function Banner() {
         }}
         fontWeight='700'
         lineHeight={{ base: "32px", md: "42px" }}>
-        Document processing with automated data capture and extraction.
+        Xử lý tài liệu với thu thập và trích xuất dữ liệu tự động.
       </Text>
       <Text
         fontSize='md'
@@ -46,7 +46,7 @@ export default function Banner() {
         fontWeight='500'
         mb='40px'
         lineHeight='28px'>
-        Transforming business documents into business value.
+        Chuyển đổi tài liệu thành giá trị của tổ chức.
       </Text>
       <Flex align='center'>
         <Button
@@ -60,7 +60,7 @@ export default function Banner() {
           py='20px'
           px='27'
           me='38px'>
-          Try it now
+          Bóc tách ngay
         </Button>
         {/* <Link>
           <Text color='white' fontSize='sm' fontWeight='500'>

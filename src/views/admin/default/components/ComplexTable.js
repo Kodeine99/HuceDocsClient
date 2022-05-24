@@ -10,6 +10,7 @@ import {
   Thead,
   Tr,
   useColorModeValue,
+  IconButton 
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import {
@@ -18,6 +19,8 @@ import {
   useSortBy,
   useTable,
 } from "react-table";
+// Icons
+import {ViewIcon, DeleteIcon} from '@chakra-ui/icons';
 
 // Custom components
 import Card from "components/card/Card";
@@ -25,6 +28,7 @@ import Menu from "components/menu/MainMenu";
 
 // Assets
 import { MdCheckCircle, MdCancel, MdOutlineError } from "react-icons/md";
+import { NavLink } from "react-router-dom";
 export default function ColumnsTable(props) {
   const { columnsData, tableData } = props;
 
@@ -65,7 +69,7 @@ export default function ColumnsTable(props) {
           fontSize='22px'
           fontWeight='700'
           lineHeight='100%'>
-          Recently documents
+          Bóc tách gần đây
         </Text>
         <Menu />
       </Flex>
@@ -82,7 +86,7 @@ export default function ColumnsTable(props) {
                   <Flex
                     justify='space-between'
                     align='center'
-                    fontSize={{ sm: "10px", lg: "12px" }}
+                    fontSize={{ sm: "12px", lg: "14px" }}
                     color='gray.400'>
                     {column.render("Header")}
                   </Flex>
@@ -98,13 +102,13 @@ export default function ColumnsTable(props) {
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
                   let data = "";
-                  if (cell.column.Header === "FILENAME") {
+                  if (cell.column.Header === "Tên file") {
                     data = (
                       <Text color={textColor} fontSize='sm' fontWeight='700'>
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === "STATUS") {
+                  } else if (cell.column.Header === "Trạng thái") {
                     data = (
                       <Flex align='center'>
                         <Icon
@@ -135,22 +139,32 @@ export default function ColumnsTable(props) {
                         </Text>
                       </Flex>
                     );
-                  } else if (cell.column.Header === "DATE") {
+                  } else if (cell.column.Header === "Ngày tạo") {
                     data = (
                       <Text color={textColor} fontSize='sm' fontWeight='700'>
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === "PROGRESS") {
+                  } else if (cell.column.Header === "Thao tác") {
                     data = (
                       <Flex align='center'>
-                        <Progress
+                        <IconButton  
+                          colorScheme='purple' 
+                          icon={<ViewIcon />} 
+                          variant='ghost'
+                        />
+                        <IconButton  
+                          colorScheme='purple' 
+                          icon={<DeleteIcon />} 
+                          variant='ghost'
+                        />
+                        {/* <Progress
                           variant='table'
                           colorScheme='brandScheme'
                           h='8px'
                           w='108px'
                           value={cell.value}
-                        />
+                        /> */}
                       </Flex>
                     );
                   }

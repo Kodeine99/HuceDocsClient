@@ -55,11 +55,11 @@ export default function UserReports() {
       {
         // Mini Statistics Card
       }
-      {/* <SimpleGrid
+      <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
         gap='20px'
         mb='20px'>
-        <MiniStatistics
+        {/* <MiniStatistics
           startContent={
             <IconBox
               w='56px'
@@ -120,22 +120,22 @@ export default function UserReports() {
           }
           name='New Tasks'
           value='154'
-        />
+        /> */}
         <MiniStatistics
           startContent={
             <IconBox
-              w='56px'
-              h='56px'
+              w='64px'
+              h='64px'
               bg={boxBg}
               icon={
                 <Icon w='32px' h='32px' as={MdFileCopy} color={brandColor} />
               }
             />
           }
-          name='Total Projects'
-          value='2935'
+          name='Total Documents'
+          value='1999'
         />
-      </SimpleGrid> */}
+      </SimpleGrid>
 
       {
         // Statics chart monthly & weekly
@@ -162,7 +162,7 @@ export default function UserReports() {
           tableData={tableDataComplex}
         />
         <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          <Tasks />
+          {/* <Tasks /> */}
           <MiniCalendar h='100%' minW='100%' selectRange={false} />
         </SimpleGrid>
       </SimpleGrid>

@@ -18,19 +18,19 @@ export const columnsDataCheck = [
 ];
 export const columnsDataComplex = [
   {
-    Header: "FILENAME",
+    Header: "Tên file",
     accessor: "name",
   },
   {
-    Header: "STATUS",
+    Header: "Trạng thái",
     accessor: "status",
   },
   {
-    Header: "DATE",
+    Header: "Ngày tạo",
     accessor: "date",
   },
   {
-    Header: "PROGRESS",
+    Header: "Thao tác",
     accessor: "progress",
   },
 ];
