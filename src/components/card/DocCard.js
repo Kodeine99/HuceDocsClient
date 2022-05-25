@@ -17,21 +17,24 @@ import Card from "components/card/Card.js";
 import React, { useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 
-export default function NFT(props) {
-  const { image, name, author, bidders, download, currentBid } = props;
+export default function DocCard(props) {
+  const { name, description,  download, currentBid } = props;
   const [like, setLike] = useState(false);
   const textColor = useColorModeValue("navy.700", "white");
   const textColorBid = useColorModeValue("brand.500", "white");
+
+  //uppercase name
+  
   return (
     <Card p='20px'>
       <Flex direction={{ base: "column" }} justify='center'>
-        <Box mb={{ base: "20px", "2xl": "20px" }} position='relative'>
-          <Image
+        <Box mb={{ base: "10px", "2xl": "10px" }} position='relative'>
+          {/* <Image
             src={image}
             w={{ base: "100%", "3xl": "100%" }}
             h={{ base: "100%", "3xl": "100%" }}
             borderRadius='20px'
-          />
+          /> */}
           <Button
             position='absolute'
             bg='white'
@@ -39,11 +42,11 @@ export default function NFT(props) {
             _active={{ bg: "white" }}
             _focus={{ bg: "white" }}
             p='0px !important'
-            top='14px'
-            right='14px'
+            top='0px'
+            right='0px'
             borderRadius='50%'
-            minW='36px'
-            h='36px'
+            minW='24px'
+            h='24px'
             onClick={() => {
               setLike(!like);
             }}>
@@ -90,10 +93,10 @@ export default function NFT(props) {
                 }}
                 fontWeight='400'
                 me='14px'>
-                {author}
+                {description}
               </Text>
             </Flex>
-            <AvatarGroup
+            {/* <AvatarGroup
               max={3}
               color={textColorBid}
               size='sm'
@@ -108,7 +111,7 @@ export default function NFT(props) {
               {bidders.map((avt, key) => (
                 <Avatar key={key} src={avt} />
               ))}
-            </AvatarGroup>
+            </AvatarGroup> */}
           </Flex>
           <Flex
             align='start'
@@ -120,10 +123,8 @@ export default function NFT(props) {
               xl: "column",
               "2xl": "row",
             }}
-            mt='25px'>
-            <Text fontWeight='700' fontSize='sm' color={textColorBid}>
-              Current Bid: {currentBid}
-            </Text>
+            mt='12px'>
+            
             <Link
               href={download}
               mt={{
@@ -139,9 +140,9 @@ export default function NFT(props) {
                 fontSize='sm'
                 fontWeight='500'
                 borderRadius='70px'
-                px='24px'
+                px='12px'
                 py='5px'>
-                Bóc tách
+                Bóc tách ngay
               </Button>
             </Link>
           </Flex>

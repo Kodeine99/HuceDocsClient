@@ -20,6 +20,10 @@ import TableTopCreators from "views/admin/marketplace/components/TableTopCreator
 import HistoryItem from "views/admin/marketplace/components/HistoryItem";
 import NFT from "components/card/NFT";
 import Card from "components/card/Card.js";
+import DocCard from "components/card/DocCard.js";
+
+//Icons
+import {TimeIcon} from "@chakra-ui/icons";
 
 // Assets
 import Nft1 from "assets/img/nfts/Nft1.png";
@@ -33,6 +37,7 @@ import Avatar2 from "assets/img/avatars/avatar2.png";
 import Avatar3 from "assets/img/avatars/avatar3.png";
 import Avatar4 from "assets/img/avatars/avatar4.png";
 import tableDataTopCreators from "views/admin/marketplace/variables/tableDataTopCreators.json";
+import docTypeData from "views/admin/marketplace/variables/docTypeData.json";
 import { tableColumnsTopCreators } from "views/admin/marketplace/variables/tableColumnsTopCreators";
 
 export default function Marketplace() {
@@ -59,7 +64,7 @@ export default function Marketplace() {
               direction={{ base: "column", md: "row" }}
               align={{ base: "start", md: "center" }}>
               <Text color={textColor} fontSize='2xl' ms='24px' fontWeight='700'>
-                Trending
+                Danh mục tài liệu
               </Text>
               <Flex
                 align='center'
@@ -71,29 +76,36 @@ export default function Marketplace() {
                   fontWeight='500'
                   me={{ base: "34px", md: "44px" }}
                   to='#art'>
-                  Art
+                  All
                 </Link>
                 <Link
                   color={textColorBrand}
                   fontWeight='500'
                   me={{ base: "34px", md: "44px" }}
                   to='#music'>
-                  Music
+                  Giấy tờ cá nhân
                 </Link>
                 <Link
                   color={textColorBrand}
                   fontWeight='500'
                   me={{ base: "34px", md: "44px" }}
                   to='#collectibles'>
-                  Collectibles
+                  Bảng điểm
+                </Link>
+                <Link
+                  color={textColorBrand}
+                  fontWeight='500'
+                  me={{ base: "34px", md: "44px" }}
+                  to='#collectibles'>
+                  Đơn
                 </Link>
                 <Link color={textColorBrand} fontWeight='500' to='#sports'>
-                  Sports
+                  Khác
                 </Link>
               </Flex>
             </Flex>
             <SimpleGrid columns={{ base: 1, md: 3 }} gap='20px'>
-              <NFT
+              {/* <NFT
                 name='Abstract Colors'
                 author='By Esthera Jackson'
                 bidders={[
@@ -109,8 +121,8 @@ export default function Marketplace() {
                 image={Nft1}
                 currentBid='0.91 ETH'
                 download='#'
-              />
-              <NFT
+              /> */}
+              {/* <NFT
                 name='ETH AI Brain'
                 author='By Nick Wilson'
                 bidders={[
@@ -126,24 +138,17 @@ export default function Marketplace() {
                 image={Nft2}
                 currentBid='0.91 ETH'
                 download='#'
-              />
-              <NFT
-                name='Mesh Gradients '
-                author='By Will Smith'
-                bidders={[
-                  Avatar1,
-                  Avatar2,
-                  Avatar3,
-                  Avatar4,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                ]}
-                image={Nft3}
-                currentBid='0.91 ETH'
-                download='#'
-              />
+              /> */}
+              {docTypeData.map((doc) => (
+                <DocCard
+                  name={doc.name}
+                  description={doc.description}
+                  currentBid='0.91 ETH'
+                  download='#'
+                />
+              ))}
+              
+              
             </SimpleGrid>
             <Text
               mt='45px'
