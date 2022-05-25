@@ -23,17 +23,18 @@ import RTL from "views/admin/rtl";
 import SignInCentered from "views/auth/signIn";
 
 const routes = [
-  {
-    name: "Trang chủ",
-    layout: "/admin",
-    path: "/default",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-    component: MainDashboard,
-  },
+  // {
+  //   name: "Trang chủ",
+  //   layout: "/admin",
+  //   path: "/default",
+  //   icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+  //   component: MainDashboard,
+  //   isShow: true,
+  // },
   {
     name: "Bóc tách tài liệu",
     layout: "/admin",
-    path: "/nft-marketplace",
+    path: "/boctach",
     icon: (
       <Icon
         as={MdDescription}
@@ -43,14 +44,17 @@ const routes = [
       />
     ),
     component: NFTMarketplace,
-    secondary: true,
+    isShow: true,
+    //secondary: true,
   },
   {
     name: "Lịch sử bóc tách",
     layout: "/admin",
     icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
-    path: "/data-tables",
+    path: "/lichsuboctach",
     component: DataTables,
+    isShow: true,
+    secondary: true,
   },
   {
     name: "Kanban",
@@ -58,6 +62,7 @@ const routes = [
     icon: <Icon as={MdDashboard} width='20px' height='20px' color='inherit' />,
     path: "/kanban",
     component: Kanban,
+    isShow: true,
   },
   {
     name: "Thông tin cá nhân",
@@ -65,6 +70,7 @@ const routes = [
     path: "/profile",
     icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
     component: Profile,
+    isShow: true,
   },
   {
     name: "Đăng nhập",
@@ -72,14 +78,16 @@ const routes = [
     path: "/sign-in",
     icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
     component: SignInCentered,
+    isShow: true,
   },
-  // {
-  //   name: "RTL Admin",
-  //   layout: "/rtl",
-  //   path: "/rtl-default",
-  //   icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-  //   component: RTL,
-  // },
+  {
+    name: "Extraction Details",
+    layout: "/extraction",
+    path: "/default",
+    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    component: RTL,
+    isShow: false,
+  },
 ];
 
 export default routes;

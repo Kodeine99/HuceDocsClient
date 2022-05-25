@@ -116,20 +116,20 @@ export default function ColumnsTable(props) {
                           h='24px'
                           me='5px'
                           color={
-                            cell.value === "Approved"
+                            cell.value === "Hoàn thành"
                               ? "green.500"
-                              : cell.value === "Disable"
+                              : cell.value === "Đã huỷ"
                               ? "red.500"
-                              : cell.value === "Error"
+                              : cell.value === "Lỗi"
                               ? "orange.500"
                               : null
                           }
                           as={
-                            cell.value === "Approved"
+                            cell.value === "Hoàn thành"
                               ? MdCheckCircle
-                              : cell.value === "Disable"
+                              : cell.value === "Đã huỷ"
                               ? MdCancel
-                              : cell.value === "Error"
+                              : cell.value === "Lỗi"
                               ? MdOutlineError
                               : null
                           }
