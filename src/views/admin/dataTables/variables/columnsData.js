@@ -19,20 +19,24 @@ export const columnsDataDevelopment = [
 
 export const columnsDataCheck = [
   {
-    Header: "NAME",
+    Header: "TÊN FILE",
     accessor: "name",
   },
   {
-    Header: "PROGRESS",
-    accessor: "progress",
+    Header: "TRẠNG THÁI",
+    accessor: "status",
   },
   {
-    Header: "QUANTITY",
-    accessor: "quantity",
+    Header: "SỐ TRANG",
+    accessor: "pageNumber",
   },
   {
-    Header: "DATE",
+    Header: "NGÀY TẠO",
     accessor: "date",
+  },
+  {
+    Header: "THAO TÁC",
+    accessor: "action",
   },
 ];
 
@@ -53,6 +57,7 @@ export const columnsDataColumns = [
     Header: "DATE",
     accessor: "date",
   },
+  
 ];
 
 export const columnsDataComplex = [

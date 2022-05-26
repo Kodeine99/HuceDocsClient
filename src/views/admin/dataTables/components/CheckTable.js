@@ -2,6 +2,8 @@ import {
   Flex,
   Table,
   Checkbox,
+  Icon,
+  IconButton,
   Tbody,
   Td,
   Text,
@@ -17,6 +19,11 @@ import {
   useSortBy,
   useTable,
 } from "react-table";
+
+// Assets
+import {ViewIcon, DeleteIcon} from '@chakra-ui/icons';
+import { MdCheckCircle, MdCancel, MdOutlineError } from "react-icons/md";
+
 
 // Custom components
 import Card from "components/card/Card";
@@ -61,7 +68,7 @@ export default function CheckTable(props) {
           fontSize='22px'
           fontWeight='700'
           lineHeight='100%'>
-          Check Table
+          Danh sách các files bóc tách
         </Text>
         <Menu />
       </Flex>
@@ -94,7 +101,7 @@ export default function CheckTable(props) {
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
                   let data = "";
-                  if (cell.column.Header === "NAME") {
+                  if (cell.column.Header === "TÊN FILE") {
                     data = (
                       <Flex align='center'>
                         <Checkbox
@@ -107,29 +114,69 @@ export default function CheckTable(props) {
                         </Text>
                       </Flex>
                     );
-                  } else if (cell.column.Header === "PROGRESS") {
+                  } else if (cell.column.Header === "TRẠNG THÁI") {
                     data = (
                       <Flex align='center'>
-                        <Text
-                          me='10px'
-                          color={textColor}
-                          fontSize='sm'
-                          fontWeight='700'>
-                          {cell.value}%
+                        <Icon
+                          w='24px'
+                          h='24px'
+                          me='5px'
+                          color={
+                            cell.value === "Tải thành công"
+                              ? "green.500"
+                              : cell.value === "Tải thất bại"
+                              ? "red.500"
+                              : null
+                          }
+                          as={
+                            cell.value === "Tải thành công"
+                              ? MdCheckCircle
+                              : cell.value === "Tải thất bại"
+                              ? MdCancel
+                              : null
+                          }
+                        />
+                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                          {cell.value}
                         </Text>
                       </Flex>
                     );
-                  } else if (cell.column.Header === "QUANTITY") {
+                  } else if (cell.column.Header === "SỐ TRANG") {
+                    data = (
+                      <Flex align='center'>
+                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                          {cell.value}
+                        </Text>
+                      </Flex>
+                      
+                    );
+                  } else if (cell.column.Header === "NGÀY TẠO") {
                     data = (
                       <Text color={textColor} fontSize='sm' fontWeight='700'>
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === "DATE") {
+                  } else if (cell.column.Header === "THAO TÁC") {
                     data = (
-                      <Text color={textColor} fontSize='sm' fontWeight='700'>
-                        {cell.value}
-                      </Text>
+                      <Flex align='center'>
+                        {/* <IconButton  
+                          colorScheme='purple' 
+                          icon={<ViewIcon />} 
+                          variant='ghost'
+                        /> */}
+                        <IconButton  
+                          colorScheme='purple' 
+                          icon={<DeleteIcon />} 
+                          variant='ghost'
+                        />
+                        {/* <Progress
+                          variant='table'
+                          colorScheme='brandScheme'
+                          h='8px'
+                          w='108px'
+                          value={cell.value}
+                        /> */}
+                      </Flex>
                     );
                   }
                   return (

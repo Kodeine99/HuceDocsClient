@@ -131,7 +131,7 @@ export default function CheckTable(props) {
                         {cell.value}
                       </Text>
                     );
-                  }
+                  } 
                   return (
                     <Td
                       {...cell.getCellProps()}

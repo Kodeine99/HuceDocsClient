@@ -13,6 +13,14 @@ import React from "react";
 // Assets
 import { MdUpload } from "react-icons/md";
 import Dropzone from "views/admin/profile/components/Dropzone";
+import CheckTable from "views/admin/dataTables/components/CheckTable";
+import tableDataFiles from "views/admin/dataTables/variables/tableDataFiles.json";
+import {
+  columnsDataCheck,
+} from "views/admin/dataTables/variables/columnsData";
+import { DeleteIcon } from "@chakra-ui/icons";
+
+
 
 export default function Upload(props) {
   const { used, total, ...rest } = props;
@@ -24,7 +32,7 @@ export default function Upload(props) {
     <Card {...rest} mb='20px' align='center' p='20px'>
       <Flex h='100%' direction={{ base: "column", "2xl": "row" }}>
         <Dropzone
-          w={{ base: "100%", "2xl": "268px" }}
+          w={{ base: "100%", "2xl": "400px" }}
           me='36px'
           maxH={{ base: "60%", lg: "50%", "2xl": "100%" }}
           minH={{ base: "60%", lg: "50%", "2xl": "100%" }}
@@ -43,7 +51,7 @@ export default function Upload(props) {
           }
         />
         <Flex direction='column' pe='44px'>
-          <Text
+          {/* <Text
             color={textColorPrimary}
             fontWeight='bold'
             textAlign='start'
@@ -59,17 +67,31 @@ export default function Upload(props) {
             textAlign='start'>
             Stay on the pulse of distributed projects with an anline whiteboard
             to plan, coordinate and discuss
-          </Text>
+          </Text> */}
+          <CheckTable columnsData={columnsDataCheck} tableData={tableDataFiles} />
           <Flex w='100%'>
             <Button
-              me='100%'
-              mb='50px'
-              w='140px'
-              minW='140px'
+              me='5%'
+              //mb='50px'
+              w='120px'
+              minW='120px'
               mt={{ base: "20px", "2xl": "auto" }}
-              variant='brand'
+              //variant='brand'
+              colorScheme="purple"
               fontWeight='500'>
-              Publish now
+              Bóc tách
+            </Button>
+            <Button 
+              leftIcon={<DeleteIcon />} 
+              //variant="brand"
+              me='5%'
+              //mb='50px'
+              w='120px'
+              minW='120px'
+              mt={{ base: "20px", "2xl": "auto" }}
+              colorScheme="red"
+              fontWeight='500'>
+              Xoá
             </Button>
           </Flex>
         </Flex>

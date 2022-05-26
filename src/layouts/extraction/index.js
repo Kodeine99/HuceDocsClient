@@ -10,6 +10,16 @@
  import routes from "routes.js";
  import Upload from "views/admin/profile/components/Upload";
 
+ // Custom components
+import Banner from "views/admin/profile/components/Banner";
+import General from "views/admin/profile/components/General";
+import Notifications from "views/admin/profile/components/Notifications";
+import Projects from "views/admin/profile/components/Projects";
+import Storage from "views/admin/profile/components/Storage";
+
+// Assets
+import banner from "assets/img/auth/banner.png";
+import avatar from "assets/img/avatars/avatar4.png";
  
  // Custom Chakra theme
  export default function Extraction(props) {
@@ -150,38 +160,45 @@
            </Portal>
  
            {getRoute() ? (
-             <Box
-               //mx='auto'
-               //p={{ base: "20px", md: "30px" }}
-               //pe='20px'
-               minH='100vh'
-               pt= {{base: "150px", md: "100px", xl: "100px" }}>
-               {/* <Switch>
-                 {getRoutes(routes)}
-                 <Redirect from='/' to='/admin/boctach' />
-               </Switch> */}
-               <Grid
-                templateColumns={{
-                  base: "1fr",
-                  lg: "1.34fr 1fr 1.62fr",
-                }}
+            <Box
+             mx='auto'
+             p={{ base: "20px", md: "30px" }}
+             pe='20px'
+             minH='100vh'
+             pt='50px'>
+            
+            <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+              {/* Main Fields */}
+              <Grid
+                // templateColumns={{
+                //   base: "1fr",
+                //   lg: "1.34fr 1fr 1.62fr",
+                // }}
                 templateRows={{
-                  base: "repeat(3, 1fr)",
+                  base: "repeat(1, 1fr)",
                   lg: "1fr",
                 }}
                 gap={{ base: "20px", xl: "20px" }}>
-                  <Upload
-                    gridArea={{
-                      base: "3 / 1 / 4 / 2",
-                      lg: "1 / 3 / 2 / 4",
-                    }}
-                    minH={{ base: "auto", lg: "420px", "2xl": "365px" }}
-                    pe='20px'
-                    pb={{ base: "100px", lg: "20px" }}
-                  />
+                
+                {/* <Storage
+                  gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3" }}
+                  used={25.6}
+                  total={50}
+                /> */}
+                <Upload
+                  // gridArea={{
+                  //   base: "2 / 1 / 3 / 2",
+                  //   lg: "1 / 3 / 2 / 4",
+                  // }}
+                  //minH={{ base: "auto", lg: "420px", "2xl": "365px" }}
+                  //pe='20px'
+                  //pb={{ base: "100px", lg: "20px" }}
+                />
               </Grid>
-               
-             </Box>
+              
+            </Box>
+            </Box>
+             
            ) : null}
            <Box>
              <Footer />
