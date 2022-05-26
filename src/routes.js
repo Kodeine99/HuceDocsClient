@@ -18,6 +18,7 @@ import Profile from "views/admin/profile";
 import Kanban from "views/admin/kanban";
 import DataTables from "views/admin/dataTables";
 import RTL from "views/admin/rtl";
+import Extract from "views/extraction/default";
 
 // Auth Imports
 import SignInCentered from "views/auth/signIn";
@@ -45,6 +46,13 @@ const routes = [
     ),
     component: NFTMarketplace,
     isShow: true,
+    // children: [
+    //   {
+    //     path: ":docId",
+    //     index: true,
+    //     component: Extract
+    //   }
+    // ]
     //secondary: true,
   },
   {
@@ -90,4 +98,9 @@ const routes = [
   },
 ];
 
+// const extractRoutes = [
+//   {
+
+//   }
+// ]
 export default routes;

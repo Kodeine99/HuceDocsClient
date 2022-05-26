@@ -11,6 +11,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+//import { Link as ReachLink } from "@reach/router"
 // Custom components
 import Card from "components/card/Card.js";
 // Assets
@@ -126,7 +127,9 @@ export default function DocCard(props) {
             mt='12px'>
             
             <Link
-              href={download}
+              //as={ReachLink}
+              //href={download}
+              href="/#/extraction"
               mt={{
                 base: "0px",
                 md: "10px",

@@ -15,7 +15,9 @@ ReactDOM.render(
       <HashRouter>
         <Switch>
           <Route path={`/auth`} component={AuthLayout} />
-          <Route path={`/admin`} component={AdminLayout} />
+          <Route path={`/admin`} component={AdminLayout} >
+            {/* <Route path={`:docId`} component={ExtractionLayout} /> */}
+          </Route>
           <Route path={`/rtl`} component={RTLLayout} />
           <Route path={`/extraction`} component={ExtractionLayout} />
           <Redirect from='/' to='/admin' />

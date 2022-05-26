@@ -24,7 +24,7 @@ export default function AdminNavbar(props) {
     };
   });
 
-  const { secondary, message, brandText } = props;
+  const { secondary, message, brandText, brandTextChild } = props;
 
   // Here are all the props that may change depending on navbar's type or state.(secondary, variant, scrolled)
   let mainText = useColorModeValue("navy.700", "white");
@@ -103,13 +103,18 @@ export default function AdminNavbar(props) {
           <Breadcrumb>
             <BreadcrumbItem color={secondaryText} fontSize='sm' mb='5px'>
               <BreadcrumbLink href='#' color={secondaryText}>
-                Pages
+                HuceDocs
               </BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem color={secondaryText} fontSize='sm'>
               <BreadcrumbLink href='#' color={secondaryText}>
                 {brandText}
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem color={secondaryText} fontSize='sm'>
+              <BreadcrumbLink href='#' color={secondaryText}>
+                {brandTextChild}
               </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
