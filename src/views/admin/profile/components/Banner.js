@@ -42,7 +42,7 @@ export default function Banner(props) {
             {posts}
           </Text>
           <Text color={textColorSecondary} fontSize='sm' fontWeight='400'>
-            Posts
+            Lượt bóc tách
           </Text>
         </Flex>
         <Flex mx='auto' me='60px' align='center' direction='column'>
