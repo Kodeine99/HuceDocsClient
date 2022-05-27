@@ -2,36 +2,36 @@
   {
     "name": "THẺ SINH VIÊN",
     "description": "Nhận diện thẻ sinh viên, trích xuất thông tin nhanh chóng và chính xác",
-    "path": {}
+    "imgPath": "/src/assets/img/docs/CCCD.png"
   },
   {
     "name": "BẢNG ĐIỂM",
     "description": "Nhận diện bảng điểm, trích xuất thông tin nhanh chóng và chính xác",
-    "path": {}
+    "imgPath": "assets/img/docs/BaithiTN.png"
   },
   {
     "name": "BẢNG ĐIỂM TIẾNG ANH",
     "description": "Nhận diện thẻ bảng điểm tiếng anh, trích xuất thông tin nhanh chóng và chính xác",
-    "path": {}
+    "imgPath": "assets/img/docs/BaithiTN.png"
   },
   {
     "name": "CAM KẾT TRẢ NỢ",
     "description": "Nhận diện giấy cam kết trả nợ, trích xuất thông tin nhanh chóng và chính xác",
-    "path": {}
+    "imgPath": "assets/img/docs/TheTinDung.png"
   },
   {
     "name": "ĐƠN XIN NHẬP HỌC",
     "description": "Nhận diện đơn xin nhập học, trích xuất thông tin nhanh chóng và chính xác",
-    "path": {}
+    "imgPath": "assets/img/docs/Boctachgiayto.png"
   },
   {
     "name": "GIẤY XÁC NHẬN TOEIC",
     "description": "Nhận diện giấy xác nhận Toeic, trích xuất thông tin nhanh chóng và chính xác",
-    "path": {}
+    "imgPath": "assets/img/docs/BaithiTN.png"
   },
   {
     "name": "GIẤY XÁC NHẬN VAY VỐN",
     "description": "Nhận diện giấy xác nhận vay vốn, trích xuất thông tin nhanh chóng và chính xác",
-    "path": {}
+    "imgPath": "assets/img/docs/DKKD.png"
   }
 ]

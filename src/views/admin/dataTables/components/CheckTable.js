@@ -70,7 +70,7 @@ export default function CheckTable(props) {
           lineHeight='100%'>
           Danh sách các files bóc tách
         </Text>
-        <Menu />
+        {/* <Menu /> */}
       </Flex>
       <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
         <Thead>

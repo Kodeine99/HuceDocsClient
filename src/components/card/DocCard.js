@@ -10,6 +10,7 @@ import {
   Link,
   Text,
   useColorModeValue,
+  Img,
 } from "@chakra-ui/react";
 //import { Link as ReachLink } from "@reach/router"
 // Custom components
@@ -17,9 +18,10 @@ import Card from "components/card/Card.js";
 // Assets
 import React, { useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import ImgTest from "assets/img/docs/CCCD.png";
 
 export default function DocCard(props) {
-  const { name, description,  download, currentBid } = props;
+  const { name, description,  download, currentBid, image } = props;
   const [like, setLike] = useState(false);
   const textColor = useColorModeValue("navy.700", "white");
   const textColorBid = useColorModeValue("brand.500", "white");
@@ -36,7 +38,8 @@ export default function DocCard(props) {
             h={{ base: "100%", "3xl": "100%" }}
             borderRadius='20px'
           /> */}
-          <Button
+          
+          {/* <Button
             position='absolute'
             bg='white'
             _hover={{ bg: "whiteAlpha.900" }}
@@ -58,7 +61,7 @@ export default function DocCard(props) {
               as={like ? IoHeart : IoHeartOutline}
               color='brand.500'
             />
-          </Button>
+          </Button> */}
         </Box>
         <Flex flexDirection='column' justify='space-between' h='100%'>
           <Flex
@@ -71,22 +74,34 @@ export default function DocCard(props) {
               "2xl": "row",
             }}
             mb='auto'>
-            <Flex direction='column'>
-              <Text
-                color={textColor}
-                fontSize={{
-                  base: "xl",
-                  md: "lg",
-                  lg: "lg",
-                  xl: "lg",
-                  "2xl": "md",
-                  "3xl": "lg",
-                }}
-                mb='5px'
-                fontWeight='bold'
-                me='14px'>
-                {name}
-              </Text>
+            <Flex direction='column' >
+              <Flex direction='row' > 
+                <Image
+                  borderRadius='full'
+                  //boxSize='45px'
+                  w='45px' h='45px'
+                  src={image}
+                  //alt='Dan Abramov'
+                  mr='10px'
+                />
+                <Text
+                  //align='center'
+                  color={textColor}
+                  fontSize={{
+                    base: "xl",
+                    md: "lg",
+                    lg: "lg",
+                    xl: "lg",
+                    "2xl": "md",
+                    "3xl": "lg",
+                  }}
+                  mb='5px'
+                  fontWeight='bold'
+                  me='14px'>
+                  {name}
+                </Text>
+              
+              </Flex>
               <Text
                 color='secondaryGray.600'
                 fontSize={{

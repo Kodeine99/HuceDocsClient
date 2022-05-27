@@ -38,6 +38,7 @@ import Avatar3 from "assets/img/avatars/avatar3.png";
 import Avatar4 from "assets/img/avatars/avatar4.png";
 import tableDataTopCreators from "views/admin/marketplace/variables/tableDataTopCreators.json";
 import docTypeData from "views/admin/marketplace/variables/docTypeData.json";
+import docTypeDataObj from "views/admin/marketplace/variables/docTypeDataObj.js";
 import { tableColumnsTopCreators } from "views/admin/marketplace/variables/tableColumnsTopCreators";
 
 export default function Marketplace() {
@@ -139,12 +140,13 @@ export default function Marketplace() {
                 currentBid='0.91 ETH'
                 download='#'
               /> */}
-              {docTypeData.map((doc) => (
+              {docTypeDataObj.map((doc) => (
                 <DocCard
                   name={doc.name}
                   description={doc.description}
                   currentBid='0.91 ETH'
                   download='#'
+                  image={doc.imgPath}
                 />
               ))}
               

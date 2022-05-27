@@ -227,7 +227,7 @@ export default function HeaderLinks(props) {
           <Avatar
             _hover={{ cursor: "pointer" }}
             color='white'
-            name='Adela Parkson'
+            name='Tung Ramen'
             bg='#11047A'
             size='sm'
             w='40px'
@@ -261,15 +261,13 @@ export default function HeaderLinks(props) {
               _focus={{ bg: "none" }}
               borderRadius='8px'
               px='14px'>
-              <Text fontSize='sm'>Profile Settings</Text>
+              <Text fontSize='sm'>
+                <Link color='white' href='/#/admin/profile'>
+                  Profile Settings 
+                </Link>
+              </Text>
             </MenuItem>
-            <MenuItem
-              _hover={{ bg: "none" }}
-              _focus={{ bg: "none" }}
-              borderRadius='8px'
-              px='14px'>
-              <Text fontSize='sm'>Newsletter Settings</Text>
-            </MenuItem>
+            
             <MenuItem
               _hover={{ bg: "none" }}
               _focus={{ bg: "none" }}
