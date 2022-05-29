@@ -12,6 +12,7 @@ import {
 import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
 import AdminNavbarLinks from "components/navbar/NavbarLinksAdmin";
+import { useHistory } from "react-router-dom";
 
 export default function AdminNavbar(props) {
   const [scrolled, setScrolled] = useState(false);
@@ -48,7 +49,22 @@ export default function AdminNavbar(props) {
       setScrolled(false);
     }
   };
-
+  const checkBrandTextChild = () => {
+    if (brandTextChild?.length > 0 && brandTextChild !== "") {
+      return (
+        <BreadcrumbItem color={secondaryText} fontSize='sm'>
+          <BreadcrumbLink href='#' color={secondaryText}>
+            {brandTextChild}
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+      )
+    } else {
+      return null;
+    }
+  
+  }
+  const history = useHistory()
+  console.log(history.location.pathname)
   return (
     <Box
       position={navbarPosition}
@@ -102,7 +118,7 @@ export default function AdminNavbar(props) {
         <Box mb={{ sm: "8px", md: "0px" }}>
           <Breadcrumb>
             <BreadcrumbItem color={secondaryText} fontSize='sm' mb='5px'>
-              <BreadcrumbLink href='#' color={secondaryText}>
+              <BreadcrumbLink href='/boctach' color={secondaryText}>
                 HuceDocs
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -112,11 +128,9 @@ export default function AdminNavbar(props) {
                 {brandText}
               </BreadcrumbLink>
             </BreadcrumbItem>
-            {/* <BreadcrumbItem color={secondaryText} fontSize='sm'>
-              <BreadcrumbLink href='#' color={secondaryText}>
-                {brandTextChild}
-              </BreadcrumbLink>
-            </BreadcrumbItem> */}
+            {
+              checkBrandTextChild()
+            }
           </Breadcrumb>
           {/* Here we create navbar brand, based on route name */}
           <Link

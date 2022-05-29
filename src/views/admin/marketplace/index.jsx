@@ -106,53 +106,16 @@ export default function Marketplace() {
               </Flex>
             </Flex>
             <SimpleGrid columns={{ base: 1, md: 3 }} gap='20px'>
-              {/* <NFT
-                name='Abstract Colors'
-                author='By Esthera Jackson'
-                bidders={[
-                  Avatar1,
-                  Avatar2,
-                  Avatar3,
-                  Avatar4,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                ]}
-                image={Nft1}
-                currentBid='0.91 ETH'
-                download='#'
-              /> */}
-              {/* <NFT
-                name='ETH AI Brain'
-                author='By Nick Wilson'
-                bidders={[
-                  Avatar1,
-                  Avatar2,
-                  Avatar3,
-                  Avatar4,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                  Avatar1,
-                ]}
-                image={Nft2}
-                currentBid='0.91 ETH'
-                download='#'
-              /> */}
+               {/* render DoctypeCard */}
               {docTypeDataObj.map((doc) => (
                 <DocCard
                   name={doc.name}
                   description={doc.description}
-                  currentBid='0.91 ETH'
-                  download='#'
                   image={doc.imgPath}
                 />
-              ))}
-              
-              
+              ))} 
             </SimpleGrid>
-            <Text
+            {/* <Text
               mt='45px'
               mb='36px'
               color={textColor}
@@ -160,8 +123,8 @@ export default function Marketplace() {
               ms='24px'
               fontWeight='700'>
               Recently Added
-            </Text>
-            <SimpleGrid
+            </Text> */}
+            {/* <SimpleGrid
               columns={{ base: 1, md: 3 }}
               gap='20px'
               mb={{ base: "20px", xl: "0px" }}>
@@ -216,7 +179,7 @@ export default function Marketplace() {
                 currentBid='0.91 ETH'
                 download='#'
               />
-            </SimpleGrid>
+            </SimpleGrid> */}
           </Flex>
         </Flex>
         <Flex

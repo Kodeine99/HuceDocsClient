@@ -19,6 +19,7 @@ import Card from "components/card/Card.js";
 import React, { useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import ImgTest from "assets/img/docs/CCCD.png";
+import { Route, NavLink } from "react-router-dom";
 
 export default function DocCard(props) {
   const { name, description,  download, currentBid, image } = props;
@@ -140,29 +141,27 @@ export default function DocCard(props) {
               "2xl": "row",
             }}
             mt='12px'>
-            
-            <Link
-              //as={ReachLink}
-              //href={download}
-              href="/#/extraction"
-              mt={{
-                base: "0px",
-                md: "10px",
-                lg: "0px",
-                xl: "10px",
-                "2xl": "0px",
-              }}>
-              <Button
-                variant='darkBrand'
-                color='white'
-                fontSize='sm'
-                fontWeight='500'
-                borderRadius='70px'
-                px='12px'
-                py='5px'>
-                Bóc tách ngay
-              </Button>
-            </Link>
+              <NavLink
+                
+                to="/boctach/abc"
+                mt={{
+                  base: "0px",
+                  md: "10px",
+                  lg: "0px",
+                  xl: "10px",
+                  "2xl": "0px",
+                }}>
+                <Button
+                  variant='darkBrand'
+                  color='white'
+                  fontSize='sm'
+                  fontWeight='500'
+                  borderRadius='70px'
+                  px='12px'
+                  py='5px'>
+                  Bóc tách ngay
+                </Button>
+              </NavLink>
           </Flex>
         </Flex>
       </Flex>

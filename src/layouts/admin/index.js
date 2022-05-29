@@ -4,6 +4,7 @@ import Footer from "components/footer/FooterAdmin.js";
 // Layout components
 import Navbar from "components/navbar/NavbarAdmin.js";
 import Sidebar from "components/sidebar/Sidebar.js";
+import ExtractionLayout from "layouts/extraction";
 import { SidebarContext } from "contexts/SidebarContext";
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
@@ -17,7 +18,7 @@ export default function Dashboard(props) {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components
   const getRoute = () => {
-    return window.location.pathname !== "/admin/full-screen-maps";
+    return window.location.pathname !== "/full-screen-maps";
   };
   const getActiveRoute = (routes) => {
     let activeRoute = "Default Brand Text";
@@ -89,14 +90,26 @@ export default function Dashboard(props) {
     return activeNavbar;
   };
   const getRoutes = (routes) => {
+    console.log(routes);
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "") {
         return (
           <Route
-            path={prop.layout + prop.path}
+            path={prop.path}
             component={prop.component}
             key={key}
-          />
+          >
+            {/* {
+            typeof prop.children !== 'undefined' && prop.children.length > 0 ? 
+            prop.children.map((prop1, index) =>  
+            <Route
+              //path={`/${prop.path}/${prop1.path}`}
+              path="boctach/:slug"
+              component={ExtractionLayout}
+              key={index}
+            />
+            ) : null} */}
+            </Route>
         );
       }
       if (prop.collapse) {
@@ -138,6 +151,7 @@ export default function Dashboard(props) {
                 onOpen={onOpen}
                 logoText={"Huce Docs"}
                 brandText={getActiveRoute(routes)}
+                //brandTextChild="abcdef"
                 secondary={getActiveNavbar(routes)}
                 message={getActiveNavbarText(routes)}
                 fixed={fixed}
@@ -155,7 +169,7 @@ export default function Dashboard(props) {
               pt='50px'>
               <Switch>
                 {getRoutes(routes)}
-                <Redirect from='/' to='/admin/boctach' />
+                <Redirect from='/' to='/boctach' />
               </Switch>
             </Box>
           ) : null}

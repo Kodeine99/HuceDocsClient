@@ -23,13 +23,13 @@ import avatar from "assets/img/avatars/avatar4.png";
  
  // Custom Chakra theme
  export default function Extraction(props) {
-   const { ...rest } = props;
+   const { brandTextChild,...rest } = props;
    // states and functions
    const [fixed] = useState(false);
    const [toggleSidebar, setToggleSidebar] = useState(false);
    // functions for changing the states from components
    const getRoute = () => {
-     return window.location.pathname !== "/admin/full-screen-maps";
+     return window.location.pathname !== "/full-screen-maps";
    };
    const getActiveRoute = (routes) => {
      let activeRoute = "Bóc tách";
@@ -149,8 +149,9 @@ import avatar from "assets/img/avatars/avatar4.png";
                <Navbar
                  onOpen={onOpen}
                  logoText={"Huce Docs"}
-                 brandText={getActiveRoute(routes)}
-                 brandTextChild={getActiveNavbarText(routes)}
+                 //brandText={getActiveRoute(routes)}
+                 brandText={"Bóc tách tài liệu"}
+                 brandTextChild={brandTextChild}
                  secondary={getActiveNavbar(routes)}
                  message={getActiveNavbarText(routes)}
                  fixed={fixed}
@@ -170,30 +171,13 @@ import avatar from "assets/img/avatars/avatar4.png";
             <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
               {/* Main Fields */}
               <Grid
-                // templateColumns={{
-                //   base: "1fr",
-                //   lg: "1.34fr 1fr 1.62fr",
-                // }}
+                
                 templateRows={{
                   base: "repeat(1, 1fr)",
                   lg: "1fr",
                 }}
                 gap={{ base: "20px", xl: "20px" }}>
-                
-                {/* <Storage
-                  gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3" }}
-                  used={25.6}
-                  total={50}
-                /> */}
-                <Upload
-                  // gridArea={{
-                  //   base: "2 / 1 / 3 / 2",
-                  //   lg: "1 / 3 / 2 / 4",
-                  // }}
-                  //minH={{ base: "auto", lg: "420px", "2xl": "365px" }}
-                  //pe='20px'
-                  //pb={{ base: "100px", lg: "20px" }}
-                />
+                <Upload/>
               </Grid>
               
             </Box>
