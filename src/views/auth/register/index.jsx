@@ -27,7 +27,7 @@ import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 
-function SignIn() {
+function Register() {
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
@@ -70,7 +70,7 @@ function SignIn() {
             color={textColorSecondary}
             fontWeight='400'
             fontSize='md'>
-            Enter your <b>username & password</b> to sign in!
+            Enter your email and password to sign in!
           </Text>
         </Box>
         <Flex
@@ -114,7 +114,7 @@ function SignIn() {
               fontWeight='500'
               color={textColor}
               mb='8px'>
-              Username<Text color={brandStars}>*</Text>
+              Email<Text color={brandStars}>*</Text>
             </FormLabel>
             <Input
               isRequired={true}
@@ -122,7 +122,7 @@ function SignIn() {
               fontSize='sm'
               ms={{ base: "0px", md: "0px" }}
               type='email'
-              placeholder='Enter your username'
+              placeholder='mail@simmmple.com'
               mb='24px'
               fontWeight='500'
               size='lg'
@@ -156,7 +156,7 @@ function SignIn() {
               </InputRightElement>
             </InputGroup>
             <Flex justifyContent='space-between' align='center' mb='24px'>
-              {/* <FormControl display='flex' alignItems='center'>
+              <FormControl display='flex' alignItems='center'>
                 <Checkbox
                   id='remember-login'
                   colorScheme='brandScheme'
@@ -170,7 +170,7 @@ function SignIn() {
                   fontSize='sm'>
                   Keep me logged in
                 </FormLabel>
-              </FormControl> */}
+              </FormControl>
               <NavLink to='/auth/forgot-password'>
                 <Text
                   color={textColorBrand}
@@ -205,7 +205,7 @@ function SignIn() {
                   as='span'
                   ms='5px'
                   fontWeight='500'>
-                  Contact to Admin to create an Account
+                  Create an Account
                 </Text>
               </NavLink>
             </Text>
@@ -216,4 +216,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default Register;

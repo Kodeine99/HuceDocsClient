@@ -10,37 +10,44 @@ const docTypeDataObj = [
   {
     name: "THẺ SINH VIÊN",
     description: "Nhận diện thẻ sinh viên, trích xuất thông tin nhanh chóng và chính xác",
-    imgPath: CCCD
+    imgPath: CCCD,
+    path: "/thesinhvien",
   },
   {
     name: "BẢNG ĐIỂM",
     description: "Nhận diện bảng điểm, trích xuất thông tin nhanh chóng và chính xác",
-    imgPath: BaiThiTN
+    imgPath: BaiThiTN,
+    path: "/bangdiem",
   },
   {
     name: "BẢNG ĐIỂM TIẾNG ANH",
     description: "Nhận diện thẻ bảng điểm tiếng anh, trích xuất thông tin nhanh chóng và chính xác",
-    imgPath: BaiThiTN
+    imgPath: BaiThiTN,
+    path: "/bangdiemtienganh",
   },
   {
     name: "CAM KẾT TRẢ NỢ",
     description: "Nhận diện giấy cam kết trả nợ, trích xuất thông tin nhanh chóng và chính xác",
-    imgPath: TheTinDung
+    imgPath: TheTinDung,
+    path: "/camkettrano",
   },
   {
     name: "ĐƠN XIN NHẬP HỌC",
     description: "Nhận diện đơn xin nhập học, trích xuất thông tin nhanh chóng và chính xác",
-    imgPath: BocTachGiayTo
+    imgPath: BocTachGiayTo,
+    path: "/donxinnhaphoc",
   },
   {
     name: "GIẤY XÁC NHẬN TOEIC",
     description: "Nhận diện giấy xác nhận Toeic, trích xuất thông tin nhanh chóng và chính xác",
-    imgPath: BaiThiTN
+    imgPath: BaiThiTN,
+    path: "/giayxacnhantoeic",
   },
   {
     name: "GIẤY XÁC NHẬN VAY VỐN",
     description: "Nhận diện giấy xác nhận vay vốn, trích xuất thông tin nhanh chóng và chính xác",
-    imgPath: DKKD
+    imgPath: DKKD,
+    path: "/giayxacnhanvayvon",
   }
 ]
 

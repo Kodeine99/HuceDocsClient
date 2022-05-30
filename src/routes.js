@@ -123,7 +123,7 @@ const routes = [
     icon: <Icon as={MdDashboard} width='20px' height='20px' color='inherit' />,
     path: "/kanban",
     component: Kanban,
-    isShow: true,
+    isShow: false,
   },
   {
     name: "Thông tin cá nhân",

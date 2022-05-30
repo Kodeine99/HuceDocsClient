@@ -23,45 +23,45 @@ export default function GeneralInformation(props) {
         fontSize='2xl'
         mt='10px'
         mb='4px'>
-        General Information
+        Thông tin cá nhân 
       </Text>
-      <Text color={textColorSecondary} fontSize='md' me='26px' mb='40px'>
+      {/* <Text color={textColorSecondary} fontSize='md' me='26px' mb='40px'>
         As we live, our hearts turn colder. Cause pain is what we go through as
         we become older. We get insulted by others, lose trust for those others.
         We get back stabbed by friends. It becomes harder for us to give others
         a hand. We get our heart broken by people we love, even that we give
         them all...
-      </Text>
+      </Text> */}
       <SimpleGrid columns='2' gap='20px'>
         <Information
           boxShadow={cardShadow}
-          title='Education'
-          value='Stanford University'
+          title='Username'
+          value='Tung Ramen'
         />
         <Information
           boxShadow={cardShadow}
-          title='Languages'
-          value='English, Spanish, Italian'
+          title='Ngày sinh'
+          value='25/10/1999'
         />
         <Information
           boxShadow={cardShadow}
-          title='Department'
-          value='Product Design'
+          title='Khoa'
+          value='Công nghệ thông tin'
         />
         <Information
           boxShadow={cardShadow}
-          title='Work History'
-          value='Google, Facebook'
+          title='Điện thoại'
+          value='0123456789'
         />
         <Information
           boxShadow={cardShadow}
-          title='Organization'
-          value='Simmmple Web LLC'
+          title='Địa chỉ'
+          value='Hà Nội'
         />
         <Information
           boxShadow={cardShadow}
-          title='Birthday'
-          value='20 July 1986'
+          title='Giới tính'
+          value='Nam'
         />
       </SimpleGrid>
     </Card>

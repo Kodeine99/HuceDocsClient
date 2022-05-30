@@ -1,7 +1,7 @@
 
 
 // Chakra imports
-import { Box, Grid } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 
 // Custom components
 import Banner from "views/admin/profile/components/Banner";
@@ -26,7 +26,7 @@ export default function Overview() {
           lg: "1.34fr 1fr 1.62fr",
         }}
         templateRows={{
-          base: "repeat(3, 1fr)",
+          base: "repeat(2, 1fr)",
           lg: "1fr",
         }}
         gap={{ base: "20px", xl: "20px" }}>
@@ -40,14 +40,21 @@ export default function Overview() {
           followers='9.9k'
           following='1'
         />
-        <Storage
-          gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3" }}
+        {/* <Storage
+          gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 1 / 1 / 3" }}
           used={25.6}
           total={50}
+        /> */}
+        <GridItem colSpan={2} >
+        <General
+          //gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3" }}
+          minH='365px'
+          pe='20px'
         />
+        </GridItem>
         
       </Grid>
-      <Grid
+      {/* <Grid
         mb='20px'
         templateColumns={{
           base: "1fr",
@@ -84,7 +91,7 @@ export default function Overview() {
             "2xl": "1 / 3 / 2 / 4",
           }}
         />
-      </Grid>
+      </Grid> */}
     </Box>
   );
 }

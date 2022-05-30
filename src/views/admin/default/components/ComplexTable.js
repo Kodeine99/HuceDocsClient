@@ -71,7 +71,7 @@ export default function ColumnsTable(props) {
           lineHeight='100%'>
           Bóc tách gần đây
         </Text>
-        <Menu />
+        {/* <Menu /> */}
       </Flex>
       <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
         <Thead>
@@ -153,11 +153,11 @@ export default function ColumnsTable(props) {
                           icon={<ViewIcon />} 
                           variant='ghost'
                         />
-                        <IconButton  
+                        {/* <IconButton  
                           colorScheme='purple' 
                           icon={<DeleteIcon />} 
                           variant='ghost'
-                        />
+                        /> */}
                         {/* <Progress
                           variant='table'
                           colorScheme='brandScheme'

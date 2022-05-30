@@ -22,7 +22,7 @@ import ImgTest from "assets/img/docs/CCCD.png";
 import { Route, NavLink } from "react-router-dom";
 
 export default function DocCard(props) {
-  const { name, description,  download, currentBid, image } = props;
+  const { name, description,  download, currentBid, image, docPath } = props;
   const [like, setLike] = useState(false);
   const textColor = useColorModeValue("navy.700", "white");
   const textColorBid = useColorModeValue("brand.500", "white");
@@ -143,7 +143,7 @@ export default function DocCard(props) {
             mt='12px'>
               <NavLink
                 
-                to="/boctach/abc"
+                to={`/boctach${docPath}`}
                 mt={{
                   base: "0px",
                   md: "10px",
