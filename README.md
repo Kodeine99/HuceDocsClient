@@ -6,7 +6,7 @@
 
 <p>&nbsp;</p>
 
-<!-- [<img alt="Horizon UI" src="https://i.ibb.co/fdyTwz1/introduction-image-2.png" /> ](https://github.com/horizon-ui/horizon-ui-chakra) -->
+
 
 <p>&nbsp;</p>
 
@@ -28,18 +28,6 @@ The fastest, most responsive & trendiest dashboard is here. Seriously.
 With Horizon UI you will find many examples for pages like NFTs Pages,
 Authentication Pages, Profile and so on. Just choose between a Basic Design or a
 cover and you are good to go!
-
-### 🎉 [NEW] Horizon UI Components
-All the main components from both versions, this will help you to see and interact with all & the latest added components of Horizon (also, new components are on the way, stay tuned)! ⚡️
-<a href="https://horizon-ui.com/components/?ref=readme-horizon" target="_blank">See all components</a>
-
-
-### Documentation
-
-Each element is well presented in a very complex documentation. You can read
-more about the <a href="https://horizon-ui.com/documentation/docs/introduction?ref=readme-horizon" target="_blank">documentation
-here.</a>
-
 ### Quick Start
 
 Install Horizon UI by running either of the following:
@@ -82,7 +70,7 @@ Community! 🎨
 
 ### Reporting Issues
 
-We use GitHub Issues as the official bug tracker for the Horizon UI. Here are
+<!-- We use GitHub Issues as the official bug tracker for the Horizon UI. Here are
 some advices for our users that want to report an issue:
 
 1. Make sure that you are using the latest version of the Horizon UI Dashbaord.
@@ -93,7 +81,7 @@ some advices for our users that want to report an issue:
 3. Some issues may be browser specific, so specifying in what browser you
    encountered the issue might help.
 
----
+--- -->
 
 ### Community
 
