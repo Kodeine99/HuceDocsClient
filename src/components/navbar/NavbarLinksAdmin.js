@@ -53,12 +53,12 @@ export default function HeaderLinks(props) {
       p='10px'
       borderRadius='30px'
       boxShadow={shadow}>
-      <SearchBar
+      {/* <SearchBar
         mb={secondary ? { base: "10px", md: "unset" } : "unset"}
         me='10px'
         borderRadius='30px'
-      />
-      <Flex
+      /> */}
+      {/* <Flex
         bg={ethBg}
         display={secondary ? "flex" : "none"}
         borderRadius='30px'
@@ -88,7 +88,7 @@ export default function HeaderLinks(props) {
             ETH
           </Text>
         </Text>
-      </Flex>
+      </Flex> */}
       <SidebarResponsive routes={routes} />
       <Menu>
         <MenuButton p='0px'>
@@ -169,16 +169,16 @@ export default function HeaderLinks(props) {
           mt='22px'
           minW={{ base: "unset" }}
           maxW={{ base: "360px", md: "unset" }}>
-          <Image src={navImage} borderRadius='16px' mb='28px' />
+          {/* <Image src={navImage} borderRadius='16px' mb='28px' /> */}
           <Flex flexDirection='column'>
-            <Link w='100%' href='https://horizon-ui.com/pro'>
+            <Link w='100%' href=''>
               <Button w='100%' h='44px' mb='10px' variant='brand'>
-                Buy Horizon UI PRO
+                Xem tài liệu hướng dẫn
               </Button>
             </Link>
             <Link
               w='100%'
-              href='https://horizon-ui.com/documentation/docs/introduction'>
+              href=''>
               <Button
                 w='100%'
                 h='44px'
@@ -189,9 +189,9 @@ export default function HeaderLinks(props) {
                 See Documentation
               </Button>
             </Link>
-            <Link
+            {/* <Link
               w='100%'
-              href='https://github.com/horizon-ui/horizon-ui-chakra'>
+              href=''>
               <Button
                 w='100%'
                 h='44px'
@@ -200,7 +200,7 @@ export default function HeaderLinks(props) {
                 bg='transparent'>
                 Try Horizon Free
               </Button>
-            </Link>
+            </Link> */}
           </Flex>
         </MenuList>
       </Menu>
