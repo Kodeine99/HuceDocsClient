@@ -3,7 +3,6 @@ import queryString from 'query-string';
 import store from "../app/store";
 
 
-
 // Setup default config for http requests
 const axiosFormClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,

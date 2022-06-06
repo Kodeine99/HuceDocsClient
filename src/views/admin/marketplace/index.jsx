@@ -1,5 +1,4 @@
 
-
 import React from "react";
 
 // Chakra imports
@@ -32,20 +31,7 @@ import tableDataComplex from "views/admin/default/variables/tableDataComplex.jso
 import {TimeIcon} from "@chakra-ui/icons";
 
 // Assets
-import Nft1 from "assets/img/nfts/Nft1.png";
-import Nft2 from "assets/img/nfts/Nft2.png";
-import Nft3 from "assets/img/nfts/Nft3.png";
-import Nft4 from "assets/img/nfts/Nft4.png";
-import Nft5 from "assets/img/nfts/Nft5.png";
-import Nft6 from "assets/img/nfts/Nft6.png";
-import Avatar1 from "assets/img/avatars/avatar1.png";
-import Avatar2 from "assets/img/avatars/avatar2.png";
-import Avatar3 from "assets/img/avatars/avatar3.png";
-import Avatar4 from "assets/img/avatars/avatar4.png";
-import tableDataTopCreators from "views/admin/marketplace/variables/tableDataTopCreators.json";
-import docTypeData from "views/admin/marketplace/variables/docTypeData.json";
 import docTypeDataObj from "views/admin/marketplace/variables/docTypeDataObj.js";
-import { tableColumnsTopCreators } from "views/admin/marketplace/variables/tableColumnsTopCreators";
 
 export default function Marketplace() {
   // Chakra Color Mode

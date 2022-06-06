@@ -1,8 +1,6 @@
 import axios from "axios";
-
 import queryString from "query-string";
-import store from "aaRedux/app/store";
-
+import store from "../app/store";
 // Setups the axios client for http requests
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,

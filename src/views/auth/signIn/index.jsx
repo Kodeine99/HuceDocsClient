@@ -1,6 +1,18 @@
 
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React,{ useEffect, useState} from "react";
+import { NavLink, useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
+
+// Formik Control
+import {Formik, Field, FastField, ErrorMessage} from 'formik';
+
+// Yup
+import * as Yup from "yup";
+
+// Redux
+import {useDispatch, useSelector} from 'react-redux';
+// Coookie
+import { useCookies } from 'react-cookie';
 // Chakra imports
 import {
   Box,
@@ -21,11 +33,14 @@ import {
 import { HSeparator } from "components/separator/Separator";
 import DefaultAuth from "layouts/auth/Default";
 // Assets
-import illustration from "assets/img/auth/auth.png";
 import loginBackground from "assets/img/auth/LoginPage.png";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
+import { login, userSelector, clearState, getUserByToken } from "../../../aaRedux/app/userSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
+import LoginInput from "components/shared/inputField/InputField";
+import InputWithHide from "components/shared/inputField/InputFieldWithHide";
 
 function SignIn() {
   // Chakra color mode
@@ -46,6 +61,62 @@ function SignIn() {
   );
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+  const history = useHistory();
+  const [setCookie] = useCookies();
+  const dispatch = useDispatch();
+  const {loading, isSuccess, isError, errorMessage} = useSelector(userSelector);
+
+
+  // setup formik
+  const initialValues = {
+    username: "",
+    password: "",
+  };
+  // setup Yup
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required("Username is required"),
+    password: Yup.string().required("Password is required"),
+  });
+  // Get user data
+  const getUserData = () => {
+    const userData = dispatch(getUserByToken());
+    console.log(userData);
+  }
+  // Handle submit
+  const handleSubmit = async (values, actions) => {
+    console.log("Submit");
+    // const action = await login(values);
+    // const actionResult = await dispatch(action);
+    // const loginResult = unwrapResult(actionResult);
+
+    // if (loginResult.isOk) {
+    //   const token = loginResult.result.token;
+    //   setCookie("access_token", token, { 
+    //     path: "/",
+    //     expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)), 
+    //   });
+    //   await getUserData();
+    // }  
+               
+  }
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearState());
+    }
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(clearState());
+      history.push("/");
+    } else if (isError) {
+      dispatch(clearState());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess, isError])
+
+  
   return (
     <DefaultAuth illustrationBackground={loginBackground} image={loginBackground}>
       <Flex
@@ -106,91 +177,82 @@ function SignIn() {
             </Text>
             <HSeparator />
           </Flex>
-          <FormControl>
-            <FormLabel
-              display='flex'
-              ms='4px'
-              fontSize='sm'
-              fontWeight='500'
-              color={textColor}
-              mb='8px'>
-              Username<Text color={brandStars}>*</Text>
-            </FormLabel>
-            <Input
-              isRequired={true}
-              variant='auth'
-              fontSize='sm'
-              ms={{ base: "0px", md: "0px" }}
-              type='email'
-              placeholder='Enter your username'
-              mb='24px'
-              fontWeight='500'
-              size='lg'
-            />
-            <FormLabel
-              ms='4px'
-              fontSize='sm'
-              fontWeight='500'
-              color={textColor}
-              isRequired={true}
-              display='flex'>
-              Password<Text color={brandStars}>*</Text>
-            </FormLabel>
-            <InputGroup size='md'>
-              <Input
-                isRequired={true}
-                fontSize='sm'
-                placeholder='Min. 8 characters'
-                mb='24px'
-                size='lg'
-                type={show ? "text" : "password"}
-                variant='auth'
-              />
-              <InputRightElement display='flex' alignItems='center' mt='4px'>
-                <Icon
-                  color={textColorSecondary}
-                  _hover={{ cursor: "pointer" }}
-                  as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                  onClick={handleClick}
-                />
-              </InputRightElement>
-            </InputGroup>
-            <Flex justifyContent='space-between' align='center' mb='24px'>
-              {/* <FormControl display='flex' alignItems='center'>
-                <Checkbox
-                  id='remember-login'
-                  colorScheme='brandScheme'
-                  me='10px'
-                />
-                <FormLabel
-                  htmlFor='remember-login'
-                  mb='0'
-                  fontWeight='normal'
-                  color={textColor}
-                  fontSize='sm'>
-                  Keep me logged in
-                </FormLabel>
-              </FormControl> */}
-              <NavLink to='/auth/forgot-password'>
-                <Text
-                  color={textColorBrand}
-                  fontSize='sm'
-                  w='124px'
-                  fontWeight='500'>
-                  Forgot password?
-                </Text>
-              </NavLink>
-            </Flex>
-            <Button
-              fontSize='sm'
-              variant='brand'
-              fontWeight='500'
-              w='100%'
-              h='50'
-              mb='24px'>
-              Sign In
-            </Button>
-          </FormControl>
+          <Formik 
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            // onSubmit = {handleSubmit}
+            onSubmit={(values, actions) => {
+              setTimeout(() => {
+                console.log("Submitted");
+                actions.setSubmitting(false)
+              }, 1000)
+            }}
+          >
+            {(formikProps) => {
+              // do somethings
+              const {values, errors, touched, isSubmitting} = formikProps;
+              
+              return (
+                <FormControl>
+                  
+                  <FastField 
+                    label={'Username'}
+                    name={'username'}
+                    type={"text"}
+                    placeholder={"Username"}
+                    component={LoginInput}
+                  />
+                  
+                  <FastField 
+                    component={InputWithHide}
+                    label={'Password'}
+                    name={'password'}
+                    placeholder={"Min. 8 characters"}
+                  />
+                  <Flex justifyContent='space-between' align='center' mb='24px'>
+                    {/* <FormControl display='flex' alignItems='center'>
+                      <Checkbox
+                        id='remember-login'
+                        colorScheme='brandScheme'
+                        me='10px'
+                      />
+                      <FormLabel
+                        htmlFor='remember-login'
+                        mb='0'
+                        fontWeight='normal'
+                        color={textColor}
+                        fontSize='sm'>
+                        Keep me logged in
+                      </FormLabel>
+                    </FormControl> */}
+                    <NavLink to='/auth/forgot-password'>
+                      <Text
+                        color={textColorBrand}
+                        fontSize='sm'
+                        w='124px'
+                        fontWeight='500'>
+                        Forgot password?
+                      </Text>
+                    </NavLink>
+                  </Flex>
+                  <Button
+                    loadingText='Signing in...'
+                    isLoading={isSubmitting}
+                    spinnerPlacement='start'
+                    type="submit"
+                    fontSize='sm'
+                    variant='brand'
+                    fontWeight='500'
+                    w='100%'
+                    h='50'
+                    mb='24px'>
+                    Sign In
+                  </Button>
+                  {/* <ErrorMessage type={'invalid'}>{form.errors.name}</ErrorMessage> */}
+                </FormControl>
+              )
+            }}
+          </Formik>
           <Flex
             flexDirection='column'
             justifyContent='center'
@@ -215,5 +277,11 @@ function SignIn() {
     </DefaultAuth>
   );
 }
+SignIn.propTypes = {
+  onSubmit: PropTypes.func,
+};
 
+SignIn.defaulProps = {
+  onSubmit: null,
+};
 export default SignIn;

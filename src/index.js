@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import store from "./aaRedux/app/store";
+import { Provider } from "react-redux";
 import "assets/css/App.css";
 import { HashRouter, Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
 import AuthLayout from "layouts/auth";
@@ -8,8 +10,7 @@ import RTLLayout from "layouts/rtl";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "theme/theme";
 import ExtractionLayout from "layouts/extraction";
-import { Provider } from "react-redux";
-import store from "./aaRedux/app/store";
+
 
 ReactDOM.render(
   <ChakraProvider theme={theme}>
