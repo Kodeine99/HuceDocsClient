@@ -5,33 +5,38 @@ import { Provider } from "react-redux";
 import "assets/css/App.css";
 import { HashRouter, Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
 import AuthLayout from "layouts/auth";
-import AdminLayout from "layouts/admin";
+import AdminLayout from "./layouts/admin";
 import RTLLayout from "layouts/rtl";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "theme/theme";
 import ExtractionLayout from "layouts/extraction";
+import {RoutesProvider} from "./contexts/RoutesContext"
 
 
 ReactDOM.render(
   <ChakraProvider theme={theme}>
     <React.StrictMode>
       <Provider store={store}>
-        <BrowserRouter>
-          <Switch>
-            {/* Authenticate Route */}
-            <Route path="/auth" component={AuthLayout} />
+        <RoutesProvider>
+          <BrowserRouter>
+            <Switch>
+              {/* Authenticate Route */}
+              <Route path="/auth" component={AuthLayout} />
 
-            {/* Admin Route */}
-            <Route path="/" component={AdminLayout} />
-            <Route path="/extraction" component={ExtractionLayout} />
+              {/* User Logined Route */}
+              <Route path="/boctach" component={AdminLayout} />
+              <Route path="/lichsuboctach" component={AdminLayout} />
+              <Route path="/thongtincanhan" exact component={AdminLayout} />
+              <Route path="/extraction" component={ExtractionLayout} />
 
 
-            {/* RTL Route */}
-            <Route path="/rtl" component={RTLLayout} />
+              {/* RTL Route */}
+              <Route path="/rtl" component={RTLLayout} />
 
-            <Redirect exact from='*' to='/botach' />
-          </Switch>
-        </BrowserRouter>
+              <Redirect exact from='*' to='/boctach' />
+            </Switch>
+          </BrowserRouter>
+        </RoutesProvider>
       </Provider>
     </React.StrictMode>
   </ChakraProvider>,

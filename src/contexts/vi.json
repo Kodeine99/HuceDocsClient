@@ -1,0 +1,694 @@
+{
+  "title": "Tiếng Việt",
+  "login": {
+    "title": "Đăng nhập",
+    "subTitle": "Vui lòng nhập đúng thông tin tài khoản để đăng nhập",
+    "username": "Email",
+    "usernamePlaceholder": "Nhập email",
+    "password": "Mật khẩu",
+    "passwordPlaceholder": "Nhập mật khẩu",
+    "forgetPassword": "Quên mật khẩu",
+    "btnLogin": "Đăng nhập",
+    "btnLoginWithGoogle": "Đăng nhập với Google",
+    "doNotHaveAccount": "Chưa có tài khoản?",
+    "linkRegister": "Đăng ký",
+    "errorCannotNull": "không được trống",
+    "errorIncorrect": "không đúng",
+    "errorLogin": "Đăng nhập không thành công"
+  },
+  "register": {
+    "title": "Tạo tài khoản ngay",
+    "subTitle": "Để bắt đầu, hãy cho chúng tôi biết loại tài khoản mà bạn muốn đăng ký sử dụng",
+    "personalTitle": "Cá nhân",
+    "personalSubTitle": "Tài khoản sử dụng với mục đích cá nhân",
+    "enterpriseTitle": "Doanh nghiệp",
+    "enterpriseSubTitle": "Tài khoản đại diện doanh nghiệp, quản lý các tài khoản thành viên",
+    "hadAnAccount": "Đã có tài khoản?",
+    "linkToLogin": "Đăng nhập",
+    "back": "Quay lại",
+    "informationPersonal": "Thông tin cá nhân",
+    "informationEnterprise": "Thông tin doanh nghiệp",
+    "btnSignUp": "Đăng ký",
+    "btnNextStep": "Tiếp tục",
+    "btnSignUpWithGoogle": "Đăng ký với Google",
+    "email": "Email",
+    "emailPlaceholder": "Nhập email",
+    "password": "Mật khẩu",
+    "passwordPlaceholder": "Nhập mật khẩu",
+    "passwordConfirm": "Xác nhận mật khẩu",
+    "passwordConfirmPlaceholder": "Nhập lại mật khẩu",
+    "iAgree": "Tôi đồng ý với các điều khoản",
+    "errorCannotNull": "không được trống",
+    "errorIncorrect": "không đúng",
+    "errorRegister": "Đăng ký không thành công",
+    "personal": {
+      "title": "Đăng ký tài khoản cá nhân",
+      "subTitle": "Vui lòng nhập đầy đủ thông tin để tạo tài khoản cá nhân",
+      "fullName": "Họ tên đầy đủ",
+      "fullNamePlaceholder": "Nhập họ tên đầy đủ"
+    },
+    "enterprise": {
+      "title": "Đăng ký tài khoản doanh nghiệp",
+      "titleStep2": "Thông tin doanh nghiệp",
+      "subTitle": "Vui lòng nhập đầy đủ thông tin để tạo tài khoản doanh nghiệp",
+      "fullName": "Họ tên người đại diện",
+      "fullNamePlaceholder": "Nhập họ tên người đại diện",
+      "companyName": "Tên công ty",
+      "companyNamePlaceholder": "Nhập tên công ty",
+      "field": "Lĩnh vực",
+      "fieldPlaceholder": "Nhập lĩnh vực hoạt động",
+      "address": "Địa chỉ",
+      "addressPlaceholder": "Nhập địa chỉ công ty"
+    },
+    "success": {
+      "title": "Đăng ký thành công",
+      "firstSubTitle": "Vui lòng kiểm tra lại email",
+      "secondSubTitle": "để xác thực đăng ký",
+      "backToHome": "Quai lại trang chủ"
+    }
+  },
+  "forgetPassword": {
+    "title": "Quên mật khẩu",
+    "subTitle": "Nhập email đăng ký để đặt lại mật khẩu",
+    "email": "Email",
+    "emailPlaceholder": "Nhập email",
+    "btn": "Gửi"
+  },
+  "languages": {
+    "vi": "Tiếng việt",
+    "en": "Tiếng anh",
+    "kr": "Tiếng hàn",
+    "jp": "Tiếng nhật",
+    "cn": "Tiếng trung"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "service": "Dịch vụ",
+    "statistic": "Thống kê",
+    "pay": "Nạp tiền",
+    "enterprise": "Doanh nghiệp",
+    "request": "Yêu cầu bóc tách",
+    "profile": "Thông tin cá nhân"
+  },
+  "serviceTabs": {
+    "recognize": "Số hóa",
+    "extraction": "Bóc tách",
+    "introduce": "Giới thiệu",
+    "download": "Download",
+    "language": "Ngôn ngữ",
+    "documentType": "Loại tài liệu",
+    "outputExtension": "Định dạng đầu ra",
+    "checkType": "Soát lỗi",
+    "autoCheck": "Tự động",
+    "manualCheck": "Thủ công",
+    "selectFile": "Chọn file",
+    "selectDes": "Kéo file vào đây hoặc Chọn từ máy tính",
+    "downloadTitleRecognize": "Danh sách file đã số hóa",
+    "downloadTitleExtraction": "Danh sách file đã bóc tách"
+  },
+  "dashboard": {
+    "favourite": "Yêu thích"
+  },
+  "routes": {
+    "/service/recognize": "recognize",
+    "/service/cmnd": "CMND,CCCD",
+    "/service/vbpq": "VBPQ",
+    "/service/hc": "HC",
+    "/service/chungnhandkkd": "ChungNhanDKKD",
+    "/service/chungnhandkdn": "ChungNhanDKDN",
+    "/service/gpxd": "GiayPhepXayDung",
+    "/service/doanhnghieptt200": "DoanhNghiep_TT200",
+    "/service/doanhnghieptt133": "DoanhNghiep_TT133",
+    "/service/gplx": "GiayPhepLaiXe",
+    "/service/gdkdn": "GiayDangKyDN",
+    "/service/hoadonvat": "HoaDonVAT",
+    "/service/khaisinh": "KhaiSinh",
+    "/service/kethon": "KetHon",
+    "/service/dcgpxd": "DCGiayPhepXayDung",
+    "/service/hscapsonha": "HoSoCapSoNha",
+    "/service/hcall": "HCAll",
+    "/service/giaycnsddat": "GiayCNSDDat"
+  },
+  "category": {
+    "recognize": {
+      "url": "/service/recognize",
+      "title": "Số hóa tài liệu",
+      "icon" : "icon-sohoa",
+      "description": "DARS là hệ thống số hoá tài liệu mạnh mẽ với khả năng số hoá được nhiều tài liệu khác nhau có độ chính xác cao.",
+      "extraDescription": "DARS là hệ thống số hoá tài liệu mạnh mẽ với khả năng số hoá được nhiều tài liệu khác nhau có độ chính xác cao.",
+      "introduce": {
+        "0": {
+          "title": "Tính năng",
+          "content": "Kết quả tài liệu số hoá có thể chỉnh sửa và tìm kiếm được nội dung. Ngoài ra, DARS có khả năng số hoá tài liệu mà giữ nguyên dàn trang của tài liệu gốc như bảng biểu, cột, ảnh, chú thích, đầu trang/chân trang, số trang; qua đó cho phép kết quả nhận dạng giữ nguyên dàn trang của tài liệu gốc, người dùng sẽ không mất, hoặc mất rất ít thời gian cho việc biên tập lại kết quả nhận dạng."
+        },
+        "1": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Giúp lưu trữ, tìm kiếm thông tin một cách nhanh chóng, dễ dàng.",
+            "1": "Thông tin được chia sẻ dễ dàng mọi lúc, mọi nơi.",
+            "2": "Giảm thiểu diện tích không gian lưu trữ.",
+            "3": "Bảo quản thông tin tài liệu được lâu hơn.",
+            "4": "Tiết kiệm thời gian, chi phí hoạt động quản lý tài liệu.",
+            "5": "Số hoá được nhiều định dạng tài liệu khác nhau như PDF, jpg, png, ipge, jp2.",
+            "6": "Định dạng đầu ra của tài liệu số hoá là Xml và Json cho phép người dùng có thể tìm kiếm thông tin theo từ khoá có trong nội dung tài liệu."
+          }
+        }
+      }
+    },
+    "CMND,CCCD": {
+      "url": "/service/cmnd",
+      "title": "CMND,CCCD",
+      "icon" : "icon-cccd",
+      "description": "DARS cung cấp giải pháp nhận dạng CMND, CCCD để trích xuất thông tin nhanh chóng và chính xác, hiệu quả giúp cho cá nhân, doanh nghiệp tiết kiệm thời gian và chi phí.",
+      "extraDescription": "DARS cung cấp giải pháp nhận dạng CMND, CCCD để trích xuất thông tin nhanh chóng và chính xác, hiệu quả giúp cho cá nhân, doanh nghiệp tiết kiệm thời gian và chi phí.",
+      "introduce": {
+        "0": {
+          "title": "Tính năng",
+          "content": "Hệ thống thực hiện nhận dạng và bóc tách thông tin CMND, CCCD thông qua việc người dùng gửi file CMND hoặc CCCD lên hệ thống. Hệ thống sẽ trả lại các thông tin bóc tách gồm Số, Họ và tên, Ngày tháng năm sinh, Giới tính, Quốc tịch, Quê quán, Nơi thường trú, Có giá trị đến, Ngày cấp, Nơi cấp."
+        },
+        "1": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Hệ thống có khả năng nhận dạng và bóc tách thông tin chính xác từ CCCD, CMND.",
+            "1": "Độ chính xác cao: Thông tin CCCD, CMND được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "2": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "3": "Tính năng bảo mật an toàn thông tin cao.",
+            "4": "Định dạng đầu ra CCCD, CMND là Xml và Json cho phép người dùng có thể tìm kiếm thông tin theo từ khoá của CCCD, CMND.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "VBPQ": {
+      "url": "/service/vbpq",
+      "title": "Văn bản pháp quy",
+      "icon" : "icon-default",
+      "description": "DARS cung cấp giải pháp tự động nhận dạng và bóc tách nhiều loại văn bản pháp quy như: quyết định, nghị quyết, thông tư, công văn, … với độ chính xác cao.",
+      "extraDescription": "DARS cung cấp giải pháp tự động nhận dạng và bóc tách nhiều loại văn bản pháp quy như: quyết định, nghị quyết, thông tư, công văn, … với độ chính xác cao.",
+      "introduce": {
+        "1": {
+          "title": "Tính năng",
+          "content": "Hệ thống tự động phân loại, nhận dạng và bóc tách thông tin từ văn bản pháp quy như: Cơ quan ban hành, số ký hiệu văn bản, ngày ban hành văn bản, trích yếu, người ký, nơi nhận, …giúp tiết kiệm thời gian và công sức cho cá nhân, tổ chức và doanh nghiệp."
+        },
+        "2": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Hệ thống các khả năng nhận dạng và bóc tách được hầu hết các loại văn bản pháp quy như: quyết định, nghị quyết, thông tư, công văn, ...",
+            "1": "Tự động bóc tách chính xác các thông tin từ các văn bản: Cơ quan ban hành, số ký hiệu văn bản, ngày ban hành văn bản, trích yếu, người ký, nơi nhận, …",
+            "2": "Định dạng đầu ra của văn bản pháp quy là Xml và Json cho phép người dùng có thể tìm kiếm văn bản theo từ khoá có trong nội dung văn bản.",
+            "3": "Kiến trúc mở, cho phép tích hợp dễ dàng với các hệ thống quản lý văn bản điều hành có sẵn của các đơn vị như: Lotus Notes, eDocTC, NSS, eOffice, …",
+            "4": "Độ chính xác cao: Thông tin văn bản pháp quy được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "5": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "6": "Tính năng bảo mật an toàn thông tin cao",
+            "7": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót"
+          }
+        }
+      }
+    },
+    "HC": {
+      "url": "/service/hc",
+      "title": "Hộ chiếu",
+      "icon" : "icon-hochieu",
+      "description": "DARS cung cấp giải pháp nhận dạng hộ chiếu để trích xuất thông tin nhanh chóng và chính xác, hiệu quả giúp cho cá nhân, doanh nghiệp tiết kiệm thời gian và chi phí.",
+      "extraDescription": "DARS cung cấp giải pháp nhận dạng hộ chiếu để trích xuất thông tin nhanh chóng và chính xác, hiệu quả giúp cho cá nhân, doanh nghiệp tiết kiệm thời gian và chi phí.",
+      "introduce": {
+        "0": {
+          "title": "Tính năng",
+          "content": "Hệ thống thực hiện nhận dạng và bóc tách thông tin hộ chiếu thông qua việc người dùng gửi file hộ chiếu lên hệ thống. Hệ thống sẽ trả lại các thông tin bóc tách gồm Họ và tên, Số hộ chiếu, Nơi sinh, Ngày sinh, Giới tính, Số GCMND, Quốc tịch, Ngày cấp, Có giá trị đến, Nơi cấp."
+        },
+        "1": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Hệ thống có khả năng nhận dạng và bóc tách thông tin chính xác từ hộ chiếu.",
+            "1": "Độ chính xác cao: Thông tin dữ liệu cá nhân được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "2": "Định dạng đầu ra của hộc hiếu là Xml và Json cho phép người dùng có thể tìm kiếm thông tin theo từ khoá có trong hộ chiếu.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "ChungNhanDKKD": {
+      "url": "/service/chungnhandkkd",
+      "title": "Chứng nhận đăng ký kinh doanh",
+      "icon" : "icon-dkkd",
+      "description": "DARS cung cấp giải pháp nhận dạng và bóc tách Giấy chứng nhận ĐKKD giúp doanh nghiệp, cá nhân quản lý thông tin doanh nghiệp.",
+      "extraDescription": "DARS cung cấp giải pháp nhận dạng và bóc tách Giấy chứng nhận ĐKKD giúp doanh nghiệp, cá nhân quản lý thông tin doanh nghiệp.",
+      "introduce": {
+        "0": {
+          "title": "Tính năng",
+          "content": "Hệ thống tự động nhận dạng và bóc tách thông tin trong Giấy chứng nhận ĐKKD như mã số đăng ký doanh nghiệp, đăng ký lần đầu ngày, tên tiếng việt, tên tiếng nước ngoài, … giúp tiết kiệm thời gian và công sức cho cá nhân, tổ chức và doanh nghiệp. ."
+        },
+        "1": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Tự động bóc tách chính xác các thông tin có trong Giấy chứng nhận ĐKKD.",
+            "1": "Định dạng đầu ra của Giấy chứng nhận ĐKKD là Xml, Json cho phép người dùng có thể tìm kiếm thông tin theo từ khoá có trong Giấy chứng nhận ĐKKD.",
+            "2": "Độ chính xác cao: Thông tin Báo cáo tài chính được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "ChungNhanDKDN": {
+      "url": "/service/chungnhandkdn",
+      "title": "Chứng nhận đăng ký doanh nghiệp",
+      "icon" : "icon-dkkd",
+      "description": "DARS cung cấp giải pháp nhận dạng và bóc tách Giấy chứng nhận ĐKKD giúp doanh nghiệp, cá nhân quản lý thông tin doanh nghiệp.",
+      "extraDescription": "DARS cung cấp giải pháp nhận dạng và bóc tách Giấy chứng nhận ĐKKD giúp doanh nghiệp, cá nhân quản lý thông tin doanh nghiệp.",
+      "introduce": {
+        "0": {
+          "title": "Tính năng",
+          "content": "Hệ thống tự động nhận dạng và bóc tách thông tin trong Giấy chứng nhận ĐKKD như mã số đăng ký doanh nghiệp, đăng ký lần đầu ngày, tên tiếng việt, tên tiếng nước ngoài, … giúp tiết kiệm thời gian và công sức cho cá nhân, tổ chức và doanh nghiệp. ."
+        },
+        "1": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Tự động bóc tách chính xác các thông tin có trong Giấy chứng nhận ĐKKD.",
+            "1": "Định dạng đầu ra của Giấy chứng nhận ĐKKD là Xml, Json cho phép người dùng có thể tìm kiếm thông tin theo từ khoá có trong Giấy chứng nhận ĐKKD.",
+            "2": "Độ chính xác cao: Thông tin Báo cáo tài chính được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "GiayPhepXayDung": {
+      "url": "/service/gpxd",
+      "title": "Giấy phép xây dựng",
+      "icon" : "icon-gpxd",
+      "description": "DARS cũng cấp giải pháp tự động nhận dạng và bóc tách Giấy phép xây dựng theo quy định của nhà nước giúp xác nhận việc cho phép cá nhân, tổ chức được phép thực hiện việc xây dựng nhà cửa, công trình.... theo nguyện vọng trong phạm vi nội dung được cấp phép.",
+      "extraDescription": "DARS cũng cấp giải pháp tự động nhận dạng và bóc tách Giấy phép xây dựng theo quy định của nhà nước giúp xác nhận việc cho phép cá nhân, tổ chức được phép thực hiện việc xây dựng nhà cửa, công trình.... theo nguyện vọng trong phạm vi nội dung được cấp phép.",
+      "introduce": {
+        "1": {
+          "title": "Tính năng",
+          "content": "Hệ thống tự động nhận dạng và bóc tách Giấy phép xây dựng gồm nhiều trường thông tin như: Số giấp phép, ngày cấp, tháng cấp, năm cấp, cơ quan ban hành, tên chủ nhà, địa chỉ thường trú, thông tin tên chủ nhà, thông tin địa chỉ thường trú, … giúp tiết kiệm thời gian và công sức cho cá nhân, tổ chức và doanh nghiệp trong việc quản lý Giấy phép xây dựng."
+        },
+        "2": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Tự động bóc tách chính xác các thông tin có trong Giấy phép xây dựng.",
+            "1": "Định dạng đầu ra của Giấy phép xây dựng là dạng Xml, Json cho phép người dùng có thể tìm kiếm thông tin theo từ khoá có trong Giấy phép xây dựng.",
+            "2": "Độ chính xác cao: Thông tin Báo cáo tài chính được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "DoanhNghiep_TT200": {
+      "url": "/service/doanhnghieptt200",
+      "title": "Báo cáo tài chính _ TT200",
+      "icon" : "icon-bctc",
+      "description": "DARS cung cấp giải pháp tự động nhận dạng và bóc tách số liệu Báo cáo tài chính TT200.",
+      "extraDescription": "DARS cung cấp giải pháp tự động nhận dạng và bóc tách số liệu Báo cáo tài chính TT200.",
+      "introduce": {
+        "0": {
+          "title": "Tính năng",
+          "content": "Hệ thống thực hiện nhận dạng và bóc tách báo cáo tài chính khi người dùng tải file báo cáo tài chính lên hệ thống và hệ thống trả lại các trường thông tin báo cáo tài chính đã bóc tách."
+        },
+        "1": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Hệ thống có khả năng tự động nhận dạng và bóc tách chính xác các thông tin từ Báo cáo tài chính TT200.",
+            "1": "Định dạng đầu ra của Báo cáo tài chính là Excel cho phép người dùng có thể tìm kiếm thông tin báo cáo tài chính theo từ khoá có trong nội dung báo cáo tài chính.",
+            "2": "Độ chính xác cao: Thông tin Báo cáo tài chính được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "DoanhNghiep_TT133": {
+      "url": "/service/doanhnghieptt133",
+      "title": "Báo cáo tài chính _ TT133",
+      "icon" : "icon-bctc",
+      "description": "DARS cung cấp giải pháp tự động nhận dạng và bóc tách số liệu Báo cáo tài chính TT113.",
+      "extraDescription": "DARS cung cấp giải pháp tự động nhận dạng và bóc tách số liệu Báo cáo tài chính TT113.",
+      "introduce": {
+        "0": {
+          "title": "Tính năng",
+          "content": "Hệ thống thực hiện nhận dạng và bóc tách báo cáo tài chính khi người dùng tải file báo cáo tài chính lên hệ thống và hệ thống trả lại các trường thông tin báo cáo tài chính đã bóc tách."
+        },
+        "1": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Hệ thống có khả năng tự động nhận dạng và bóc tách chính xác các thông tin từ Báo cáo tài chính TT113.",
+            "1": "Định dạng đầu ra của Báo cáo tài chính có thể Excel cho phép người dùng có thể tìm kiếm thông tin báo cáo tài chính theo từ khoá có trong nội dung báo cáo tài chính.",
+            "2": "Độ chính xác cao: Thông tin Báo cáo tài chính được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "GiayPhepLaiXe": {
+      "url": "/service/gplx",
+      "title": "Giấy phép lái xe",
+      "icon" : "icon-default",
+      "description": "DARS cung cấp giải pháp nhận dạng giấy phép lái xe để trích xuất thông tin nhanh chóng và chính xác, hiệu quả giúp cho cá nhân, doanh nghiệp tiết kiệm thời gian và chi phí.",
+      "extraDescription": "DARS cung cấp giải pháp nhận dạng giấy phép lái xe để trích xuất thông tin nhanh chóng và chính xác, hiệu quả giúp cho cá nhân, doanh nghiệp tiết kiệm thời gian và chi phí.",
+      "introduce": {
+        "0": {
+          "title": "Tính năng",
+          "content": "Hệ thống thực hiện nhận dạng và bóc tách thông tin Giấy phép lái xe thông qua việc người dùng gửi file Giấy phép lái xe lên hệ thống. Hệ thống sẽ trả lại các thông tin bóc tách gồm Số, Họ và tên, Ngày sinh, Quốc tịch, Nơi cư trú, Hạng giấy phép, Có giá trị đến, Ngày cấp phép."
+        },
+        "1": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Hệ thống có khả năng nhận dạng và bóc tách thông tin chính xác từ Giấy phép lái xe.",
+            "1": "Định dạng đầu ra của bằng lái xe là dạng Xml, Json cho phép người dùng có thể tìm kiếm thông tin theo từ khoá có trong bằng lái xe.",
+            "2": "Độ chính xác cao: Thông tin Báo cáo tài chính được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "GiayDangKyDN": {
+      "url": "/service/gdkdn",
+      "title": "Giấy đăng ký doanh nghiệp",
+      "icon" : "icon-default",
+      "description": "DARS cung cấp giải pháp nhận dạng và bóc tách Giấy chứng nhận ĐKDN giúp doanh nghiệp, cá nhân quản lý thông tin doanh nghiệp.",
+      "extraDescription": "DARS cung cấp giải pháp nhận dạng và bóc tách Giấy chứng nhận ĐKDN giúp doanh nghiệp, cá nhân quản lý thông tin doanh nghiệp.",
+      "introduce": {
+        "0": {
+          "title": "Tính năng",
+          "content": "Hệ thống tự động nhận dạng và bóc tách thông tin trong Giấy chứng nhận ĐKDN như mã số đăng ký doanh nghiệp, đăng ký lần đầu ngày, tên tiếng việt, tên tiếng nước ngoài, …. giúp tiết kiệm thời gian và công sức cho cá nhân, tổ chức và doanh nghiệp."
+        },
+        "1": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Tự động bóc tách chính xác các thông tin có trong Giấy chứng nhận ĐKDN.",
+            "1": "Định dạng đầu ra của Giấy chứng nhận ĐKDN là Xml, Json cho phép người dùng có thể tìm kiếm thông tin theo từ khoá có trong Giấy chứng nhận ĐKDN.",
+            "2": "Độ chính xác cao: Thông tin Giấy chứng nhận ĐKDN được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "HoaDonVAT": {
+      "url": "/service/hoadonvat",
+      "title": "Hóa đơn VAT",
+      "icon" : "icon-hoadon",
+      "description": "DARS cung cấp giải pháp tự động nhận dạng và bóc tách Hoá đơn VAT theo mẫu của cơ quan có thẩm quyền để quản lý, lưu trữ.",
+      "extraDescription": "DARS cung cấp giải pháp tự động nhận dạng và bóc tách Hoá đơn VAT theo mẫu của cơ quan có thẩm quyền để quản lý, lưu trữ.",
+      "introduce": {
+        "1": {
+          "title": "Tính năng",
+          "content": "Hệ thống tự động nhận dạng và bóc tách hoá đơn VAT gồm các thông tin sau: tên đơn vị bán hàng, mã số thuế đơn vị phát hành, mẫu số, ký hiệu, loại hoá đơn, số hoá đơn, ngày hoá đơn, giá trị hoá đơn, loại tiền."
+        },
+        "2": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Tự động bóc tách chính xác các thông tin có trong hoá đơn VAT: tên đơn vị bán hàng, mã số thuế đơn vị phát hành, mẫu số, ký hiệu, loại hoá đơn, số hoá đơn, ngày hoá đơn, giá trị hoá đơn, loại tiền.",
+            "1": "Định dạng đầu ra của hoá đơn VAT là dạng Xml, Json cho phép người dùng có thể tìm kiếm thông tin theo từ khoá có trong hoá đơn VAT.",
+            "2": "Độ chính xác cao: Thông tin Báo cáo tài chính được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "KhaiSinh": {
+      "url": "/service/khaisinh",
+      "title": "Giấy khai sinh",
+      "icon" : "icon-giaykhaisinh",
+      "description": "DARS cung cấp giải pháp nhận dạng giấy khai sinh để trích xuất thông tin nhanh chóng và chính xác, hiệu quả giúp cho cá nhân, doanh nghiệp tiết kiệm thời gian và chi phí.",
+      "extraDescription": "DARS cung cấp giải pháp nhận dạng giấy khai sinh để trích xuất thông tin nhanh chóng và chính xác, hiệu quả giúp cho cá nhân, doanh nghiệp tiết kiệm thời gian và chi phí.",
+      "introduce": {
+        "0": {
+          "title": "Tính năng",
+          "content": "Hệ thống thực hiện nhận dạng và bóc tách thông tin Giấy khai sinh thông qua việc người dùng gửi file của giấy khai sinh lên hệ thống. Hệ thống sẽ trả lại các thông tin bóc tách gồm Số ĐK, Họ tên, Ngày tháng năm sinh, Ghi bằng chữ, Giới tính, Dân tộc, Quốc tịch, Nơi sinh, Họ tên mẹ, Năm sinh mẹ, Dân tộc mẹ, Quốc tịch mẹ, Nơi cư trú mẹ, Họ tên cha, Năm sinh cha, Dân tộc cha, Nơi cư trú cha, Họ tên người đi khai sinh, Giấy tờ tuỳ thân, Nơi đăng ký khai sinh, Ngày đăng ký khai sinh."
+        },
+        "1": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Hệ thống có khả năng nhận dạng và bóc tách thông tin chính xác từ Giấy khai sinh.",
+            "1": "Định dạng đầu ra của giấy khai sinh là dạng Xml, Json cho phép người dùng có thể tìm kiếm thông tin theo từ khoá có trong giấy khai sinh.",
+            "2": "Độ chính xác cao: Thông tin Báo cáo tài chính được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "KetHon": {
+      "url": "/service/kethon",
+      "title": "Giấy kết hôn",
+      "icon" : "icon-giaykethon",
+      "description": "DARS cung cấp giải pháp nhận dạng giấy khai sinh để trích xuất thông tin nhanh chóng và chính xác, hiệu quả giúp cho cá nhân, doanh nghiệp tiết kiệm thời gian và chi phí.",
+      "extraDescription": "DARS cung cấp giải pháp nhận dạng giấy khai sinh để trích xuất thông tin nhanh chóng và chính xác, hiệu quả giúp cho cá nhân, doanh nghiệp tiết kiệm thời gian và chi phí.",
+      "introduce": {
+        "0": {
+          "title": "Tính năng",
+          "content": "Hệ thống thực hiện nhận dạng và bóc tách thông tin Giấy khai sinh thông qua việc người dùng gửi file của giấy khai sinh lên hệ thống. Hệ thống sẽ trả lại các thông tin bóc tách gồm Số ĐK, Họ tên, Ngày tháng năm sinh, Ghi bằng chữ, Giới tính, Dân tộc, Quốc tịch, Nơi sinh, Họ tên mẹ, Năm sinh mẹ, Dân tộc mẹ, Quốc tịch mẹ, Nơi cư trú mẹ, Họ tên cha, Năm sinh cha, Dân tộc cha, Nơi cư trú cha, Họ tên người đi khai sinh, Giấy tờ tuỳ thân, Nơi đăng ký khai sinh, Ngày đăng ký khai sinh."
+        },
+        "1": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Hệ thống có khả năng nhận dạng và bóc tách thông tin chính xác từ Giấy khai sinh.",
+            "1": "Định dạng đầu ra của giấy khai sinh là dạng Xml, Json cho phép người dùng có thể tìm kiếm thông tin theo từ khoá có trong giấy khai sinh.",
+            "2": "Độ chính xác cao: Thông tin Báo cáo tài chính được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "DCGiayPhepXayDung": {
+      "url": "/service/dcgpxd",
+      "title": "Điều chỉnh giấy phép xây dựng",
+      "icon" : "icon-gpxd-dc",
+      "description": "DARS cũng cấp giải pháp tự động nhận dạng và bóc tách Điều chỉnh Giấy phép xây dựng theo quy định của nhà nước.",
+      "extraDescription": "DARS cũng cấp giải pháp tự động nhận dạng và bóc tách Điều chỉnh Giấy phép xây dựng theo quy định của nhà nước.",
+      "introduce": {
+        "0": {
+          "title": "Tính năng",
+          "content": "Hệ thống tự động nhận dạng và bóc tách Điều chỉnh giấy phép xây dựng gồm nhiều trường thông tin như: Số giấp phép, ngày cấp, tháng cấp, năm cấp, cơ quan ban hành, nội dung điều chỉnh, người ký giúp tiết kiệm thời gian và công sức cho cá nhân, tổ chức và doanh nghiệp trong việc quản lý hồ sơ xây dựng."
+        },
+        "1": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Tự động bóc tách chính xác các thông tin có trong điều chỉnh giấy phép xây dựng.",
+            "1": "Định dạng đầu ra của điều chỉnh giấy phép xây dựng là dạng Xml, Json cho phép người dùng có thể tìm kiếm thông tin theo từ khoá có trong điều chỉnh giấy phép xây dựng.",
+            "2": "Độ chính xác cao: Thông tin Báo cáo tài chính được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "HoSoCapSoNha": {
+      "url": "/service/hscapsonha",
+      "title": "Hồ sơ cấp số nhà",
+      "icon" : "icon-hs-capsonha",
+      "description": "DARS cung cấp giải pháp tự động nhận dạng và bóc tách Hồ sơ cấp số nhà.",
+      "extraDescription": "DARS cung cấp giải pháp tự động nhận dạng và bóc tách Hồ sơ cấp số nhà.",
+      "introduce": {
+        "1": {
+          "title": "Tính năng",
+          "content": "Hệ thống tự động bóc tách Hồ sơ cấp số nhà theo các trường thông tin: Số giấy phép, ngày cấp, tháng cấp, năm cấp, Cơ quan ban hành, tên chủ nhà, người ký, số nhà, đường, khu phố, phường xã."
+        },
+        "2": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Tự động bóc tách chính xác các thông tin có trong hồ sơ cấp số nhà: Số giấy phép, ngày cấp, tháng cấp, năm cấp, Cơ quan ban hành, tên chủ nhà, người ký, số nhà, đường, khu phố, phường xã.",
+            "1": "Định dạng đầu ra của hồ sơ cấp số nhà là dạng Xml, Json cho phép người dùng có thể tìm kiếm thông tin theo từ khoá có trong hồ sơ cấp số nhà.",
+            "2": "Độ chính xác cao: Thông tin Báo cáo tài chính được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót."
+          }
+        }
+      }
+    },
+    "HCAll": {
+      "url": "/service/hcall",
+      "title": "Hộ chiếu nước ngoài",
+      "icon" : "icon-hochieu",
+      "description": "Types of personal papers: ID card, Driver's License, Passport...",
+      "extraDescription": "Enim laboris ullamco quis ullamco proident occaecat et deserunt eiusmod pariatur aliquip nulla minim officia. Id minim ut sit aliquip minim aute ex. Excepteur et ipsum consequat aliqua excepteur.",
+      "introduce": {
+        "0": {
+          "title": "Giới thiệu",
+          "content": "DARS cung cấp giải pháp tự động nhận dạng và bóc tách số liệu Báo cáo tài chính TT200 và Báo cáo tài chính TT113."
+        },
+        "1": {
+          "title": "Tính năng",
+          "content": "Hệ thống thực hiện nhận dạng và bóc tách báo cáo tài chính khi người dùng tải file báo cáo tài chính lên hệ thống và hệ thống trả lại các trường thông tin báo cáo tài chính đã bóc tách."
+        },
+        "2": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Hệ thống có khả năng tự động nhận dạng và bóc tách chính xác các thông tin từ Báo cáo tài chính TT200 và Báo cáo tài chính TT113.",
+            "1": "Định dạng đầu ra của Báo cáo tài chính có thể PDF, Word, Excel, Xml, Json, …cho phép người dùng có thể tìm kiếm thông tin báo cáo tài chính theo từ khoá có trong nội dung báo cáo tài chính.",
+            "2": "Độ chính xác cao: Thông tin Báo cáo tài chính được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót.",
+            "6": "Nhận dạng và bóc tách thông tin dựa trên form mẫu yêu cầu."
+          }
+        }
+      }
+    },
+    "GiayCNSDDat": {
+      "url": "/service/giaycnsddat",
+      "title": "Giấy chứng nhận sử dụng đất",
+      "icon" : "icon-giay-cnsd-dat",
+      "description": "Types of personal papers: ID card, Driver's License, Passport...",
+      "extraDescription": "Enim laboris ullamco quis ullamco proident occaecat et deserunt eiusmod pariatur aliquip nulla minim officia. Id minim ut sit aliquip minim aute ex. Excepteur et ipsum consequat aliqua excepteur.",
+      "introduce": {
+        "0": {
+          "title": "Giới thiệu",
+          "content": "DARS cung cấp giải pháp tự động nhận dạng và bóc tách số liệu Báo cáo tài chính TT200 và Báo cáo tài chính TT113."
+        },
+        "1": {
+          "title": "Tính năng",
+          "content": "Hệ thống thực hiện nhận dạng và bóc tách báo cáo tài chính khi người dùng tải file báo cáo tài chính lên hệ thống và hệ thống trả lại các trường thông tin báo cáo tài chính đã bóc tách."
+        },
+        "2": {
+          "title": "Lợi ích",
+          "contentList": {
+            "0": "Hệ thống có khả năng tự động nhận dạng và bóc tách chính xác các thông tin từ Báo cáo tài chính TT200 và Báo cáo tài chính TT113.",
+            "1": "Định dạng đầu ra của Báo cáo tài chính có thể PDF, Word, Excel, Xml, Json, …cho phép người dùng có thể tìm kiếm thông tin báo cáo tài chính theo từ khoá có trong nội dung báo cáo tài chính.",
+            "2": "Độ chính xác cao: Thông tin Báo cáo tài chính được nhận dạng và bóc tách có độ chính xác cao lên đến 97%.",
+            "3": "Tốc độ xử lý thông tin nhanh giúp người dùng tiết kiệm được thời gian.",
+            "4": "Tính năng bảo mật an toàn thông tin cao.",
+            "5": "Giảm chi phí xử lý: Loại bỏ việc nhập dữ liệu thủ công tốn kém, tốn thời gian và dễ sai sót.",
+            "6": "Nhận dạng và bóc tách thông tin dựa trên form mẫu yêu cầu."
+          }
+        }
+      }
+    }
+  },
+  "statusDocument": {
+    "0": {
+      "class": "in-processing",
+      "message": "Chờ xử lý"
+    },
+    "1": {
+      "class": "in-processing",
+      "message": "Đang xử lý"
+    },
+    "2": {
+      "class": "success",
+      "message": "Hoàn thành"
+    },
+    "3":{
+      "class": "error",
+      "message": "Không hoàn thành"
+    },
+    "4":{
+      "class": "in-processing",
+      "message": "Đang soát lỗi"
+    },
+    "100":{
+      "class": "error",
+      "message": "Không đủ tiền"
+    },
+    "101":{
+      "class": "error",
+      "message": "Lỗi"
+    }
+  },
+  "statusPayment": {
+    "2":{
+      "class": "error",
+      "message": "Lỗi nạp tiền"
+    },
+    "1":{
+      "class": "green-success",
+      "message": "Đã thanh toán"
+    }
+  },
+  "statusCode": {
+    "1": "Thành công",
+    "11": "Lưu thành công",
+    "0": "Thất bại",
+    "10": "Lưu không thành công",
+    "1000": "Đăng nhập thành công",
+    "1001": "Đăng nhập không thành công",
+    "1002": "Tài khoản không tồn tại",
+    "1003": "Tài khoản đã bị khóa",
+    "1004": "Tài khoản chưa được xác nhận email",
+    "1005": "Mật khẩu không đúng",
+    "1100": "Đăng ký thành công",
+    "1101": "Đăng ký không thành công",
+    "1102": "Email đã được sử dụng",
+    "1103": "Mật khẩu yêu cầu chưa ít nhất 1 chữ hoa, 1 chữ thường và số",
+    "1104": "Email không hợp lệ",
+    "1200": "Đổi mật khẩu thành công",
+    "1201": "Đổi mật khẩu không thành công",
+    "1202": "Mật khẩu xác nhận không khớp",
+    "1203": "Mật khẩu không đúng"
+  },
+  "serviceTable": {
+    "upload": {
+      "stt": "STT",
+      "filename": "Tên file",
+      "status": "Trạng thái",
+      "pages": "Số trang",
+      "amount": "Số tiền",
+      "action": "Xóa"
+    },
+    "download": {
+      "stt": "STT",
+      "filename": "Tên file",
+      "status": "Trạng thái",
+      "amount": "Số tiền",
+      "createDate": "Thời gian sử dụng",
+      "action": "Hành động",
+      "rework": "Thực hiện lại",
+      "delete": "Xóa",
+      "download": "Nén và tải xuống"
+    },
+    "totalDcoin": "Tổng số D-coin",
+    "footer": "Bản ghi",
+    "footerMid": "Trên",
+    "paging": "Hiển thị bản ghi/trang:",
+    "inProcessing": "Đang tải lên",
+    "success": "Tải thành công",
+    "error": "Lỗi tải lên",
+    "process": {
+      "titleRecognize": "Đang số hóa",
+      "titleExtraction": "Đang bóc tách",
+      "subTitle": "Vui lòng chờ trong giây lát",
+      "btn": "Chuyển sang trang Download"
+    }
+  },
+  "enterprise": {
+    "employee": {
+      "stt": "STT",
+      "name": "Tài khoản",
+      "email": "Email",
+      "status": "Trạng thái",
+      "createDate": "Ngày đăng ký",
+      "action": "Hành động",
+      "spent": "D-Coin sử dụng"
+    },
+    "document": {
+      "stt": "STT",
+      "filename": "Tên File",
+      "username": "Người thực hiện",
+      "typename": "Thể loại",
+      "amount": "Chi phí",
+      "status": "Trạng thái",
+      "createDate": "Thời gian sử dụng"
+    }
+  }
+}

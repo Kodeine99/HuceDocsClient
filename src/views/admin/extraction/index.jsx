@@ -35,10 +35,9 @@ import {TimeIcon} from "@chakra-ui/icons";
 // Assets
 import docTypeDataObj from "views/admin/marketplace/variables/docTypeDataObj.js";
 
-export default function Marketplace() {
+export default function Extract() {
 
 
-  ///
 
   const getRoute = () => {
     return window.location.pathname !== "/full-screen-maps";

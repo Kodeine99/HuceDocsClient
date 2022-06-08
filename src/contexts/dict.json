@@ -1,0 +1,41 @@
+  {
+    "routes": {
+      "/boctach/thesinhvien": "TheSinhVien",
+      "/boctach/bangdiem": "BangDiem",
+      "/boctach/bangdiemtienganh": "BangDiemTiengAnh",
+      "/boctach/camkettrano": "CamKetTraNo",
+      "/boctach/donxinnhaphoc": "DonXinNhapHoc",
+      "/boctach/giayxacnhantoeic": "GiayXacNhanToeic",
+      "/boctach/giayxacnhanvayvon": "GiayXacNhanVayVon"
+    },
+    "category": {
+      "TheSinhVien": {
+        "url": "/boctach/thesinhvien",
+        "title": "Thẻ sinh viên"
+      },
+      "BangDiem": {
+        "url": "/boctach/bangdiem",
+        "title": "Bảng điểm"
+      },
+      "BangDiemTiengAnh": {
+        "url": "/boctach/bangdiemtienganh",
+        "title": "Bảng điểm tiếng anh"
+      },
+      "CamKetTraNo": {
+        "url": "/boctach/camkettrano",
+        "title": "Cấm kết trả nợ"
+      },
+      "DonXinNhapHoc": {
+        "url": "/boctach/donxinnhaphoc",
+        "title": "Đơn xin nhập học"
+      },
+      "GiayXacNhanToeic": {
+        "url": "/boctach/giayxacnhantoeic",
+        "title": "Giấy xác nhận TOEIC"
+      },
+      "GiayXacNhanVayVon": {
+        "url": "/boctach/giayxacnhanvayvon",
+        "title": "Giấy xác nhận vay vốn"
+      }
+    }
+  }

@@ -4,13 +4,16 @@ import Footer from "components/footer/FooterAdmin.js";
 // Layout components
 import Navbar from "components/navbar/NavbarAdmin.js";
 import Sidebar from "components/sidebar/Sidebar.js";
-import ExtractionLayout from "layouts/extraction";
 import { SidebarContext } from "contexts/SidebarContext";
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import routes from "routes.js";
+import routes from "../../routes/routes";
+import Extract from "../../views/admin/extraction/index";
+import Profile from "views/admin/profile";
+import Kanban from "views/admin/kanban";
+import ExtrHistory from "../../views/admin/extrHistory/index";
+import ExtractDetails from "../../views/admin/extractDetails/index";
 
-// Custom Chakra theme
 export default function Dashboard(props) {
   const { ...rest } = props;
   // states and functions
@@ -159,8 +162,21 @@ export default function Dashboard(props) {
               />
             </Box>
           </Portal>
-
-          {getRoute() ? (
+          <Box
+            mx='auto'
+            p={{ base: "20px", md: "30px" }}
+            pe='20px'
+            minH='100vh'
+            pt='50px'>
+            <Switch>
+              <Route path="/boctach"  component={Extract} />
+              <Route path="/boctach/*"  component={ExtractDetails} />
+              <Route path="/lichsuboctach"  component={ExtrHistory} />
+              <Route path="/thongtincanhan" component={Profile} />
+              {/* <Redirect from='*' to='/boctach' /> */}
+            </Switch>
+          </Box>
+          {/* {getRoute() ? (
             <Box
               mx='auto'
               p={{ base: "20px", md: "30px" }}
@@ -173,7 +189,7 @@ export default function Dashboard(props) {
                 <Redirect from='*' to='/boctach' />
               </Switch>
             </Box>
-          ) : null}
+          ) : null} */}
           <Box>
             <Footer />
           </Box>

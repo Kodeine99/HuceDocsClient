@@ -22,7 +22,7 @@ import banner from "assets/img/auth/banner.png";
 import avatar from "assets/img/avatars/avatar4.png";
  
  // Custom Chakra theme
- export default function Extract(props) {
+ export default function ExtractDetailsContent(props) {
    return (
      <Box>
       

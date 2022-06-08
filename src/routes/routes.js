@@ -128,7 +128,7 @@ const routes = [
   {
     name: "Thông tin cá nhân",
     layout: "",
-    path: "/profile",
+    path: "/thongtincanhan",
     icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
     component: Profile,
     isShow: true,
