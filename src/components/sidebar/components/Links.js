@@ -50,7 +50,8 @@ export function SidebarLinks(props) {
         route.isShow === true &&
         route.layout === "" ||
         route.layout === "/auth" ||
-        route.layout === "/rtl"
+        route.layout === "/rtl" ||
+        route.layout === "/extraction"
       ) {
         return (
           <NavLink to={route.layout + route.path}>

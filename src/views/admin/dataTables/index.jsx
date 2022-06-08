@@ -1,5 +1,5 @@
 
-
+import { Route, Switch, Redirect} from "react-router-dom";
 // Chakra imports
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import DevelopmentTable from "views/admin/dataTables/components/DevelopmentTable";
@@ -18,8 +18,12 @@ import tableDataFiles from "views/admin/dataTables/variables/tableDataFiles.json
 import tableDataColumns from "views/admin/dataTables/variables/tableDataColumns.json";
 import tableDataComplex from "views/admin/dataTables/variables/tableDataComplex.json";
 import React from "react";
+import routes from "routes.js";
+
 
 export default function Settings() {
+
+  
   // Chakra Color Mode
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -40,6 +44,7 @@ export default function Settings() {
           columnsData={columnsDataComplex}
           tableData={tableDataComplex}
         /> */}
+        
       </SimpleGrid>
     </Box>
   );

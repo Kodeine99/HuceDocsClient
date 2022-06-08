@@ -90,7 +90,7 @@ export default function Dashboard(props) {
     return activeNavbar;
   };
   const getRoutes = (routes) => {
-    console.log(routes);
+    //console.log(routes);
     return routes.map((prop, key) => {
       if (prop.layout === "") {
         return (
@@ -99,17 +99,17 @@ export default function Dashboard(props) {
             component={prop.component}
             key={key}
           >
-            {/* {
+            {
             typeof prop.children !== 'undefined' && prop.children.length > 0 ? 
             prop.children.map((prop1, index) =>  
             <Route
-              //path={`/${prop.path}/${prop1.path}`}
-              path="boctach/:slug"
+              path={`/${prop.path}/${prop1.path}`}
+              //path="boctach/:slug"
               component={ExtractionLayout}
               key={index}
             />
-            ) : null} */}
-            </Route>
+            ) : null}
+          </Route>
         );
       }
       if (prop.collapse) {
@@ -169,7 +169,8 @@ export default function Dashboard(props) {
               pt='50px'>
               <Switch>
                 {getRoutes(routes)}
-                <Redirect from='/' to='/boctach' />
+                
+                <Redirect from='*' to='/boctach' />
               </Switch>
             </Box>
           ) : null}

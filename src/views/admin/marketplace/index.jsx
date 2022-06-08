@@ -1,5 +1,7 @@
 
 import React from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
+import routes from "routes";
 
 // Chakra imports
 import {
@@ -34,6 +36,25 @@ import {TimeIcon} from "@chakra-ui/icons";
 import docTypeDataObj from "views/admin/marketplace/variables/docTypeDataObj.js";
 
 export default function Marketplace() {
+
+
+  ///
+
+  const getRoute = () => {
+    return window.location.pathname !== "/full-screen-maps";
+  };
+  const getChildRoute = (routes) => {
+    return routes.map((route, index) => {
+     if (route.layout === "" && typeof(route.childrens) !== "undefined" && route.childrens.length > 0) {
+      //console.log(route.children);
+      route.childrens.map((child, index) => {
+        return <Route key={index} path={`/${route.path}/${child.path}`} component={child.component} />;
+      })
+     } else {
+       return null;
+     }
+    });
+  };
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorBrand = useColorModeValue("brand.500", "white");
@@ -99,14 +120,33 @@ export default function Marketplace() {
             </Flex>
             <SimpleGrid columns={{ base: 1, md: 3 }} gap='20px'>
                {/* render DoctypeCard */}
-              {docTypeDataObj.map((doc) => (
-                <DocCard
-                  name={doc.name}
-                  description={doc.description}
-                  image={doc.imgPath}
-                  docPath = {doc.path}
-                />
+              {routes.map((route) => (
+                (route.layout === "" && typeof(route.childrens) !== "undefined" && route.childrens.length > 0) ? (
+                  route.childrens.map((child, index) => (
+                    <DocCard
+                      name={child.name}
+                      description={child.description}
+                      image={child.imgPath}
+                      docPath = {child.path}
+                      key={index}
+                    />
+                  )
+                ) ): null
               ))} 
+              {/* {getRoute() ? (
+                <Box
+                  mx='auto'
+                  p={{ base: "20px", md: "30px" }}
+                  pe='20px'
+                  minH='100vh'
+                  pt='50px'>
+                  <Switch>
+                    {getChildRoute(routes)}
+                    
+                    <Redirect from='*' to='/boctach' />
+                  </Switch>
+                </Box>
+              ) : null} */}
             </SimpleGrid>
           </Flex>
         </Flex>

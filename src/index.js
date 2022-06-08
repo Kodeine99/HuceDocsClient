@@ -24,7 +24,7 @@ ReactDOM.render(
             </Route>
             <Route path="/rtl" component={RTLLayout} />
             {/* <Route path="/extraction" component={ExtractionLayout} /> */}
-            <Redirect exact from='/' to='/boctach' />
+            <Redirect exact from='*' to='/botach' />
           </Switch>
         </BrowserRouter>
       </Provider>
