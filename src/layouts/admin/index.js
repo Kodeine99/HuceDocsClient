@@ -1,4 +1,4 @@
- // Chakra imports
+// Chakra imports
 import { Portal, Box, useDisclosure } from "@chakra-ui/react";
 import Footer from "components/footer/FooterAdmin.js";
 // Layout components
@@ -6,7 +6,7 @@ import Navbar from "components/navbar/NavbarAdmin.js";
 import Sidebar from "components/sidebar/Sidebar.js";
 import { SidebarContext } from "contexts/SidebarContext";
 import React, { useState } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, useRouteMatch, useLocation } from "react-router-dom";
 import routes from "../../routes/routes";
 import Extract from "../../views/admin/extraction/index";
 import Profile from "views/admin/profile";
@@ -16,6 +16,8 @@ import ExtractDetails from "../../views/admin/extractDetails/index";
 
 export default function Dashboard(props) {
   const { ...rest } = props;
+  const {url} = useRouteMatch();
+  const location = useLocation();
   // states and functions
   const [fixed] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -24,27 +26,54 @@ export default function Dashboard(props) {
     return window.location.pathname !== "/full-screen-maps";
   };
   const getActiveRoute = (routes) => {
-    let activeRoute = "Default Brand Text";
-    for (let i = 0; i < routes.length; i++) {
-      if (routes[i].collapse) {
-        let collapseActiveRoute = getActiveRoute(routes[i].items);
-        if (collapseActiveRoute !== activeRoute) {
-          return collapseActiveRoute;
-        }
-      } else if (routes[i].category) {
-        let categoryActiveRoute = getActiveRoute(routes[i].items);
-        if (categoryActiveRoute !== activeRoute) {
-          return categoryActiveRoute;
-        }
-      } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
-          return routes[i].name;
+    const urlArray = location.pathname
+      .split("/")
+      .slice(1)
+      .map((url) => `/${url}`);
+      console.log("urlArray", urlArray);
+    
+    const result = urlArray.map((item) => {
+      const index = routes.findIndex((route) => route.path === item);
+      if (index !== -1) {
+        return routes[index].name;
+      }
+      for (let i = 0; i <= routes.length; ++i) {
+        if (typeof routes[i]?.childrens !== "undefined" && routes.length > 0) {
+          const routeChildIndex = routes[i]?.childrens.findIndex((route) => route.path === item);
+          if (routeChildIndex !== -1) {
+            return routes[i].childrens[routeChildIndex].name;
+          }
         }
       }
-    }
-    return activeRoute;
+      return "";
+    });
+    return result;
+
+
+
+
+
+    // let activeRoute = "Default Brand Text";
+    // for (let i = 0; i < routes.length; i++) {
+    //   if (routes[i].collapse) {
+    //     let collapseActiveRoute = getActiveRoute(routes[i].items);
+    //     if (collapseActiveRoute !== activeRoute) {
+    //       return collapseActiveRoute;
+    //     }
+    //   } else if (routes[i].category) {
+    //     let categoryActiveRoute = getActiveRoute(routes[i].items);
+    //     if (categoryActiveRoute !== activeRoute) {
+    //       return categoryActiveRoute;
+    //     }
+    //   } else {
+    //     if (
+    //       window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
+    //     ) {
+    //       return routes[i].name;
+    //     }
+    //   }
+    // }
+    // return activeRoute;
   };
   const getActiveNavbar = (routes) => {
     let activeNavbar = false;
@@ -97,11 +126,7 @@ export default function Dashboard(props) {
     return routes.map((prop, key) => {
       if (prop.layout === "") {
         return (
-          <Route
-            path={prop.path}
-            component={prop.component}
-            key={key}
-          >
+          <Route path={prop.path} component={prop.component} key={key}>
             {/* {
             typeof prop.children !== 'undefined' && prop.children.length > 0 ? 
             prop.children.map((prop1, index) =>  
@@ -133,21 +158,23 @@ export default function Dashboard(props) {
         value={{
           toggleSidebar,
           setToggleSidebar,
-        }}>
-        <Sidebar routes={routes} display='none' {...rest} />
+        }}
+      >
+        <Sidebar routes={routes} display="none" {...rest} />
         <Box
-          float='right'
-          minHeight='100vh'
-          height='100%'
-          overflow='auto'
-          position='relative'
-          maxHeight='100%'
+          float="right"
+          minHeight="100vh"
+          height="100%"
+          overflow="auto"
+          position="relative"
+          maxHeight="100%"
           w={{ base: "100%", xl: "calc( 100% - 290px )" }}
           maxWidth={{ base: "100%", xl: "calc( 100% - 290px )" }}
-          transition='all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)'
-          transitionDuration='.2s, .2s, .35s'
-          transitionProperty='top, bottom, width'
-          transitionTimingFunction='linear, linear, ease'>
+          transition="all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
+          transitionDuration=".2s, .2s, .35s"
+          transitionProperty="top, bottom, width"
+          transitionTimingFunction="linear, linear, ease"
+        >
           <Portal>
             <Box>
               <Navbar
@@ -163,33 +190,23 @@ export default function Dashboard(props) {
             </Box>
           </Portal>
           <Box
-            mx='auto'
+            mx="auto"
             p={{ base: "20px", md: "30px" }}
-            pe='20px'
-            minH='100vh'
-            pt='50px'>
+            pe="20px"
+            minH="100vh"
+            pt="50px"
+          >
             <Switch>
-              <Route path="/boctach"  component={Extract} />
-              <Route path="/boctach/*"  component={ExtractDetails} />
-              <Route path="/lichsuboctach"  component={ExtrHistory} />
+              {/* <Route path="/boctach" component={Extract} /> */}
+              <Route path="/boctach" >
+                <ExtractDetails />
+              </Route>
+              <Route path="/lichsuboctach" component={ExtrHistory} />
               <Route path="/thongtincanhan" component={Profile} />
               {/* <Redirect from='*' to='/boctach' /> */}
             </Switch>
           </Box>
-          {/* {getRoute() ? (
-            <Box
-              mx='auto'
-              p={{ base: "20px", md: "30px" }}
-              pe='20px'
-              minH='100vh'
-              pt='50px'>
-              <Switch>
-                {getRoutes(routes)}
-                
-                <Redirect from='*' to='/boctach' />
-              </Switch>
-            </Box>
-          ) : null} */}
+          
           <Box>
             <Footer />
           </Box>

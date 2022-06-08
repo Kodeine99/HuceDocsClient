@@ -1,8 +1,10 @@
-import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import routes from "../../../routes/routes";
-
-// Chakra imports
+import routes from "../../../../routes/routes";
+import Banner from "views/admin/marketplace/components/Banner";
+import Card from "components/card/Card.js";
+import DocCard from "components/card/DocCard.js";
+import ComplexTable from "views/admin/default/components/ComplexTable";
+import { columnsDataComplex } from "views/admin/default/variables/columnsData";
+import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
 import {
   Box,
   Button,
@@ -13,53 +15,12 @@ import {
   useColorModeValue,
   SimpleGrid,
 } from "@chakra-ui/react";
+import React from "react";
 
-// Custom components
-import Banner from "views/admin/marketplace/components/Banner";
-import TableTopCreators from "views/admin/marketplace/components/TableTopCreators";
-import HistoryItem from "views/admin/marketplace/components/HistoryItem";
-import NFT from "components/card/NFT";
-import Card from "components/card/Card.js";
-import DocCard from "components/card/DocCard.js";
-import ComplexTable from "views/admin/default/components/ComplexTable";
-import { columnsDataComplex } from "views/admin/default/variables/columnsData";
-import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
-
-//Icons
-import { TimeIcon } from "@chakra-ui/icons";
-
-// Assets
-import docTypeDataObj from "views/admin/marketplace/variables/docTypeDataObj.js";
-
-export default function Extract() {
-  const getRoute = () => {
-    return window.location.pathname !== "/full-screen-maps";
-  };
-  const getChildRoute = (routes) => {
-    return routes.map((route, index) => {
-      if (
-        route.layout === "" &&
-        typeof route.childrens !== "undefined" &&
-        route.childrens.length > 0
-      ) {
-        //console.log(route.children);
-        route.childrens.map((child, index) => {
-          return (
-            <Route
-              key={index}
-              path={`/${route.path}/${child.path}`}
-              component={child.component}
-            />
-          );
-        });
-      } else {
-        return null;
-      }
-    });
-  };
-  // Chakra Color Mode
+export const SomeComponent = () => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorBrand = useColorModeValue("brand.500", "white");
+
   return (
     <Box pt={{ base: "180px", md: "80px", xl: "80px" }}>
       {/* Main Fields */}
@@ -145,20 +106,6 @@ export default function Extract() {
                     ))
                   : null
               )}
-              {/* {getRoute() ? (
-                <Box
-                  mx='auto'
-                  p={{ base: "20px", md: "30px" }}
-                  pe='20px'
-                  minH='100vh'
-                  pt='50px'>
-                  <Switch>
-                    {getChildRoute(routes)}
-                    
-                    <Redirect from='*' to='/boctach' />
-                  </Switch>
-                </Box>
-              ) : null} */}
             </SimpleGrid>
           </Flex>
         </Flex>
@@ -167,10 +114,6 @@ export default function Extract() {
           gridArea={{ xl: "1 / 3 / 2 / 4", "2xl": "1 / 2 / 2 / 3" }}
         >
           <Card px="0px" mb="20px">
-            {/* <TableTopCreators
-              tableData={tableDataTopCreators}
-              columnsData={tableColumnsTopCreators}
-            /> */}
             <ComplexTable
               columnsData={columnsDataComplex}
               tableData={tableDataComplex}
@@ -181,4 +124,4 @@ export default function Extract() {
       {/* Delete Product */}
     </Box>
   );
-}
+};
