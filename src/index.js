@@ -18,12 +18,17 @@ ReactDOM.render(
       <Provider store={store}>
         <BrowserRouter>
           <Switch>
+            {/* Authenticate Route */}
             <Route path="/auth" component={AuthLayout} />
-            <Route path="/" component={AdminLayout} >
-              {/* <Route path={`:docId`} component={ExtractionLayout} /> */}
-            </Route>
+
+            {/* Admin Route */}
+            <Route path="/" component={AdminLayout} />
+            <Route path="/extraction" component={ExtractionLayout} />
+
+
+            {/* RTL Route */}
             <Route path="/rtl" component={RTLLayout} />
-            {/* <Route path="/extraction" component={ExtractionLayout} /> */}
+
             <Redirect exact from='*' to='/botach' />
           </Switch>
         </BrowserRouter>

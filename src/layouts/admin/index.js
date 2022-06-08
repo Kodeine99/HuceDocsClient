@@ -99,7 +99,7 @@ export default function Dashboard(props) {
             component={prop.component}
             key={key}
           >
-            {
+            {/* {
             typeof prop.children !== 'undefined' && prop.children.length > 0 ? 
             prop.children.map((prop1, index) =>  
             <Route
@@ -108,7 +108,7 @@ export default function Dashboard(props) {
               component={ExtractionLayout}
               key={index}
             />
-            ) : null}
+            ) : null} */}
           </Route>
         );
       }
