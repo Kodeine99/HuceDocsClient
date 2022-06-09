@@ -16,7 +16,7 @@ import {
 import routes from "../../routes/routes";
 import Extract from "../../views/admin/extraction/index";
 import Profile from "views/admin/profile";
-import Kanban from "views/admin/kanban";
+import DocumentsView from "../../views/admin/documents/index";
 import ExtrHistory from "../../views/admin/extrHistory/index";
 import ExtractDetails from "../../views/admin/extractDetails/index";
 
@@ -235,6 +235,7 @@ export default function Dashboard(props) {
               </Route>
               <Route path="/lichsuboctach" component={ExtrHistory} />
               <Route path="/thongtincanhan" component={Profile} />
+              <Route path="/tailieuhuongdan" component={DocumentsView} />
               {/* <Redirect from='*' to='/boctach' /> */}
             </Switch>
           </Box>

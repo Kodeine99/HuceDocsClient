@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import routes from "../../../routes/routes";
 
@@ -32,6 +32,9 @@ import { TimeIcon } from "@chakra-ui/icons";
 import docTypeDataObj from "views/admin/marketplace/variables/docTypeDataObj.js";
 
 export default function Extract() {
+
+  
+  const [docTypeData, setDocTypeData] = useState(docTypeDataObj);
   const getRoute = () => {
     return window.location.pathname !== "/full-screen-maps";
   };

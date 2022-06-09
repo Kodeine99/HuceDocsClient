@@ -142,12 +142,12 @@ export default function HeaderLinks(props) {
         >
           {/* <Image src={navImage} borderRadius='16px' mb='28px' /> */}
           <Flex flexDirection="column">
-            <Link w="100%" href="">
+            <NavLink w="100%" to="/tailieuhuongdan">
               <Button w="100%" h="44px" mb="10px" variant="brand">
                 Xem tài liệu hướng dẫn
               </Button>
-            </Link>
-            <Link w="100%" href="">
+            </NavLink>
+            <NavLink w="100%" to="/tailieuhuongdan">
               <Button
                 w="100%"
                 h="44px"
@@ -158,7 +158,7 @@ export default function HeaderLinks(props) {
               >
                 See Documentation
               </Button>
-            </Link>
+            </NavLink>
             {/* <Link
               w='100%'
               href=''>

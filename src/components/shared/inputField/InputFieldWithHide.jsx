@@ -1,28 +1,37 @@
-import React from 'react';
-import { FormControl,
+import React from "react";
+import {
+  FormControl,
   FormLabel,
   Input,
   useColorModeValue,
   Text,
   InputGroup,
   Icon,
-  InputRightElement } from '@chakra-ui/react';
-import PropTypes from 'prop-types'
-import {ErrorMessage} from "formik";
+  InputRightElement,
+  FormErrorMessage,
+} from "@chakra-ui/react";
+import PropTypes from "prop-types";
+import { ErrorMessage } from "formik";
 
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
-
-
+import { ErrorMessageInput } from "./ErrorMessageInput";
 
 function InputWithHide(props) {
-  const {field, form,
-    type, label, placeholder, disabled, value, defaultValue
+  const {
+    field,
+    form,
+    type,
+    label,
+    placeholder,
+    disabled,
+    value,
+    defaultValue,
   } = props;
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
-  const {name} = field;
-  const {errors, touched} = form;
+  const { name } = field;
+  const { errors, touched } = form;
   const showError = errors[name] && touched[name];
 
   //Chakra color mode
@@ -37,28 +46,32 @@ function InputWithHide(props) {
   return (
     <>
       <FormLabel
-        ms='4px'
-        fontSize='sm'
-        fontWeight='500'
+        mt="20px"
+        ms="4px"
+        fontSize="lg"
+        fontWeight="500"
         color={textColor}
         //isRequired={true}
-        display='flex'>
-        {label}<Text color={brandStars}>*</Text>
+        display="flex"
+      >
+        {label}
+        <Text color={brandStars}>*</Text>
       </FormLabel>
-      <InputGroup size='md'>
+      <InputGroup size="md">
         <Input
           id={name}
           //isRequired={true}
           {...field}
-          fontSize='sm'
+          fontSize="sm"
           placeholder={placeholder}
-          mb='24px'
-          size='lg'
+          //mb="24px"
+          size="lg"
           type={show ? "text" : "password"}
-          variant='auth'
+          variant="auth"
           value={value}
         />
-        <InputRightElement display='flex' alignItems='center' mt='4px'>
+
+        <InputRightElement display="flex" alignItems="center" mt="4px">
           <Icon
             color={textColorSecondary}
             _hover={{ cursor: "pointer" }}
@@ -67,8 +80,9 @@ function InputWithHide(props) {
           />
         </InputRightElement>
       </InputGroup>
+      <ErrorMessage name={name} fontSize="12px" as='samp' color='crimson' component={Text}></ErrorMessage>
     </>
-  )
+  );
 }
 
 InputWithHide.propTypes = {
@@ -84,10 +98,10 @@ InputWithHide.propTypes = {
 };
 
 InputWithHide.defaultProps = {
-  type: 'text',
-  label: '',
-  placeholder: '',
+  type: "text",
+  label: "",
+  placeholder: "",
   disabled: false,
-}
+};
 
 export default InputWithHide;

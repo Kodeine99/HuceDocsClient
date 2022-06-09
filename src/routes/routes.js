@@ -8,14 +8,15 @@ import {
   MdHome,
   MdLock,
   MdOutlineShoppingCart,
-  MdDescription
+  MdDescription,
+  MdBook
 } from "react-icons/md";
 
 // Admin Imports
 import MainDashboard from "views/admin/default";
 import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
-import Kanban from "views/admin/kanban";
+import DocumentView from "../views/admin/documents/index";
 import DataTables from "views/admin/dataTables";
 import RTL from "views/admin/rtl";
 import Extract from "views/extraction/default";
@@ -118,20 +119,20 @@ const routes = [
     secondary: true,
   },
   {
-    name: "Kanban",
-    layout: "",
-    icon: <Icon as={MdDashboard} width='20px' height='20px' color='inherit' />,
-    path: "/kanban",
-    component: Kanban,
-    isShow: false,
-  },
-  {
     name: "Thông tin cá nhân",
     layout: "",
     path: "/thongtincanhan",
     icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
     component: Profile,
     isShow: true,
+  },
+  {
+    name: "Tài liệu hướng dẫn",
+    layout: "",
+    icon: <Icon as={MdBook} width='20px' height='20px' color='inherit' />,
+    path: "/tailieuhuongdan",
+    component: DocumentView,
+    isShow: false,
   },
   {
     name: "Đăng nhập",

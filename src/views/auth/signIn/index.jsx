@@ -1,18 +1,14 @@
-
-import React,{ useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-
 // Formik Control
-import {Formik, Field, FastField, ErrorMessage} from 'formik';
-
+import { Formik, Field, FastField, ErrorMessage, Form } from "formik";
 // Yup
 import * as Yup from "yup";
-
 // Redux
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 // Coookie
-import { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
 // Chakra imports
 import {
   Box,
@@ -20,6 +16,7 @@ import {
   Checkbox,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Icon,
@@ -37,7 +34,12 @@ import loginBackground from "assets/img/auth/LoginPage.png";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
-import { login, userSelector, clearState, getUserByToken } from "../../../aaRedux/app/userSlice";
+import {
+  login,
+  userSelector,
+  clearState,
+  getUserByToken,
+} from "../../../aaRedux/app/userSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import LoginInput from "components/shared/inputField/InputField";
 import InputWithHide from "components/shared/inputField/InputFieldWithHide";
@@ -64,8 +66,8 @@ function SignIn() {
   const history = useHistory();
   const [setCookie] = useCookies();
   const dispatch = useDispatch();
-  const {loading, isSuccess, isError, errorMessage} = useSelector(userSelector);
-
+  const { loading, isSuccess, isError, errorMessage } =
+    useSelector(userSelector);
 
   // setup formik
   const initialValues = {
@@ -81,7 +83,7 @@ function SignIn() {
   const getUserData = () => {
     const userData = dispatch(getUserByToken());
     console.log(userData);
-  }
+  };
   // Handle submit
   const handleSubmit = async (values, actions) => {
     console.log("Submit");
@@ -91,19 +93,27 @@ function SignIn() {
 
     // if (loginResult.isOk) {
     //   const token = loginResult.result.token;
-    //   setCookie("access_token", token, { 
+    //   setCookie("access_token", token, {
     //     path: "/",
-    //     expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)), 
+    //     expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)),
     //   });
     //   await getUserData();
-    // }  
-               
+    // }
+  };
+  function validateName(value) {
+    let error;
+    if (!value) {
+      error = "Name is required";
+    } else if (value.toLowerCase() !== "naruto") {
+      error = "Jeez! You're not a fan 😱";
+    }
+    return error;
   }
 
   useEffect(() => {
     return () => {
       dispatch(clearState());
-    }
+    };
   });
 
   useEffect(() => {
@@ -114,103 +124,113 @@ function SignIn() {
       dispatch(clearState());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess, isError])
+  }, [isSuccess, isError]);
 
-  
   return (
-    <DefaultAuth illustrationBackground={loginBackground} image={loginBackground}>
+    <DefaultAuth
+      illustrationBackground={loginBackground}
+      image={loginBackground}
+    >
       <Flex
         maxW={{ base: "100%", md: "max-content" }}
-        w='100%'
+        w="100%"
         mx={{ base: "auto", lg: "0px" }}
-        me='auto'
-        h='100%'
-        alignItems='start'
-        justifyContent='center'
+        me="auto"
+        h="100%"
+        alignItems="start"
+        justifyContent="center"
         mb={{ base: "30px", md: "60px" }}
         px={{ base: "25px", md: "0px" }}
         mt={{ base: "40px", md: "14vh" }}
-        flexDirection='column'>
-        <Box me='auto'>
-          <Heading color={textColor} fontSize='36px' mb='10px'>
+        flexDirection="column"
+      >
+        <Box me="auto">
+          <Heading color={textColor} fontSize="36px" mb="10px">
             Sign In
           </Heading>
           <Text
-            mb='36px'
-            ms='4px'
+            mb="36px"
+            ms="4px"
             color={textColorSecondary}
-            fontWeight='400'
-            fontSize='md'>
+            fontWeight="400"
+            fontSize="md"
+          >
             Enter your <b>username & password</b> to sign in!
           </Text>
         </Box>
         <Flex
-          zIndex='2'
-          direction='column'
+          zIndex="2"
+          direction="column"
           w={{ base: "100%", md: "420px" }}
-          maxW='100%'
-          background='transparent'
-          borderRadius='15px'
+          maxW="100%"
+          background="transparent"
+          borderRadius="15px"
           mx={{ base: "auto", lg: "unset" }}
-          me='auto'
-          mb={{ base: "20px", md: "auto" }}>
+          me="auto"
+          mb={{ base: "20px", md: "auto" }}
+        >
           <Button
-            fontSize='sm'
-            me='0px'
-            mb='26px'
-            py='15px'
-            h='50px'
-            borderRadius='16px'
+            fontSize="sm"
+            me="0px"
+            mb="26px"
+            py="15px"
+            h="50px"
+            borderRadius="16px"
             bg={googleBg}
             color={googleText}
-            fontWeight='500'
+            fontWeight="500"
             _hover={googleHover}
             _active={googleActive}
-            _focus={googleActive}>
-            <Icon as={FcGoogle} w='20px' h='20px' me='10px' />
+            _focus={googleActive}
+          >
+            <Icon as={FcGoogle} w="20px" h="20px" me="10px" />
             Sign in with Google
           </Button>
-          <Flex align='center' mb='25px'>
+          <Flex align="center" mb="25px">
             <HSeparator />
-            <Text color='gray.400' mx='14px'>
+            <Text color="gray.400" mx="14px">
               or
             </Text>
             <HSeparator />
           </Flex>
-          <Formik 
+          <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             // onSubmit = {handleSubmit}
             onSubmit={(values, actions) => {
               setTimeout(() => {
                 console.log("Submitted");
-                actions.setSubmitting(false)
-              }, 1000)
+                actions.setSubmitting(false);
+              }, 1000);
             }}
           >
             {(formikProps) => {
               // do somethings
-              const {values, errors, touched, isSubmitting} = formikProps;
-              
+              const { values, errors, touched, isSubmitting } = formikProps;
+
               return (
-                <FormControl>
-                  
-                  <FastField 
-                    label={'Username'}
-                    name={'username'}
-                    type={"text"}
-                    placeholder={"Username"}
-                    component={LoginInput}
-                  />
-                  
-                  <FastField 
-                    component={InputWithHide}
-                    label={'Password'}
-                    name={'password'}
-                    placeholder={"Min. 8 characters"}
-                  />
-                  <Flex justifyContent='space-between' align='center' mb='24px'>
-                    {/* <FormControl display='flex' alignItems='center'>
+                <Form>
+                  <FormControl>
+                    <FastField
+                      component={LoginInput}
+                      label={"Username"}
+                      name={"username"}
+                      type={"text"}
+                      placeholder={"Username"}
+                    />
+
+                    <FastField
+                      component={InputWithHide}
+                      label={"Password"}
+                      name={"password"}
+                      placeholder={"Min. 8 characters"}
+                    />
+                    <Flex
+                      justifyContent="space-between"
+                      align="center"
+                      mb="24px"
+                    >
+                      {/* <FormControl display='flex' alignItems='center'>
                       <Checkbox
                         id='remember-login'
                         colorScheme='brandScheme'
@@ -225,48 +245,53 @@ function SignIn() {
                         Keep me logged in
                       </FormLabel>
                     </FormControl> */}
-                    <NavLink to='/auth/forgot-password'>
-                      <Text
-                        color={textColorBrand}
-                        fontSize='sm'
-                        w='124px'
-                        fontWeight='500'>
-                        Forgot password?
-                      </Text>
-                    </NavLink>
-                  </Flex>
-                  <Button
-                    loadingText='Signing in...'
-                    isLoading={isSubmitting}
-                    spinnerPlacement='start'
-                    type="submit"
-                    fontSize='sm'
-                    variant='brand'
-                    fontWeight='500'
-                    w='100%'
-                    h='50'
-                    mb='24px'>
-                    Sign In
-                  </Button>
-                  {/* <ErrorMessage type={'invalid'}>{form.errors.name}</ErrorMessage> */}
-                </FormControl>
-              )
+                      <NavLink to="/auth/forgot-password">
+                        <Text
+                          color={textColorBrand}
+                          fontSize="sm"
+                          w="124px"
+                          fontWeight="500"
+                        >
+                          Forgot password?
+                        </Text>
+                      </NavLink>
+                    </Flex>
+                    <Button
+                      loadingText="Signing in..."
+                      isLoading={isSubmitting}
+                      spinnerPlacement="start"
+                      type="submit"
+                      fontSize="sm"
+                      variant="brand"
+                      fontWeight="500"
+                      w="100%"
+                      h="50"
+                      mb="24px"
+                    >
+                      Sign In
+                    </Button>
+                    {/* <ErrorMessage type={'invalid'}>{form.errors.name}</ErrorMessage> */}
+                  </FormControl>
+                </Form>
+              );
             }}
           </Formik>
           <Flex
-            flexDirection='column'
-            justifyContent='center'
-            alignItems='start'
-            maxW='100%'
-            mt='0px'>
-            <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="start"
+            maxW="100%"
+            mt="0px"
+          >
+            <Text color={textColorDetails} fontWeight="400" fontSize="14px">
               Not registered yet?
-              <NavLink to='/auth/sign-up'>
+              <NavLink to="/auth/sign-up">
                 <Text
                   color={textColorBrand}
-                  as='span'
-                  ms='5px'
-                  fontWeight='500'>
+                  as="span"
+                  ms="5px"
+                  fontWeight="500"
+                >
                   Contact to Admin to create an Account
                 </Text>
               </NavLink>
