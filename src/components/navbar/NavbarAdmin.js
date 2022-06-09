@@ -12,7 +12,8 @@ import {
 import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
 import AdminNavbarLinks from "components/navbar/NavbarLinksAdmin";
-import { useHistory } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
+import routes from "routes/routes";
 
 export default function AdminNavbar(props) {
   const [scrolled, setScrolled] = useState(false);
@@ -49,21 +50,13 @@ export default function AdminNavbar(props) {
       setScrolled(false);
     }
   };
-  const checkBrandTextChild = () => {
-    if (brandTextChild?.length > 0 && brandTextChild !== "") {
-      return (
-        <BreadcrumbItem color={secondaryText} fontSize="sm">
-          <BreadcrumbLink href="#" color={secondaryText}>
-            {brandTextChild}
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-      );
-    } else {
-      return null;
-    }
+  const getChildPath = (childName) => {
+    const routeChild = routes.findIndex((route) => route.name === childName);
+    if (routeChild !== -1) {
+      return routes[routeChild].path;
+    } 
+    return ""
   };
-  const history = useHistory();
-  console.log(history.location.pathname);
   return (
     <Box
       position={navbarPosition}
@@ -119,7 +112,7 @@ export default function AdminNavbar(props) {
         <Box mb={{ sm: "8px", md: "0px" }}>
           <Breadcrumb>
             <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
-              <BreadcrumbLink href="/boctach" color={secondaryText}>
+              <BreadcrumbLink as={NavLink} to="/boctach" color={secondaryText}>
                 HuceDocs
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -133,7 +126,11 @@ export default function AdminNavbar(props) {
               brandText.length > 0 &&
               brandText.map((text, index) => (
                 <BreadcrumbItem color={secondaryText} fontSize="sm" key={index}>
-                  <BreadcrumbLink href={`/boctach`} color={secondaryText}>
+                  <BreadcrumbLink
+                    as={NavLink}
+                    to={`${getChildPath(text)}`}
+                    color={secondaryText}
+                  >
                     {`${text}`}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
