@@ -25,7 +25,7 @@ export default function AdminNavbar(props) {
     };
   });
 
-  const { secondary, message, brandText, brandTextChild } = props;
+  const { secondary, message, brandText, brandTextChild, navbarTitle } = props;
 
   // Here are all the props that may change depending on navbar's type or state.(secondary, variant, scrolled)
   let mainText = useColorModeValue("navy.700", "white");
@@ -157,7 +157,7 @@ export default function AdminNavbar(props) {
               boxShadow: "none",
             }}
           >
-            {brandText}
+            {navbarTitle}
           </Link>
         </Box>
         <Box ms="auto" w={{ sm: "100%", md: "unset" }}>

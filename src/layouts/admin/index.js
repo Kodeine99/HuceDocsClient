@@ -6,7 +6,13 @@ import Navbar from "components/navbar/NavbarAdmin.js";
 import Sidebar from "components/sidebar/Sidebar.js";
 import { SidebarContext } from "contexts/SidebarContext";
 import React, { useState } from "react";
-import { Redirect, Route, Switch, useRouteMatch, useLocation } from "react-router-dom";
+import {
+  Redirect,
+  Route,
+  Switch,
+  useRouteMatch,
+  useLocation,
+} from "react-router-dom";
 import routes from "../../routes/routes";
 import Extract from "../../views/admin/extraction/index";
 import Profile from "views/admin/profile";
@@ -16,7 +22,7 @@ import ExtractDetails from "../../views/admin/extractDetails/index";
 
 export default function Dashboard(props) {
   const { ...rest } = props;
-  const {url} = useRouteMatch();
+  const { url } = useRouteMatch();
   const location = useLocation();
   // states and functions
   const [fixed] = useState(false);
@@ -30,8 +36,8 @@ export default function Dashboard(props) {
       .split("/")
       .slice(1)
       .map((url) => `/${url}`);
-      console.log("urlArray", urlArray);
-    
+    console.log("urlArray", urlArray);
+
     const result = urlArray.map((item) => {
       const index = routes.findIndex((route) => route.path === item);
       if (index !== -1) {
@@ -39,7 +45,9 @@ export default function Dashboard(props) {
       }
       for (let i = 0; i <= routes.length; ++i) {
         if (typeof routes[i]?.childrens !== "undefined" && routes.length > 0) {
-          const routeChildIndex = routes[i]?.childrens.findIndex((route) => route.path === item);
+          const routeChildIndex = routes[i]?.childrens.findIndex(
+            (route) => route.path === item
+          );
           if (routeChildIndex !== -1) {
             return routes[i].childrens[routeChildIndex].name;
           }
@@ -48,9 +56,6 @@ export default function Dashboard(props) {
       return "";
     });
     return result;
-
-
-
 
 
     // let activeRoute = "Default Brand Text";
@@ -75,6 +80,32 @@ export default function Dashboard(props) {
     // }
     // return activeRoute;
   };
+
+  const getNavbarTitle = (routes) => {
+    const urlArray = location.pathname
+    .split("/")
+    .slice(1)
+    .map((url) => `/${url}`);
+    const lastItem = urlArray[urlArray.length - 1];
+    //console.log(lastItem)
+    //console.log("urlArray", urlArray);
+    
+    let result ="";
+    for (let i = 0; i < routes.length; i++) {
+      if (typeof routes[i]?.childrens !== "undefined" && routes.length > 0) {
+        const routeChildIndex = routes[i]?.childrens.findIndex(
+          (route) => route.path === lastItem
+        )
+        if (routeChildIndex !== -1) {
+          result = routes[i].childrens[routeChildIndex].name;
+          console.log("RS",result);
+          //return result;
+        }
+      }
+    } 
+    //console.log("result:" ,result);
+    return result;
+  }
   const getActiveNavbar = (routes) => {
     let activeNavbar = false;
     for (let i = 0; i < routes.length; i++) {
@@ -185,6 +216,7 @@ export default function Dashboard(props) {
                 secondary={getActiveNavbar(routes)}
                 message={getActiveNavbarText(routes)}
                 fixed={fixed}
+                navbarTitle = {getNavbarTitle(routes)}
                 {...rest}
               />
             </Box>
@@ -198,7 +230,7 @@ export default function Dashboard(props) {
           >
             <Switch>
               {/* <Route path="/boctach" component={Extract} /> */}
-              <Route path="/boctach" >
+              <Route path="/boctach">
                 <ExtractDetails />
               </Route>
               <Route path="/lichsuboctach" component={ExtrHistory} />
@@ -206,7 +238,7 @@ export default function Dashboard(props) {
               {/* <Redirect from='*' to='/boctach' /> */}
             </Switch>
           </Box>
-          
+
           <Box>
             <Footer />
           </Box>
