@@ -1,4 +1,3 @@
-
 // Chakra imports
 import {
   Avatar,
@@ -22,43 +21,37 @@ import {
   MdAttachMoney,
   MdBarChart,
   MdFileCopy,
+  MdOutlinePeopleOutline
 } from "react-icons/md";
-import CheckTable from "views/admin/default/components/CheckTable";
-import ComplexTable from "views/admin/default/components/ComplexTable";
-import DailyTraffic from "views/admin/default/components/DailyTraffic";
-import PieCard from "views/admin/default/components/PieCard";
-import Tasks from "views/admin/default/components/Tasks";
-import TotalSpent from "views/admin/default/components/TotalSpent";
-import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
+import CheckTable from "views/admin/userManage/components/CheckTable";
+import ComplexTable from "views/admin/userManage/components/ComplexTable";
+import DailyTraffic from "views/admin/userManage/components/DailyTraffic";
+import PieCard from "views/admin/userManage/components/PieCard";
+import Tasks from "views/admin/userManage/components/Tasks";
+import TotalSpent from "views/admin/userManage/components/TotalSpent";
+import WeeklyRevenue from "views/admin/userManage/components/WeeklyRevenue";
 import {
   columnsDataCheck,
   columnsDataComplex,
-} from "views/admin/default/variables/columnsData";
-import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
-import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
+  columnsUserManageData,
+} from "views/admin/userManage/variables/columnsData";
+import tableDataCheck from "views/admin/userManage/variables/tableDataCheck.json";
+import tableDataComplex from "views/admin/userManage/variables/tableDataComplex.json";
+import userTableData from "views/admin/userManage/variables/userTableData.json";
 import Banner from "views/admin/marketplace/components/Banner";
+import UserManageTable from "./components/UserManageTable";
 
-
-export default function UserReports() {
+export default function UserManage() {
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
   return (
-    
-      <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      
-      <SimpleGrid 
-        columns={{ base: 1, md: 1, xl: 1 }}
-        spacing={4} gap='20px' mb='20px'>
-          <Banner />
-      </SimpleGrid>
-      {
-        // Mini Statistics Card
-      }
+    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
-        gap='20px'
-        mb='20px'>
+        gap="20px"
+        mb="20px"
+      >
         {/* <MiniStatistics
           startContent={
             <IconBox
@@ -124,16 +117,16 @@ export default function UserReports() {
         <MiniStatistics
           startContent={
             <IconBox
-              w='64px'
-              h='64px'
+              w="64px"
+              h="64px"
               bg={boxBg}
               icon={
-                <Icon w='32px' h='32px' as={MdFileCopy} color={brandColor} />
+                <Icon w="32px" h="32px" as={MdOutlinePeopleOutline} color={brandColor} />
               }
             />
           }
-          name='Total Documents'
-          value='1999'
+          name="Total Users"
+          value="10"
         />
       </SimpleGrid>
 
@@ -144,7 +137,7 @@ export default function UserReports() {
         <TotalSpent />
         <WeeklyRevenue />
       </SimpleGrid> */}
-      
+
       {
         //
       }
@@ -155,16 +148,16 @@ export default function UserReports() {
           <PieCard />
         </SimpleGrid>
       </SimpleGrid> */}
-      
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        <ComplexTable
-          columnsData={columnsDataComplex}
-          tableData={tableDataComplex}
+
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap="20px" mb="20px">
+        <UserManageTable
+          columnsData={columnsUserManageData}
+          tableData={userTableData}
         />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          {/* <Tasks /> */}
-          <MiniCalendar h='100%' minW='100%' selectRange={false} />
-        </SimpleGrid>
+        {/* <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
+          <Tasks />
+          <MiniCalendar h="100%" minW="100%" selectRange={false} />
+        </SimpleGrid> */}
       </SimpleGrid>
     </Box>
   );

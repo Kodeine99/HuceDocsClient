@@ -19,6 +19,7 @@ import Profile from "views/admin/profile";
 import DocumentsView from "../../views/admin/documents/index";
 import ExtrHistory from "../../views/admin/extrHistory/index";
 import ExtractDetails from "../../views/admin/extractDetails/index";
+import UserManageView from "../../views/admin/userManage/index";
 
 export default function Dashboard(props) {
   const { ...rest } = props;
@@ -235,6 +236,7 @@ export default function Dashboard(props) {
               </Route>
               <Route path="/lichsuboctach" component={ExtrHistory} />
               <Route path="/thongtincanhan" component={Profile} />
+              <Route path="/quanlynguoidung" component={ UserManageView} />
               <Route path="/tailieuhuongdan" component={DocumentsView} />
               {/* <Redirect from='*' to='/boctach' /> */}
             </Switch>

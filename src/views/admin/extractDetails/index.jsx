@@ -10,11 +10,6 @@ import { RoutesContext } from "../../../contexts/RoutesContext";
  
  // Custom Chakra theme
  export default function ExtractDetails(props) {
-  
-  const dict  = useContext(RoutesContext).dictionary;
-  const location = useLocation().pathname;  
-
-  const docCode = dict.routes[location];
 
   const {path} = useRouteMatch();
    return (

@@ -33,6 +33,7 @@ ReactDOM.render(
               <Route path="/lichsuboctach" component={AdminLayout} />
               <Route path="/thongtincanhan" exact component={AdminLayout} />
               <Route path="/tailieuhuongdan" exact component={AdminLayout} />
+              <Route path="/quanlynguoidung" exact component={AdminLayout} />
               {/* <Route path="/extraction" component={ExtractionLayout} /> */}
 
               {/* RTL Route */}

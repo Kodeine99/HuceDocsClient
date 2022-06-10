@@ -21,7 +21,7 @@ import React from "react";
 import routes from "../../../routes/routes";
 
 
-export default function Settings() {
+export default function ExtrHistory() {
 
   
   // Chakra Color Mode

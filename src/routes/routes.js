@@ -9,16 +9,16 @@ import {
   MdLock,
   MdOutlineShoppingCart,
   MdDescription,
-  MdBook
+  MdBook,
+  MdPersonSearch,
 } from "react-icons/md";
 
 // Admin Imports
-import MainDashboard from "views/admin/default";
+import UserManage from "views/admin/userManage";
 import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
 import DocumentView from "../views/admin/documents/index";
 import DataTables from "views/admin/dataTables";
-import RTL from "views/admin/rtl";
 import Extract from "views/extraction/default";
 
 // ICON
@@ -47,72 +47,74 @@ const routes = [
     layout: "",
     path: "/boctach",
     icon: (
-      <Icon
-        as={MdDescription}
-        width='20px'
-        height='20px'
-        color='inherit'
-      />
+      <Icon as={MdDescription} width="20px" height="20px" color="inherit" />
     ),
     component: NFTMarketplace,
     isShow: true,
     childrens: [
       {
-        path:"/thesinhvien",
+        path: "/thesinhvien",
         name: "THẺ SINH VIÊN",
-        description: "Nhận diện thẻ sinh viên, trích xuất thông tin nhanh chóng và chính xác",
+        description:
+          "Nhận diện thẻ sinh viên, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: CCCD,
         component: Extract,
       },
       {
-        path:"/bangdiem",
+        path: "/bangdiem",
         name: "BẢNG ĐIỂM",
-        description: "Nhận diện bảng điểm, trích xuất thông tin nhanh chóng và chính xác",
+        description:
+          "Nhận diện bảng điểm, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: BaiThiTN,
         component: Extract,
       },
       {
-        path:"/bangdiemtienganh",
+        path: "/bangdiemtienganh",
         name: "BẢNG ĐIỂM TIẾNG ANH",
-        description: "Nhận diện thẻ bảng điểm tiếng anh, trích xuất thông tin nhanh chóng và chính xác",
+        description:
+          "Nhận diện thẻ bảng điểm tiếng anh, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: BaiThiTN,
         component: Extract,
       },
       {
-        path:"/camkettrano",
+        path: "/camkettrano",
         name: "CAM KẾT TRẢ NỢ",
-        description: "Nhận diện giấy cam kết trả nợ, trích xuất thông tin nhanh chóng và chính xác",
+        description:
+          "Nhận diện giấy cam kết trả nợ, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: TheTinDung,
         component: Extract,
       },
       {
-        path:"/donxinnhaphoc",
+        path: "/donxinnhaphoc",
         name: "ĐƠN XIN NHẬP HỌC",
-        description: "Nhận diện đơn xin nhập học, trích xuất thông tin nhanh chóng và chính xác",
+        description:
+          "Nhận diện đơn xin nhập học, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: BocTachGiayTo,
         component: Extract,
       },
       {
-        path:"/giayxacnhantoeic",
+        path: "/giayxacnhantoeic",
         name: "GIẤY XÁC NHẬN TOEIC",
-        description: "Nhận diện giấy xác nhận Toeic, trích xuất thông tin nhanh chóng và chính xác",
+        description:
+          "Nhận diện giấy xác nhận Toeic, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: BaiThiTN,
         component: Extract,
       },
       {
-        path:"/giayxacnhanvayvon",
+        path: "/giayxacnhanvayvon",
         name: "GIẤY XÁC NHẬN VAY VỐN",
-        description: "Nhận diện giấy xác nhận vay vốn, trích xuất thông tin nhanh chóng và chính xác",
+        description:
+          "Nhận diện giấy xác nhận vay vốn, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: DKKD,
         component: Extract,
-      }
+      },
     ],
     secondary: true,
   },
   {
     name: "Lịch sử bóc tách",
     layout: "",
-    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
     path: "/lichsuboctach",
     component: DataTables,
     isShow: true,
@@ -122,36 +124,37 @@ const routes = [
     name: "Thông tin cá nhân",
     layout: "",
     path: "/thongtincanhan",
-    icon: <Icon as={MdPerson} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
     component: Profile,
     isShow: true,
   },
   {
     name: "Tài liệu hướng dẫn",
     layout: "",
-    icon: <Icon as={MdBook} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdBook} width="20px" height="20px" color="inherit" />,
     path: "/tailieuhuongdan",
     component: DocumentView,
     isShow: false,
   },
   {
+    name: "Quản lý người dùng",
+    layout: "",
+    path: "/quanlynguoidung",
+    icon: (
+      <Icon as={MdPersonSearch} width="20px" height="20px" color="inherit" />
+    ),
+    component: UserManage,
+    isShow: true,
+  },
+  {
     name: "Đăng nhập",
     layout: "/auth",
     path: "/sign-in",
-    icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
     component: SignInCentered,
     isShow: true,
-  },
-  // {
-  //   name: "Bóc tách",
-  //   layout: "/extraction",
-  //   path: "/details",
-  //   icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
-  //   component: Extract,
-  //   isShow: false,
-  // },
+  }
 ];
-
 
 // const extractRoutes = [
 //   {

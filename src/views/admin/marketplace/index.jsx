@@ -22,11 +22,11 @@ import HistoryItem from "views/admin/marketplace/components/HistoryItem";
 import NFT from "components/card/NFT";
 import Card from "components/card/Card.js";
 import DocCard from "components/card/DocCard.js";
-import ComplexTable from "views/admin/default/components/ComplexTable";
+import ComplexTable from "views/admin/userManage/components/ComplexTable";
 import {
   columnsDataComplex,
-} from "views/admin/default/variables/columnsData";
-import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
+} from "views/admin/userManage/variables/columnsData";
+import tableDataComplex from "views/admin/userManage/variables/tableDataComplex.json";
 
 
 //Icons

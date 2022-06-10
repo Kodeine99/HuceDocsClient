@@ -34,3 +34,25 @@ export const columnsDataComplex = [
     accessor: "progress",
   },
 ];
+export const columnsUserManageData = [
+  {
+    Header: "Username",
+    accessor: "name",
+  },
+  {
+    Header: "Email",
+    accessor: "email",
+  },
+  {
+    Header: "Ngày tạo",
+    accessor: "date",
+  },
+  {
+    Header: "Trạng thái",
+    accessor: "status",
+  },
+  {
+    Header: "Thao tác",
+    accessor: "progress",
+  },
+];

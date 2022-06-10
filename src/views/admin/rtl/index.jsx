@@ -24,19 +24,19 @@ import {
   MdBarChart,
   MdFileCopy,
 } from "react-icons/md";
-import CheckTable from "views/admin/default/components/CheckTable";
-import ComplexTable from "views/admin/default/components/ComplexTable";
-import DailyTraffic from "views/admin/default/components/DailyTraffic";
-import PieCard from "views/admin/default/components/PieCard";
-import Tasks from "views/admin/default/components/Tasks";
-import TotalSpent from "views/admin/default/components/TotalSpent";
-import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
+import CheckTable from "views/admin/userManage/components/CheckTable";
+import ComplexTable from "views/admin/userManage/components/ComplexTable";
+import DailyTraffic from "views/admin/userManage/components/DailyTraffic";
+import PieCard from "views/admin/userManage/components/PieCard";
+import Tasks from "views/admin/userManage/components/Tasks";
+import TotalSpent from "views/admin/userManage/components/TotalSpent";
+import WeeklyRevenue from "views/admin/userManage/components/WeeklyRevenue";
 import {
   columnsDataCheck,
   columnsDataComplex,
-} from "views/admin/default/variables/columnsData";
-import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
-import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
+} from "views/admin/userManage/variables/columnsData";
+import tableDataCheck from "views/admin/userManage/variables/tableDataCheck.json";
+import tableDataComplex from "views/admin/userManage/variables/tableDataComplex.json";
 
 export default function UserReports() {
   // Chakra Color Mode
