@@ -33,8 +33,14 @@ import docTypeDataObj from "views/admin/marketplace/variables/docTypeDataObj.js"
 
 export default function Extract() {
 
-  
-  const [docTypeData, setDocTypeData] = useState(docTypeDataObj);
+  const docTypeDatas = routes.map((route) => {
+    return route.childrens
+  });
+  console.log("Data:",docTypeDatas);
+
+
+  const [docTypeData, setDocTypeData] = useState(docTypeDatas);
+
   const getRoute = () => {
     return window.location.pathname !== "/full-screen-maps";
   };
@@ -94,41 +100,44 @@ export default function Extract() {
                 ms={{ base: "24px", md: "0px" }}
                 mt={{ base: "20px", md: "0px" }}
               >
-                <Link
+                <Button
                   color={textColorBrand}
                   fontWeight="500"
                   me={{ base: "34px", md: "44px" }}
-                  to="#art"
+                  variant="ghost"
+                  //to="#art"
                 >
                   All
-                </Link>
-                <Link
+                </Button>
+                <Button
                   color={textColorBrand}
                   fontWeight="500"
                   me={{ base: "34px", md: "44px" }}
-                  to="#music"
+                  //to="#music"
+                  variant="ghost"
                 >
                   Giấy tờ cá nhân
-                </Link>
-                <Link
+                </Button>
+                <Button
                   color={textColorBrand}
                   fontWeight="500"
                   me={{ base: "34px", md: "44px" }}
-                  to="#collectibles"
+                  //to="#collectibles"
                 >
                   Bảng điểm
-                </Link>
-                <Link
+                </Button>
+                <Button
                   color={textColorBrand}
                   fontWeight="500"
                   me={{ base: "34px", md: "44px" }}
-                  to="#collectibles"
+                  //to="#collectibles"
+                  variant="ghost"
                 >
                   Đơn
-                </Link>
-                <Link color={textColorBrand} fontWeight="500" to="#sports">
+                </Button>
+                <Button color={textColorBrand} fontWeight="500" variant="ghost">
                   Khác
-                </Link>
+                </Button>
               </Flex>
             </Flex>
             <SimpleGrid columns={{ base: 1, md: 3 }} gap="20px">

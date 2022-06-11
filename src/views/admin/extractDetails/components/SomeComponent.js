@@ -21,6 +21,20 @@ export const SomeComponent = () => {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorBrand = useColorModeValue("brand.500", "white");
 
+  const docTypeDatas = routes
+    .filter((route) => route.name === "Bóc tách tài liệu")
+    .map((route) => route.childrens)[0];
+
+  const [dataTypeArr, setDataTypeArr] = React.useState(docTypeDatas);
+  //console.log("dataTypeArr", dataTypeArr);
+
+  const filterDocType = (category) => {
+    let newDocTypeArr = docTypeDatas.filter(
+      (child) => child.category === category
+    );
+    //console.log("docTypeArr after filter:",newDocTypeArr);
+    setDataTypeArr(newDocTypeArr);
+  };
   return (
     <Box pt={{ base: "180px", md: "80px", xl: "80px" }}>
       {/* Main Fields */}
@@ -28,7 +42,7 @@ export const SomeComponent = () => {
         mb="20px"
         gridTemplateColumns={{ xl: "repeat(3, 1fr)", "2xl": "1fr 0.46fr" }}
         gap={{ base: "20px", xl: "20px" }}
-        display={{ base: "block", xl: "grid" }}
+        display={{ base: "block", xl: "grid", md: "grid" }}
       >
         <Flex
           flexDirection="column"
@@ -52,46 +66,59 @@ export const SomeComponent = () => {
                 ms={{ base: "24px", md: "0px" }}
                 mt={{ base: "20px", md: "0px" }}
               >
-                <Link
+                <Button
                   color={textColorBrand}
                   fontWeight="500"
-                  me={{ base: "34px", md: "44px" }}
-                  to="#art"
+                  me={{ base: "12px", md: "15px" }}
+                  //to="#art"
+                  variant="ghost"
+                  onClick={() => setDataTypeArr(docTypeDatas)}
                 >
                   All
-                </Link>
-                <Link
+                </Button>
+                <Button
                   color={textColorBrand}
                   fontWeight="500"
-                  me={{ base: "34px", md: "44px" }}
-                  to="#music"
+                  me={{ base: "12px", md: "15px" }}
+                  //to="#music"
+                  variant="ghost"
+                  onClick={() => filterDocType("Giấy tờ cá nhân")}
                 >
                   Giấy tờ cá nhân
-                </Link>
-                <Link
+                </Button>
+                <Button
                   color={textColorBrand}
                   fontWeight="500"
-                  me={{ base: "34px", md: "44px" }}
-                  to="#collectibles"
+                  me={{ base: "12px", md: "15px" }}
+                  //to="#collectibles"
+                  variant="ghost"
+                  onClick={() => filterDocType("Bảng điểm")}
                 >
                   Bảng điểm
-                </Link>
-                <Link
+                </Button>
+                <Button
                   color={textColorBrand}
                   fontWeight="500"
-                  me={{ base: "34px", md: "44px" }}
-                  to="#collectibles"
+                  me={{ base: "12px", md: "15px" }}
+                  //to="#collectibles"
+                  variant="ghost"
+                  onClick={() => filterDocType("Đơn")}
                 >
                   Đơn
-                </Link>
-                <Link color={textColorBrand} fontWeight="500" to="#sports">
+                </Button>
+                <Button
+                  color={textColorBrand}
+                  fontWeight="500"
+                  variant="ghost"
+                  onClick={() => filterDocType("Khác")}
+                >
                   Khác
-                </Link>
+                </Button>
               </Flex>
             </Flex>
             <SimpleGrid columns={{ base: 1, md: 3 }} gap="20px">
               {/* render DoctypeCard */}
-              {routes.map((route) =>
+              {/* {routes.map((route) =>
                 route.layout === "" &&
                 typeof route.childrens !== "undefined" &&
                 route.childrens.length > 0
@@ -105,7 +132,16 @@ export const SomeComponent = () => {
                       />
                     ))
                   : null
-              )}
+              )} */}
+              {dataTypeArr.map((docType, index) => (
+                <DocCard
+                  name={docType.name}
+                  description={docType.description}
+                  image={docType.imgPath}
+                  docPath={docType.path}
+                  key={index}
+                />
+              ))}
             </SimpleGrid>
           </Flex>
         </Flex>

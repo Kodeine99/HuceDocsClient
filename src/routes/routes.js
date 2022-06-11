@@ -59,6 +59,7 @@ const routes = [
           "Nhận diện thẻ sinh viên, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: CCCD,
         component: Extract,
+        category: "Giấy tờ cá nhân"
       },
       {
         path: "/bangdiem",
@@ -67,6 +68,7 @@ const routes = [
           "Nhận diện bảng điểm, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: BaiThiTN,
         component: Extract,
+        category: "Bảng điểm"
       },
       {
         path: "/bangdiemtienganh",
@@ -75,6 +77,7 @@ const routes = [
           "Nhận diện thẻ bảng điểm tiếng anh, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: BaiThiTN,
         component: Extract,
+        category: "Bảng điểm"
       },
       {
         path: "/camkettrano",
@@ -83,6 +86,7 @@ const routes = [
           "Nhận diện giấy cam kết trả nợ, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: TheTinDung,
         component: Extract,
+        category: "Khác"
       },
       {
         path: "/donxinnhaphoc",
@@ -91,6 +95,7 @@ const routes = [
           "Nhận diện đơn xin nhập học, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: BocTachGiayTo,
         component: Extract,
+        category: "Đơn"
       },
       {
         path: "/giayxacnhantoeic",
@@ -99,6 +104,7 @@ const routes = [
           "Nhận diện giấy xác nhận Toeic, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: BaiThiTN,
         component: Extract,
+        category: "Khác"
       },
       {
         path: "/giayxacnhanvayvon",
@@ -107,6 +113,7 @@ const routes = [
           "Nhận diện giấy xác nhận vay vốn, trích xuất thông tin nhanh chóng và chính xác",
         imgPath: DKKD,
         component: Extract,
+        category: "Khác"
       },
     ],
     secondary: true,
@@ -118,6 +125,7 @@ const routes = [
     path: "/lichsuboctach",
     component: DataTables,
     isShow: true,
+    childrens: [],
     secondary: true,
   },
   {
@@ -127,6 +135,7 @@ const routes = [
     icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
     component: Profile,
     isShow: true,
+    childrens: [],
   },
   {
     name: "Tài liệu hướng dẫn",
@@ -135,6 +144,7 @@ const routes = [
     path: "/tailieuhuongdan",
     component: DocumentView,
     isShow: false,
+    childrens: [],
   },
   {
     name: "Quản lý người dùng",
@@ -145,6 +155,7 @@ const routes = [
     ),
     component: UserManage,
     isShow: true,
+    childrens: [],
   },
   {
     name: "Đăng nhập",
@@ -153,6 +164,7 @@ const routes = [
     icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
     component: SignInCentered,
     isShow: true,
+    childrens: [],
   }
 ];
 

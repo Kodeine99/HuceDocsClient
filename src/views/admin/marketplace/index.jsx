@@ -85,13 +85,15 @@ export default function Marketplace() {
                 me='20px'
                 ms={{ base: "24px", md: "0px" }}
                 mt={{ base: "20px", md: "0px" }}>
-                <Link
+                <Button
                   color={textColorBrand}
                   fontWeight='500'
                   me={{ base: "34px", md: "44px" }}
-                  to='#art'>
+                  //to='#art'
+                  variant='ghost'
+                  >
                   All
-                </Link>
+                </Button>
                 <Link
                   color={textColorBrand}
                   fontWeight='500'
