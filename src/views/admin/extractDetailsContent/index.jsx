@@ -20,6 +20,7 @@ import Storage from "views/admin/profile/components/Storage";
 // Assets
 import banner from "assets/img/auth/banner.png";
 import avatar from "assets/img/avatars/avatar4.png";
+import ExtrUploadFile from "../extractDetails/components/ExtrUploadFile";
 
 // Custom Chakra theme
 export default function ExtractDetailsContent(props) {
@@ -30,6 +31,7 @@ export default function ExtractDetailsContent(props) {
         p={{ base: "20px", md: "30px" }}
         pe="20px"
         minH="100vh"
+        
         pt="50px"
       >
         <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -41,7 +43,7 @@ export default function ExtractDetailsContent(props) {
             }}
             gap={{ base: "20px", xl: "20px" }}
           >
-            <Upload />
+            <ExtrUploadFile />
           </Grid>
         </Box>
       </Box>

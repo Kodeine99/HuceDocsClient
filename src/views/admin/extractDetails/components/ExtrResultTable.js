@@ -35,7 +35,7 @@ import { MdCheckCircle, MdCancel, MdOutlineError, MdOutlinePendingActions, MdDom
 // Custom components
 import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
-export default function ExtrHistoryTable(props) {
+export default function ExtrResultTable(props) {
   const { columnsData, tableData } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
@@ -97,18 +97,10 @@ export default function ExtrHistoryTable(props) {
       direction='column'
       w='100%'
       px='0px'
-      overflowX={{ sm: "scroll", lg: "hidden" }}>
-      <Flex px='25px' justify='space-between' mb='20px' align='center'>
-        <Text
-          color={textColor}
-          fontSize='22px'
-          fontWeight='700'
-          lineHeight='100%'>
-          Danh sách các files bóc tách
-        </Text>
-        {/* <Menu /> */}
-      </Flex>
-      <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
+      //overflowX={{ sm: "scroll", lg: "hidden" }}
+      >
+      
+      <Table {...getTableProps()} variant='simple' color='gray.500' >
         <Thead>
           {headerGroups.map((headerGroup, index) => (
             <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
@@ -196,7 +188,7 @@ export default function ExtrHistoryTable(props) {
                       <Flex align='center'>
                         <IconButton  
                           colorScheme='purple' 
-                          icon={<EditIcon />} 
+                          icon={<ViewIcon />} 
                           variant='ghost'
                         />
                         <IconButton  
@@ -204,13 +196,6 @@ export default function ExtrHistoryTable(props) {
                           icon={<DeleteIcon />} 
                           variant='ghost'
                         />
-                        {/* <Progress
-                          variant='table'
-                          colorScheme='brandScheme'
-                          h='8px'
-                          w='108px'
-                          value={cell.value}
-                        /> */}
                       </Flex>
                     );
                   }
@@ -279,7 +264,7 @@ export default function ExtrHistoryTable(props) {
               <NumberDecrementStepper />
             </NumberInputStepper>
           </NumberInput>
-          <Select
+          {/* <Select
             w={32}
             value={pageSize}
             onChange={(e) => {
@@ -291,7 +276,7 @@ export default function ExtrHistoryTable(props) {
                 Show {pageSize}
               </option>
             ))}
-          </Select>
+          </Select> */}
         </Flex>
 
         <Flex>

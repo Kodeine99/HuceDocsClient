@@ -7,7 +7,7 @@ import {
   columnsDataCheck,
 } from "views/admin/dataTables/variables/columnsData";
 
-import tableDataFiles from "views/admin/dataTables/variables/tableDataFiles.json";
+import extrHistoryData from "views/admin/extrHistory/variables/extrHistoryData.json";
 
 import React from "react";
 import routes from "../../../routes/routes";
@@ -28,7 +28,7 @@ export default function ExtrHistory() {
           columnsData={columnsDataDevelopment}
           tableData={tableDataDevelopment}
         /> */}
-        <ExtrHistoryTable columnsData={columnsDataCheck} tableData={tableDataFiles} />
+        <ExtrHistoryTable columnsData={columnsDataCheck} tableData={extrHistoryData} />
         {/* <ColumnsTable
           columnsData={columnsDataColumns}
           tableData={tableDataColumns}
