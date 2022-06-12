@@ -18,6 +18,15 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Select,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import {
@@ -28,9 +37,23 @@ import {
 } from "react-table";
 
 // Assets
-import {ViewIcon, DeleteIcon, EditIcon, ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon} from '@chakra-ui/icons';
-import { MdCheckCircle, MdCancel, MdOutlineError, MdOutlinePendingActions, MdDomainVerification, MdCancelPresentation } from "react-icons/md";
-
+import {
+  ViewIcon,
+  DeleteIcon,
+  EditIcon,
+  ArrowLeftIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ArrowRightIcon,
+} from "@chakra-ui/icons";
+import {
+  MdCheckCircle,
+  MdCancel,
+  MdOutlineError,
+  MdOutlinePendingActions,
+  MdDomainVerification,
+  MdCancelPresentation,
+} from "react-icons/md";
 
 // Custom components
 import Card from "components/card/Card";
@@ -40,7 +63,6 @@ export default function ExtrResultTable(props) {
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
-
 
   const {
     getTableProps,
@@ -70,51 +92,53 @@ export default function ExtrResultTable(props) {
     useSortBy,
     usePagination
   );
-  // const tableInstance = useTable(
-  //   {
-  //     columns,
-  //     data,
-  //   },
-  //   useGlobalFilter,
-  //   useSortBy,
-  //   usePagination
-  // );
+  // Test Modal
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [size, setSize] = React.useState('md')
 
-  // const {
-  //   getTableProps,
-  //   getTableBodyProps,
-  //   headerGroups,
-  //   page,
-  //   prepareRow,
-  //   initialState,
-  // } = tableInstance;
-  // initialState.pageSize = 11;
+  const OverlayTwo = () => (
+    <ModalOverlay
+      bg='none'
+      backdropFilter='auto'
+      backdropInvert='80%'
+      backdropBlur='2px'
+    />
+  )
+  const [overlay, setOverlay] = React.useState(<OverlayTwo />)
+
+
+  const handleSizeClick = (newSize) => {
+    setSize(newSize)
+    onOpen()
+  }
+  
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   return (
     <Card
-      direction='column'
-      w='100%'
-      px='0px'
+      direction="column"
+      w="100%"
+      px="0px"
       //overflowX={{ sm: "scroll", lg: "hidden" }}
-      >
-      
-      <Table {...getTableProps()} variant='simple' color='gray.500' >
+    >
+      <Table {...getTableProps()} variant="simple" color="gray.500">
         <Thead>
           {headerGroups.map((headerGroup, index) => (
             <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
               {headerGroup.headers.map((column, index) => (
                 <Th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  pe='10px'
+                  pe="10px"
                   key={index}
-                  borderColor={borderColor}>
+                  borderColor={borderColor}
+                >
                   <Flex
-                    justify='space-between'
-                    align='center'
+                    justify="space-between"
+                    align="center"
                     fontSize={{ sm: "10px", lg: "12px" }}
-                    color='gray.400'>
+                    color="gray.400"
+                  >
                     {column.render("Header")}
                   </Flex>
                 </Th>
@@ -131,19 +155,19 @@ export default function ExtrResultTable(props) {
                   let data = "";
                   if (cell.column.Header === "TÊN FILE") {
                     data = (
-                      <Flex align='center'>
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                      <Flex align="center">
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value[0]}
                         </Text>
                       </Flex>
                     );
                   } else if (cell.column.Header === "TRẠNG THÁI") {
                     data = (
-                      <Flex align='center'>
+                      <Flex align="center">
                         <Icon
-                          w='24px'
-                          h='24px'
-                          me='5px'
+                          w="24px"
+                          h="24px"
+                          me="5px"
                           color={
                             cell.value === "Bóc tách thành công"
                               ? "green.500"
@@ -163,38 +187,44 @@ export default function ExtrResultTable(props) {
                               : null
                           }
                         />
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}
                         </Text>
                       </Flex>
                     );
                   } else if (cell.column.Header === "SỐ TRANG") {
                     data = (
-                      <Flex align='center'>
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                      <Flex align="center">
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}
                         </Text>
                       </Flex>
-                      
                     );
                   } else if (cell.column.Header === "NGÀY TẠO") {
                     data = (
-                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
                   } else if (cell.column.Header === "THAO TÁC") {
                     data = (
-                      <Flex align='center'>
-                        <IconButton  
-                          colorScheme='purple' 
-                          icon={<ViewIcon />} 
-                          variant='ghost'
+                      <Flex align="center">
+                        <IconButton
+                          colorScheme="purple"
+                          icon={<ViewIcon />}
+                          variant="ghost"
+                          onClick={() => {
+                            setOverlay(<OverlayTwo />)
+                            onOpen()
+                          }}
+                          key={size}
+                          m={4}
+                          
                         />
-                        <IconButton  
-                          colorScheme='purple' 
-                          icon={<DeleteIcon />} 
-                          variant='ghost'
+                        <IconButton
+                          colorScheme="purple"
+                          icon={<DeleteIcon />}
+                          variant="ghost"
                         />
                       </Flex>
                     );
@@ -205,7 +235,8 @@ export default function ExtrResultTable(props) {
                       key={index}
                       fontSize={{ sm: "14px" }}
                       minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                      borderColor='transparent'>
+                      borderColor="transparent"
+                    >
                       {data}
                     </Td>
                   );
@@ -215,6 +246,17 @@ export default function ExtrResultTable(props) {
           })}
         </Tbody>
       </Table>
+      <Modal onClose={onClose} size={size} isOpen={isOpen}>
+        {overlay}
+        <ModalContent>
+          <ModalHeader>Venus DB PRO</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>{/* <Lorem count={2} /> */}</ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Flex justifyContent="space-between" m={4} alignItems="center">
         <Flex>
           <Tooltip label="First Page">
