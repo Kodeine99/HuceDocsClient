@@ -12,13 +12,14 @@ import {
   MdBook,
   MdPersonSearch,
 } from "react-icons/md";
-
+import {HiDocumentSearch} from "react-icons/hi";
 // Admin Imports
 import UserManage from "views/admin/userManage";
 import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
 import DocumentView from "../views/admin/documents/index";
 import DataTables from "views/admin/dataTables";
+import DocumentManage from "views/admin/documentManage/index";
 import Extract from "views/extraction/default";
 
 // ICON
@@ -129,6 +130,28 @@ const routes = [
     secondary: true,
   },
   {
+    name: "Quản lý người dùng",
+    layout: "",
+    path: "/quanlynguoidung",
+    icon: (
+      <Icon as={MdPersonSearch} width="20px" height="20px" color="inherit" />
+    ),
+    component: UserManage,
+    isShow: true,
+    childrens: [],
+  },
+  {
+    name: "Quản lý tài liệu",
+    layout: "",
+    path: "/quanlytailieu",
+    icon: (
+      <Icon as={HiDocumentSearch} width="20px" height="20px" color="inherit" />
+    ),
+    component: DocumentManage,
+    isShow: true,
+    childrens: [],
+  },
+  {
     name: "Thông tin cá nhân",
     layout: "",
     path: "/thongtincanhan",
@@ -146,17 +169,7 @@ const routes = [
     isShow: false,
     childrens: [],
   },
-  {
-    name: "Quản lý người dùng",
-    layout: "",
-    path: "/quanlynguoidung",
-    icon: (
-      <Icon as={MdPersonSearch} width="20px" height="20px" color="inherit" />
-    ),
-    component: UserManage,
-    isShow: true,
-    childrens: [],
-  },
+  
   {
     name: "Đăng nhập",
     layout: "/auth",

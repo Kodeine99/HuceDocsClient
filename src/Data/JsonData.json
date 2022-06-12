@@ -1,0 +1,21 @@
+[
+  {
+    "TYPE": "GIAY_XAC_NHAN_TOEIC",
+    "DATA": [
+      {
+        "HO_TEN": "Trương Việt Hà",
+        "NGAY_SINH": "22/8/1998",
+        "MSSV": "68661",
+        "LOP": "61MNE",
+        "NGANH_HOC": "Kỹ thuật Cấp thoát nước",
+        "HE_DAO_TAO": "Đại học chính quy",
+        "KHOA": "Kỹ thuật Môi trường",
+        "NDXN": "Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.",
+        "DIEM_THI": "490/990",
+        "DOT_THI": "8/2020",
+        "NGAY_XAC_NHAN": "17/12/2021",
+        "ECM_ID": ""
+      }
+    ]
+  }
+]

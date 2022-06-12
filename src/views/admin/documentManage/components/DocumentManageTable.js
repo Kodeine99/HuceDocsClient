@@ -1,23 +1,22 @@
 import {
   Flex,
-  Table,
-  Progress,
   Icon,
+  IconButton,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Select,
+  Table,
   Tbody,
   Td,
   Text,
   Th,
   Thead,
+  Tooltip,
   Tr,
   useColorModeValue,
-  IconButton, 
-  Tooltip,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Select
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import {
@@ -26,17 +25,20 @@ import {
   useSortBy,
   useTable,
 } from "react-table";
-// Icons
-import {ViewIcon, DeleteIcon, EditIcon, UnlockIcon, LockIcon, ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon} from '@chakra-ui/icons';
 
 // Custom components
 import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
-
-// Assets
-import { MdCheckCircle, MdCancel, MdOutlineError, MdEdit } from "react-icons/md";
-import { NavLink } from "react-router-dom";
-export default function UserManageTable(props) {
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  DeleteIcon,
+  EditIcon,
+} from "@chakra-ui/icons";
+import { MdCheckCircle, MdOutlineError } from "react-icons/md";
+export default function DocumentManageTable(props) {
   const { columnsData, tableData } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
@@ -70,6 +72,7 @@ export default function UserManageTable(props) {
     useSortBy,
     usePagination
   );
+
   // const tableInstance = useTable(
   //   {
   //     columns,
@@ -88,40 +91,45 @@ export default function UserManageTable(props) {
   //   prepareRow,
   //   initialState,
   // } = tableInstance;
-  // initialState.pageSize = 10;
+  // initialState.pageSize = 5;
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   return (
     <Card
-      direction='column'
-      w='100%'
-      px='0px'
-      overflowX={{ sm: "scroll", lg: "hidden" }}>
-      <Flex px='25px' justify='space-between' mb='10px' align='center'>
+      direction="column"
+      w="100%"
+      px="0px"
+      overflowX={{ sm: "scroll", lg: "hidden" }}
+    >
+      <Flex px="25px" justify="space-between" mb="20px" align="center">
         <Text
           color={textColor}
-          fontSize='22px'
-          fontWeight='700'
-          lineHeight='100%'>
-          Quản lý users
+          fontSize="22px"
+          fontWeight="700"
+          lineHeight="100%"
+        >
+          Quản lý tài liệu bóc tách
         </Text>
       </Flex>
-      <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
+      <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
+        {/* Table Header */}
         <Thead>
           {headerGroups.map((headerGroup, index) => (
             <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
               {headerGroup.headers.map((column, index) => (
                 <Th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  pe='10px'
+                  pe="10px"
                   key={index}
-                  borderColor={borderColor}>
+                  borderColor={borderColor}
+                >
                   <Flex
-                    justify='space-between'
-                    align='center'
-                    fontSize={{ sm: "12px", lg: "14px" }}
-                    color='gray.400'>
+                    justify="space-between"
+                    align="center"
+                    fontSize={{ sm: "10px", lg: "12px" }}
+                    color="gray.400"
+                  >
                     {column.render("Header")}
                   </Flex>
                 </Th>
@@ -129,87 +137,108 @@ export default function UserManageTable(props) {
             </Tr>
           ))}
         </Thead>
+        {/* Table Content */}
         <Tbody {...getTableBodyProps()}>
-          {page.map((row, index) => {
+          {page.map((row, indexx) => {
             prepareRow(row);
+
             return (
-              <Tr {...row.getRowProps()} key={index}>
+              <Tr {...row.getRowProps()} key={indexx}>
                 {row.cells.map((cell, index) => {
                   let data = "";
-                  if (cell.column.Header === "Username") {
+                  if (cell.column.Header === "TICKET ID") {
                     data = (
-                      <Text color={textColor} fontSize='sm' fontWeight='700'>
-                        {cell.value}
-                      </Text>
-                    );
-                  } else if (cell.column.Header === "Email") {
-                    data = (
-                      <Text color={textColor} fontSize='sm' fontWeight='700'>
-                        {cell.value}
-                      </Text>
-                    );
-                  } else if (cell.column.Header === "Trạng thái") {
-                    data = (
-                      <Flex align='center'>
-                        <Icon
-                          w='24px'
-                          h='24px'
-                          me='5px'
-                          color={
-                            cell.value === "Active"
-                              ? "green.500"
-                              : cell.value === "Deactive"
-                              ? "red.500"
-                              : null
-                          }
-                          as={
-                            cell.value === "Active"
-                              ? MdCheckCircle
-                              : cell.value === "Deactive"
-                              ? MdOutlineError
-                              : null
-                          }
-                        />
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                      <Flex align="center">
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}
                         </Text>
                       </Flex>
                     );
-                  } else if (cell.column.Header === "Ngày tạo") {
+                  } else if (cell.column.Header === "TYPE") {
                     data = (
-                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                      <Flex align="center">
+                        <Text
+                          me="10px"
+                          color={textColor}
+                          fontSize="sm"
+                          fontWeight="700"
+                        >
+                          {cell.value}
+                        </Text>
+                      </Flex>
+                    );
+                  } else if (cell.column.Header === "NGƯỜI TẠO") {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === "Thao tác") {
+                  } else if (cell.column.Header === "NGÀY TẠO") {
                     data = (
-                      <Flex align='center'>
-                        <IconButton  
-                          //as={MdEdit}
-                          colorScheme='purple' 
-                          icon={<EditIcon />} 
-                          variant='ghost'
-                          size="sm"
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === "NGÀY CẬP NHẬT") {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === "TRẠNG THÁI") {
+                    data = (
+                      <Flex align="center">
+                        <Icon
+                          w="24px"
+                          h="24px"
+                          me="5px"
+                          color={
+                            cell.value === 1
+                              ? "green.500"
+                              : cell.value === 0
+                              ? "red.500"
+                              : null
+                          }
+                          as={
+                            cell.value === 1
+                              ? MdCheckCircle
+                              : cell.value === 0
+                              ? MdOutlineError
+                              : null
+                          }
                         />
-                        <IconButton  
-                          //as={MdEdit}
-                          colorScheme='purple' 
-                          icon={<LockIcon />} 
-                          variant='ghost'
-                          size="sm"
+                        {cell.value === 1 ? (
+                          <Text
+                            color={textColor}
+                            fontSize="sm"
+                            fontWeight="700"
+                          >
+                            {"Active"}
+                          </Text>
+                        ) : (
+                          <Text
+                            color={textColor}
+                            fontSize="sm"
+                            fontWeight="700"
+                          >
+                            {"Đã xoá"}
+                          </Text>
+                        )}
+                      </Flex>
+                    );
+                  } else if (cell.column.Header === "THAO TÁC") {
+                    data = (
+                      <Flex align="center">
+                        <IconButton
+                          colorScheme="purple"
+                          icon={<EditIcon />}
+                          variant="ghost"
                         />
-                        {/* <IconButton  
-                          colorScheme='purple' 
-                          icon={<DeleteIcon />} 
-                          variant='ghost'
-                        /> */}
-                        {/* <Progress
-                          variant='table'
-                          colorScheme='brandScheme'
-                          h='8px'
-                          w='108px'
-                          value={cell.value}
-                        /> */}
+                        <IconButton
+                          colorScheme="purple"
+                          icon={<DeleteIcon />}
+                          variant="ghost"
+                        />
                       </Flex>
                     );
                   }
@@ -218,10 +247,9 @@ export default function UserManageTable(props) {
                       {...cell.getCellProps()}
                       key={index}
                       fontSize={{ sm: "14px" }}
-                      maxH='30px !important'
-                      py='8px'
                       minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                      borderColor='transparent'>
+                      borderColor="transparent"
+                    >
                       {data}
                     </Td>
                   );
