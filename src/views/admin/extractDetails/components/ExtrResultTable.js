@@ -27,6 +27,7 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import React, { useMemo } from "react";
 import {
@@ -46,6 +47,7 @@ import {
   ChevronRightIcon,
   ArrowRightIcon,
 } from "@chakra-ui/icons";
+
 import {
   MdCheckCircle,
   MdCancel,
@@ -55,11 +57,50 @@ import {
   MdCancelPresentation,
 } from "react-icons/md";
 
+import personalIdentificationCard from "../../../../assets/img/docs/personal-identification-card.png";
+import IoNewspaperOutline from "../../../../assets/img/docs/documentCheck.png";
+
 // Custom components
 import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
+import ExtractResultCard from "../../../../components/card/ExtractResultCard";
 export default function ExtrResultTable(props) {
-  const { columnsData, tableData } = props;
+  const ocrData = [
+    {
+      TYPE: "GIAY_XAC_NHAN_TOEIC",
+      DATA: [
+        {
+          HO_TEN: "Trương Việt Hà",
+          NGAY_SINH: "22/8/1998",
+          MSSV: "68661",
+          LOP: "61MNE",
+          NGANH_HOC: "Kỹ thuật Cấp thoát nước",
+          HE_DAO_TAO: "Đại học chính quy",
+          KHOA: "Kỹ thuật Môi trường",
+          NDXN: "Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.",
+          DIEM_THI: "490/990",
+          DOT_THI: "8/2020",
+          NGAY_XAC_NHAN: "17/12/2021",
+          ECM_ID: "",
+        },
+        {
+          HO_TEN: "Nguyễn Văn Tùng",
+          NGAY_SINH: "25/10/1999",
+          MSSV: "228062",
+          LOP: "62PM1",
+          NGANH_HOC: "Công nghệ phần mềm",
+          HE_DAO_TAO: "Đại học chính quy",
+          KHOA: "Công nghệ thông tin",
+          NDXN: "Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.",
+          DIEM_THI: "825/990",
+          DOT_THI: "1/2022",
+          NGAY_XAC_NHAN: "17/1/2021",
+          ECM_ID: "",
+        },
+      ],
+    },
+  ];
+  const { columnsData, tableData, modalTitle } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -93,25 +134,23 @@ export default function ExtrResultTable(props) {
     usePagination
   );
   // Test Modal
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [size, setSize] = React.useState('md')
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [size, setSize] = React.useState("md");
 
   const OverlayTwo = () => (
     <ModalOverlay
-      bg='none'
-      backdropFilter='auto'
-      backdropInvert='80%'
-      backdropBlur='2px'
+      bg="none"
+      backdropFilter="auto"
+      backdropInvert="80%"
+      backdropBlur="2px"
     />
-  )
-  const [overlay, setOverlay] = React.useState(<OverlayTwo />)
-
+  );
+  const [overlay, setOverlay] = React.useState(<OverlayTwo />);
 
   const handleSizeClick = (newSize) => {
-    setSize(newSize)
-    onOpen()
-  }
-  
+    setSize(newSize);
+    onOpen();
+  };
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -214,18 +253,12 @@ export default function ExtrResultTable(props) {
                           icon={<ViewIcon />}
                           variant="ghost"
                           onClick={() => {
-                            setOverlay(<OverlayTwo />)
-                            onOpen()
+                            setOverlay(<OverlayTwo />);
+                            onOpen();
                           }}
                           key={size}
-                          m={4}
-                          
                         />
-                        <IconButton
-                          colorScheme="purple"
-                          icon={<DeleteIcon />}
-                          variant="ghost"
-                        />
+                        {/* {if (cells.)} */}
                       </Flex>
                     );
                   }
@@ -238,6 +271,7 @@ export default function ExtrResultTable(props) {
                       borderColor="transparent"
                     >
                       {data}
+                      
                     </Td>
                   );
                 })}
@@ -246,12 +280,32 @@ export default function ExtrResultTable(props) {
           })}
         </Tbody>
       </Table>
-      <Modal onClose={onClose} size={size} isOpen={isOpen}>
+      <Modal onClose={onClose} size="full" isOpen={isOpen}>
         {overlay}
         <ModalContent>
-          <ModalHeader>Venus DB PRO</ModalHeader>
+          <ModalHeader>{modalTitle}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>{/* <Lorem count={2} /> */}</ModalBody>
+          <ModalBody>
+            <SimpleGrid columns={{ base: 3, md: 3 }} gap="20px" >
+              {ocrData.map((item, index) => {
+                return (
+                  <>
+                    {typeof item.DATA !== "undefined" && item.DATA.length > 0
+                      ? item.DATA.map((childItem, index) => {
+                          return (
+                            <ExtractResultCard
+                              type={item?.TYPE}
+                              data={childItem}
+                              icon={IoNewspaperOutline}
+                            />
+                          );
+                        })
+                      : null}
+                  </>
+                );
+              })}
+            </SimpleGrid>
+          </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Close</Button>
           </ModalFooter>

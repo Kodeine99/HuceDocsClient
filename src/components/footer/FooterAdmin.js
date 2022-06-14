@@ -10,6 +10,7 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
 
 export default function Footer() {
   const textColor = useColorModeValue("gray.400", "white");
@@ -42,7 +43,7 @@ export default function Footer() {
           <Link
             mx='3px'
             color={textColor}
-            href='https://www.simmmple.com'
+            href='https://github.com/Kodeine99'
             target='_blank'
             fontWeight='700'>
             Tung Ramen!
@@ -55,24 +56,24 @@ export default function Footer() {
             base: "20px",
             md: "44px",
           }}>
-          <Link
+          <NavLink
             fontWeight='500'
             color={textColor}
-            href='mailto:hello@simmmple.com'>
+            to='/tailieuhuongdan'>
             Documentation
-          </Link>
+          </NavLink>
         </ListItem>
         <ListItem
           me={{
             base: "20px",
             md: "44px",
           }}>
-          <Link
+          <NavLink
             fontWeight='500'
             color={textColor}
-            href='https://www.simmmple.com/licenses'>
+            to='/tailieuhuongdan'>
             Contact
-          </Link>
+          </NavLink>
         </ListItem>
         {/* <ListItem
           me={{
