@@ -33,7 +33,7 @@ export function InputSelect(props) {
       <FormControl {...field} isInvalid={form.errors.name && form.touched.name}> 
       <Flex direction={"column"}>
         <FormLabel
-          mt="20px"
+          mt="5px"
           ms="4px"
           fontSize="lg"
           fontWeight="500"
@@ -44,7 +44,7 @@ export function InputSelect(props) {
           {label}
           {/* <Text color={brandStars}>*</Text> */}
         </FormLabel>
-        <Select placeholder={placeholder} defaultValue={defaultValue}>
+        <Select placeholder={placeholder} defaultValue={defaultValue} size="lg">
           <option value="">Choose</option>
           <option value={0}>Female</option>
           <option value={1}>Male</option>
