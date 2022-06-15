@@ -18,6 +18,8 @@ import * as Yup from "yup";
 import LoginInput from "components/shared/inputField/InputField";
 import InputWithHide from "components/shared/inputField/InputFieldWithHide";
 import { NavLink } from "react-router-dom";
+import ProfileField from "components/shared/customFields/ProfileField";
+import { InputSelect } from "components/shared/customFields/InputSelect";
 // Assets
 export default function GeneralInformation(props) {
   const { ...rest } = props;
@@ -40,17 +42,29 @@ export default function GeneralInformation(props) {
 
   // setup formik
   const initialValues = {
-    username: "",
-    password: "",
+    fullname: "Tung Ramen",
+    username: "tungramen99",
+    email: "tungramen99@gmail.com",
+    phoneNumber: "0989898989",
+    age: 23,
+    birthday: "",
+    address: "Van Quan, Ha Dong, Ha Noi",
+    gender: 0
   };
   // setup Yup
   const validationSchema = Yup.object().shape({
     username: Yup.string().required("Username is required"),
-    password: Yup.string().required("Password is required"),
+    fullname: Yup.string().required("Fullname is required"),
+    email: Yup.string().email("Email is invalid").required("Email is require."),
+    phoneNumber: Yup.string().required("This field is require."),
+    age: Yup.string().required("This field is require."),
+    birthday: Yup.string().required("This field is require."),
+    gender: Yup.string().required("This field is require."),
+    address: Yup.string().required("This field is require."),
   });
   const userInfo = props.userInfo;
   return (
-    <Card mb={{ base: "0px", "2xl": "20px" }} {...rest}>
+    <Card mb={{ base: "0px", "2xl": "10px" }} {...rest}>
       <Text
         color={textColorPrimary}
         fontWeight="bold"
@@ -97,20 +111,106 @@ export default function GeneralInformation(props) {
           return (
             <Form>
               <FormControl>
-                <SimpleGrid columns={2} gap="20px">
+                <SimpleGrid columns={2} gap="10px">
                   <FastField
-                    component={LoginInput}
+                    component={ProfileField}
+                    label={"Fullname"}
+                    name={"fullname"}
+                    type={"text"}
+                    placeholder={"FullName"}
+                    defaultValue={"Tung Ramen"}
+                    {...formikProps.getFieldProps(
+                      "fullname"
+                    )}
+                    // {...formikProps.getFieldProps("Username")}
+                  />
+                  <FastField
+                    component={ProfileField}
                     label={"Username"}
                     name={"username"}
                     type={"text"}
                     placeholder={"Username"}
+                    disabled={true}
+                    defaultValue={"tungramen99"}
+                    {...formikProps.getFieldProps(
+                      "username"
+                    )}
+                    // {...formikProps.getFieldProps("Username")}
                   />
 
                   <FastField
-                    component={InputWithHide}
-                    label={"Password"}
-                    name={"password"}
-                    placeholder={"Min. 8 characters"}
+                    component={ProfileField}
+                    label={"Email"}
+                    name={"email"}
+                    placeholder={"Email"}
+                    type={"email"}
+                    disabled={true}
+                    defaultValue={"tungramen99@gmail.com"}
+                    {...formikProps.getFieldProps(
+                      "email"
+                    )}
+                    // {...formikProps.getFieldProps("Email")}
+                  />
+                  <FastField
+                    component={ProfileField}
+                    label={"Phone number"}
+                    name={"phoneNumber"}
+                    placeholder={"Phone Number"}
+                    type={"text"}
+                    defaultValue={"0989898989"}
+                    {...formikProps.getFieldProps(
+                      "phoneNumber"
+                    )}
+                    // {...formikProps.getFieldProps("Email")}
+                  />
+                  <FastField
+                    component={ProfileField}
+                    label={"Age"}
+                    name={"age"}
+                    placeholder={"Age"}
+                    type={"number"}
+                    disabled={true}
+                    defaultValue={23}
+                    {...formikProps.getFieldProps(
+                      "age"
+                    )}
+                    // {...formikProps.getFieldProps("Email")}
+                  />
+                  <FastField
+                    component={ProfileField}
+                    label={"Birthday"}
+                    name={"birthday"}
+                    type={"date"}
+                    {...formikProps.getFieldProps(
+                      "birthday"
+                    )}
+                    // {...formikProps.getFieldProps("Email")}
+                  />
+                  <FastField
+                    component={ProfileField}
+                    label={"Address"}
+                    name={"address"}
+                    placeholder={"Address"}
+                    type={"text"}
+                    defaultValue={"Van Quan, Ha Dong, Ha Noi"}
+                    {...formikProps.getFieldProps(
+                      "address"
+                    )}
+                    // {...formikProps.getFieldProps("Email")}
+                  />
+
+                  
+
+                  <FastField
+                    component={InputSelect}
+                    label={"Gender"}
+                    name={"gender"}
+                    type={"number"}
+                    defaultValue={0}
+                    {...formikProps.getFieldProps(
+                      "gender"
+                    )}
+                    // {...formikProps.getFieldProps("Email")}
                   />
                 </SimpleGrid>
 
