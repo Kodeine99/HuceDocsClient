@@ -2,6 +2,11 @@ import {
   Flex,
   Icon,
   IconButton,
+  Modal,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -17,8 +22,9 @@ import {
   Tooltip,
   Tr,
   useColorModeValue,
+  useDisclosure,
 } from "@chakra-ui/react";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   useGlobalFilter,
   usePagination,
@@ -38,6 +44,7 @@ import {
   EditIcon,
 } from "@chakra-ui/icons";
 import { MdCheckCircle, MdOutlineError } from "react-icons/md";
+import EditDocumentModal from "./EditDocumentModal";
 export default function DocumentManageTable(props) {
   const { columnsData, tableData } = props;
 
@@ -73,25 +80,19 @@ export default function DocumentManageTable(props) {
     usePagination
   );
 
-  // const tableInstance = useTable(
-  //   {
-  //     columns,
-  //     data,
-  //   },
-  //   useGlobalFilter,
-  //   useSortBy,
-  //   usePagination
-  // );
-
-  // const {
-  //   getTableProps,
-  //   getTableBodyProps,
-  //   headerGroups,
-  //   page,
-  //   prepareRow,
-  //   initialState,
-  // } = tableInstance;
-  // initialState.pageSize = 5;
+  // Modal actions
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const OverlayTwo = () => (
+    <ModalOverlay
+      bg="none"
+      backdropFilter="auto"
+      backdropInvert="80%"
+      backdropBlur="2px"
+    />
+  );
+  const [overlay, setOverlay] = useState(<OverlayTwo />);
+  const [modalTitle, setModalTitle] = useState("");
+  const [rowData, setRowData] = useState({});
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -145,6 +146,7 @@ export default function DocumentManageTable(props) {
             return (
               <Tr {...row.getRowProps()} key={indexx}>
                 {row.cells.map((cell, index) => {
+                  //console.log(row.original);
                   let data = "";
                   if (cell.column.Header === "TICKET ID") {
                     data = (
@@ -233,6 +235,13 @@ export default function DocumentManageTable(props) {
                           colorScheme="purple"
                           icon={<EditIcon />}
                           variant="ghost"
+                          onClick={() => {
+                            setOverlay(<OverlayTwo />);
+
+                            setModalTitle(row.values.HUCEDOCS_TYPE);
+                            setRowData(row.original);
+                            onOpen();
+                          }}
                         />
                         <IconButton
                           colorScheme="purple"
@@ -259,6 +268,14 @@ export default function DocumentManageTable(props) {
           })}
         </Tbody>
       </Table>
+      <EditDocumentModal
+          isOpen={isOpen}
+          onClose={onClose}
+          onOpen={onOpen}
+          modalTitle={modalTitle}
+          overlay={overlay}
+          data={rowData}
+        />
       <Flex justifyContent="space-between" m={4} alignItems="center">
         <Flex>
           <Tooltip label="First Page">
@@ -277,7 +294,7 @@ export default function DocumentManageTable(props) {
             />
           </Tooltip>
         </Flex>
-
+        
         <Flex alignItems="center">
           <Text flexShrink="0" mr={8}>
             Page{" "}

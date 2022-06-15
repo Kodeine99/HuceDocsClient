@@ -22,7 +22,7 @@
   {
     "ID": 2,
     "TICKET_ID": "TICKET_ID 02",
-    "HUCEDOCS_TYPE": "GIAY_XAC_NHAN_TOEIC",
+    "HUCEDOCS_TYPE": "THE_SINH_VIEN",
     "USER_CREATE": "tungnv",
     "CREATE_DATE": "12.Jul.2022",
     "UPDATE_DATE": "12.Aug.2022",
@@ -42,13 +42,13 @@
   {
     "ID": 3,
     "TICKET_ID": "TICKET_ID 03",
-    "HUCEDOCS_TYPE": "GIAY_XAC_NHAN_TOEIC",
+    "HUCEDOCS_TYPE": "CAM_KET_TRA_NO",
     "USER_CREATE": "lammx",
     "CREATE_DATE": "12.Jan.2022",
     "UPDATE_DATE": "12.May.2022",
     "STATUS": 1,
     "HO_TEN": "Trần Thị Luyện",
-    "NGAY_SINH": "16/06/1994",
+    "NGAY_SINH": "20/06/1994",
     "MSSV": "68661",
     "LOP": "61MNE",
     "NGANH_HOC": "Kỹ thuật Cấp thoát nước",
@@ -62,7 +62,7 @@
   {
     "ID": 4,
     "TICKET_ID": "TICKET_ID 04",
-    "HUCEDOCS_TYPE": "GIAY_XAC_NHAN_TOEIC",
+    "HUCEDOCS_TYPE": "BANG_DIEM_TIENG_ANH",
     "USER_CREATE": "leom10",
     "CREATE_DATE": "12.Jan.2022",
     "UPDATE_DATE": "12.May.2022",

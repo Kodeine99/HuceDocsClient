@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FormControl,
   FormLabel,
@@ -17,8 +16,9 @@ import { ErrorMessage, Field } from "formik";
 
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
+import { useState } from "react";
 
-function ProfileField(props) {
+function DocumentField(props) {
   const {
     field,
     form,
@@ -32,7 +32,7 @@ function ProfileField(props) {
   const { name, onChange, onBlur } = field;
   const { colorMode, toggleColorMode } = useColorMode();
 
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   //const { name } = field;
   const { errors, touched } = form;
@@ -49,11 +49,11 @@ function ProfileField(props) {
 
   return (
     <>
-      <FormControl 
+      <FormControl
         variant="floating"
         isInvalid={form.errors.name && form.touched.name}
       >
-        <Flex direction={"columns"}>
+        <Flex direction={"row"} gap={'10px'} mt="10px">
           <FormLabel
             mt="5px"
             ms="4px"
@@ -62,6 +62,7 @@ function ProfileField(props) {
             color={textColor}
             //isRequired={true}
             display="flex"
+            alignItems={'center'}
           >
             {label}
             {/* <Text color={brandStars}>*</Text> */}
@@ -98,7 +99,7 @@ function ProfileField(props) {
   );
 }
 
-ProfileField.propTypes = {
+DocumentField.propTypes = {
   // formik
   field: PropTypes.object.isRequired,
   form: PropTypes.object.isRequired,
@@ -110,11 +111,11 @@ ProfileField.propTypes = {
   disabled: PropTypes.bool,
 };
 
-ProfileField.defaultProps = {
+DocumentField.defaultProps = {
   type: "text",
   label: "",
   placeholder: "",
   disabled: false,
 };
 
-export default ProfileField;
+export default DocumentField;

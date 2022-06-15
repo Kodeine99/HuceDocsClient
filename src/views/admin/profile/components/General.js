@@ -62,7 +62,6 @@ export default function GeneralInformation(props) {
     gender: Yup.string().required("This field is require."),
     address: Yup.string().required("This field is require."),
   });
-  const userInfo = props.userInfo;
   return (
     <Card mb={{ base: "0px", "2xl": "10px" }} {...rest}>
       <Text
