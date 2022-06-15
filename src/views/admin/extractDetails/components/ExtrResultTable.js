@@ -46,6 +46,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ArrowRightIcon,
+  ViewOffIcon,
 } from "@chakra-ui/icons";
 
 import {
@@ -246,21 +247,31 @@ export default function ExtrResultTable(props) {
                       </Text>
                     );
                   } else if (cell.column.Header === "THAO TÁC") {
-                    data = (
-                      <Flex align="center">
-                        <IconButton
-                          colorScheme="purple"
-                          icon={<ViewIcon />}
-                          variant="ghost"
-                          onClick={() => {
-                            setOverlay(<OverlayTwo />);
-                            onOpen();
-                          }}
-                          key={size}
-                        />
-                        {/* {if (cells.)} */}
-                      </Flex>
-                    );
+                    data =
+                      row.values.status === "Bóc tách thành công" ? (
+                        <Flex align="center">
+                          <IconButton
+                            colorScheme="purple"
+                            icon={<ViewIcon />}
+                            variant="ghost"
+                            onClick={() => {
+                              setOverlay(<OverlayTwo />);
+                              onOpen();
+                            }}
+                            key={size}
+                          />
+                          {/* {if (cells.)} */}
+                        </Flex>
+                      ) : (
+                        <Flex align="center">
+                          <IconButton
+                            colorScheme="purple"
+                            icon={<ViewOffIcon />}
+                            variant="ghost"
+                            disabled
+                          />
+                        </Flex>
+                      );
                   }
                   return (
                     <Td
@@ -271,7 +282,6 @@ export default function ExtrResultTable(props) {
                       borderColor="transparent"
                     >
                       {data}
-                      
                     </Td>
                   );
                 })}
@@ -286,7 +296,7 @@ export default function ExtrResultTable(props) {
           <ModalHeader>{modalTitle}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <SimpleGrid columns={{ base: 3, md: 3 }} gap="20px" >
+            <SimpleGrid columns={{ base: 3, md: 3 }} gap="20px">
               {ocrData.map((item, index) => {
                 return (
                   <>

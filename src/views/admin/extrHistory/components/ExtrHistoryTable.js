@@ -28,9 +28,25 @@ import {
 } from "react-table";
 
 // Assets
-import {ViewIcon, DeleteIcon, EditIcon, ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon} from '@chakra-ui/icons';
-import { MdCheckCircle, MdCancel, MdOutlineError, MdOutlinePendingActions, MdDomainVerification, MdCancelPresentation } from "react-icons/md";
-
+import {
+  ViewIcon,
+  DeleteIcon,
+  EditIcon,
+  ArrowLeftIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ArrowRightIcon,
+} from "@chakra-ui/icons";
+import {
+  MdCheckCircle,
+  MdCancel,
+  MdOutlineError,
+  MdOutlinePendingActions,
+  MdDomainVerification,
+  MdCancelPresentation,
+  MdDeleteForever,
+  MdDelete,
+} from "react-icons/md";
 
 // Custom components
 import Card from "components/card/Card";
@@ -40,7 +56,6 @@ export default function ExtrHistoryTable(props) {
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
-
 
   const {
     getTableProps,
@@ -94,35 +109,39 @@ export default function ExtrHistoryTable(props) {
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   return (
     <Card
-      direction='column'
-      w='100%'
-      px='0px'
-      overflowX={{ sm: "scroll", lg: "hidden" }}>
-      <Flex px='25px' justify='space-between' mb='20px' align='center'>
+      direction="column"
+      w="100%"
+      px="0px"
+      overflowX={{ sm: "scroll", lg: "hidden" }}
+    >
+      <Flex px="25px" justify="space-between" mb="20px" align="center">
         <Text
           color={textColor}
-          fontSize='22px'
-          fontWeight='700'
-          lineHeight='100%'>
+          fontSize="22px"
+          fontWeight="700"
+          lineHeight="100%"
+        >
           Danh sách các files bóc tách
         </Text>
         {/* <Menu /> */}
       </Flex>
-      <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
+      <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
         <Thead>
           {headerGroups.map((headerGroup, index) => (
             <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
               {headerGroup.headers.map((column, index) => (
                 <Th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  pe='10px'
+                  pe="10px"
                   key={index}
-                  borderColor={borderColor}>
+                  borderColor={borderColor}
+                >
                   <Flex
-                    justify='space-between'
-                    align='center'
+                    justify="space-between"
+                    align="center"
                     fontSize={{ sm: "10px", lg: "12px" }}
-                    color='gray.400'>
+                    color="gray.400"
+                  >
                     {column.render("Header")}
                   </Flex>
                 </Th>
@@ -139,19 +158,19 @@ export default function ExtrHistoryTable(props) {
                   let data = "";
                   if (cell.column.Header === "TÊN FILE") {
                     data = (
-                      <Flex align='center'>
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                      <Flex align="center">
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value[0]}
                         </Text>
                       </Flex>
                     );
                   } else if (cell.column.Header === "TRẠNG THÁI") {
                     data = (
-                      <Flex align='center'>
+                      <Flex align="center">
                         <Icon
-                          w='24px'
-                          h='24px'
-                          me='5px'
+                          w="24px"
+                          h="24px"
+                          me="5px"
                           color={
                             cell.value === "Bóc tách thành công"
                               ? "green.500"
@@ -171,39 +190,49 @@ export default function ExtrHistoryTable(props) {
                               : null
                           }
                         />
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}
                         </Text>
                       </Flex>
                     );
                   } else if (cell.column.Header === "SỐ TRANG") {
                     data = (
-                      <Flex align='center'>
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                      <Flex align="center">
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}
                         </Text>
                       </Flex>
-                      
                     );
                   } else if (cell.column.Header === "NGÀY TẠO") {
                     data = (
-                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
                   } else if (cell.column.Header === "THAO TÁC") {
                     data = (
-                      <Flex align='center'>
-                        <IconButton  
+                      <Flex align="center" pt={'0px'}>
+                        {/* <IconButton  
                           colorScheme='purple' 
                           icon={<EditIcon />} 
                           variant='ghost'
-                        />
-                        <IconButton  
-                          colorScheme='purple' 
-                          icon={<DeleteIcon />} 
-                          variant='ghost'
-                        />
+                        /> */}
+                        {row.values.status === "Bóc tách thành công" ? (
+                          <IconButton
+                            colorScheme="purple"
+                            icon={<MdDelete />}
+                            variant="ghost"
+                            size={"lg"}
+                          />
+                        ) : (
+                          <IconButton
+                            colorScheme="purple"
+                            icon={<MdDeleteForever />}
+                            variant="ghost"
+                            size={"lg"}
+                            disabled
+                          />
+                        )}
                         {/* <Progress
                           variant='table'
                           colorScheme='brandScheme'
@@ -218,9 +247,10 @@ export default function ExtrHistoryTable(props) {
                     <Td
                       {...cell.getCellProps()}
                       key={index}
-                      fontSize={{ sm: "14px" }}
-                      minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                      borderColor='transparent'>
+                      fontSize={{ sm: "16px" }}
+                      minW={{ sm: "120px", md: "160px", lg: "auto" }}
+                      borderColor="transparent"
+                    >
                       {data}
                     </Td>
                   );
