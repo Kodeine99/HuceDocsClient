@@ -17,9 +17,19 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Select
+  Select,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  SimpleGrid,
+  ModalFooter,
+  Button,
+  useDisclosure,
+  ModalOverlay
 } from "@chakra-ui/react";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   useGlobalFilter,
   usePagination,
@@ -36,6 +46,7 @@ import Menu from "components/menu/MainMenu";
 // Assets
 import { MdCheckCircle, MdCancel, MdOutlineError, MdEdit } from "react-icons/md";
 import { NavLink } from "react-router-dom";
+import ExtractResultCard from "components/card/ExtractResultCard";
 export default function UserManageTable(props) {
   const { columnsData, tableData } = props;
 
@@ -89,7 +100,20 @@ export default function UserManageTable(props) {
   //   initialState,
   // } = tableInstance;
   // initialState.pageSize = 10;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [size, setSize] = useState("md");
 
+  const OverlayTwo = () => (
+    <ModalOverlay
+      bg="none"
+      backdropFilter="auto"
+      backdropInvert="80%"
+      backdropBlur="2px"
+    />
+  );
+  const [overlay, setOverlay] = useState(<OverlayTwo />);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalText, setModalText] = useState("");
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   return (
@@ -138,13 +162,13 @@ export default function UserManageTable(props) {
                   let data = "";
                   if (cell.column.Header === "Username") {
                     data = (
-                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                      <Text color={textColor} fontSize='md' fontWeight='700'>
                         {cell.value}
                       </Text>
                     );
                   } else if (cell.column.Header === "Email") {
                     data = (
-                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                      <Text color={textColor} fontSize='md' fontWeight='700'>
                         {cell.value}
                       </Text>
                     );
@@ -170,51 +194,47 @@ export default function UserManageTable(props) {
                               : null
                           }
                         />
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        <Text color={textColor} fontSize='md' fontWeight='700'>
                           {cell.value}
                         </Text>
                       </Flex>
                     );
                   } else if (cell.column.Header === "Ngày tạo") {
                     data = (
-                      <Text color={textColor} fontSize='sm' fontWeight='700'>
+                      <Text color={textColor} fontSize='md' fontWeight='700'>
                         {cell.value}
                       </Text>
                     );
                   } else if (cell.column.Header === "Thao tác") {
                     data = (
                       <Flex align='center'>
-                        <IconButton  
+                        {/* <IconButton  
                           //as={MdEdit}
                           colorScheme='purple' 
                           icon={<EditIcon />} 
                           variant='ghost'
-                          size="sm"
-                        />
+                          size="md"
+                        /> */}
                         <IconButton  
                           //as={MdEdit}
                           colorScheme='purple' 
-                          icon={<LockIcon />} 
+                          icon={row.values.status === "Active" ?<LockIcon /> : <UnlockIcon/>} 
                           variant='ghost'
-                          size="sm"
+                          size="md"
+                          onClick={() => {
+                            setOverlay(<OverlayTwo />);
+                            row.values.status === "Active" ? setModalTitle("Khóa tài khoản") : setModalTitle("Mở khóa tài khoản");
+                            row.values.status === "Active" ? setModalText("Bạn muốn khoá tài khoản này?") : setModalText("Bạn muốn mở khóa tài khoản này?");
+                            onOpen();
+                          }}
                         />
-                        {/* <IconButton  
-                          colorScheme='purple' 
-                          icon={<DeleteIcon />} 
-                          variant='ghost'
-                        /> */}
-                        {/* <Progress
-                          variant='table'
-                          colorScheme='brandScheme'
-                          h='8px'
-                          w='108px'
-                          value={cell.value}
-                        /> */}
+                        
                       </Flex>
                     );
                   }
                   return (
                     <Td
+                      //onClick={() => console.info(row, cell.value)}
                       {...cell.getCellProps()}
                       key={index}
                       fontSize={{ sm: "14px" }}
@@ -231,6 +251,20 @@ export default function UserManageTable(props) {
           })}
         </Tbody>
       </Table>
+      <Modal onClose={onClose} size="xl" isOpen={isOpen}>
+        {overlay}
+        <ModalContent>
+          <ModalHeader>{modalTitle}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text fontSize={'24px'} fontWeight="bold" >{modalText}</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button mr={'20px'} colorScheme={'whatsapp'} onClick={onClose}>Yes</Button>
+            <Button colorScheme={'red'} onClick={onClose}>No</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Flex justifyContent="space-between" m={4} alignItems="center">
         <Flex>
           <Tooltip label="First Page">

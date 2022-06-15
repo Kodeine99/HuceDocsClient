@@ -149,7 +149,7 @@ export default function DocumentManageTable(props) {
                   if (cell.column.Header === "TICKET ID") {
                     data = (
                       <Flex align="center">
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                        <Text color={textColor} fontSize="md" fontWeight="700">
                           {cell.value}
                         </Text>
                       </Flex>
@@ -160,7 +160,7 @@ export default function DocumentManageTable(props) {
                         <Text
                           me="10px"
                           color={textColor}
-                          fontSize="sm"
+                          fontSize="md"
                           fontWeight="700"
                         >
                           {cell.value}
@@ -169,19 +169,19 @@ export default function DocumentManageTable(props) {
                     );
                   } else if (cell.column.Header === "NGƯỜI TẠO") {
                     data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                      <Text color={textColor} fontSize="md" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
                   } else if (cell.column.Header === "NGÀY TẠO") {
                     data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                      <Text color={textColor} fontSize="md" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
                   } else if (cell.column.Header === "NGÀY CẬP NHẬT") {
                     data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                      <Text color={textColor} fontSize="md" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
@@ -210,7 +210,7 @@ export default function DocumentManageTable(props) {
                         {cell.value === 1 ? (
                           <Text
                             color={textColor}
-                            fontSize="sm"
+                            fontSize="md"
                             fontWeight="700"
                           >
                             {"Active"}
@@ -218,7 +218,7 @@ export default function DocumentManageTable(props) {
                         ) : (
                           <Text
                             color={textColor}
-                            fontSize="sm"
+                            fontSize="md"
                             fontWeight="700"
                           >
                             {"Đã xoá"}

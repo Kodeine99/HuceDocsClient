@@ -49,7 +49,7 @@ export default function GeneralInformation(props) {
     age: 23,
     birthday: "",
     address: "Van Quan, Ha Dong, Ha Noi",
-    gender: 0
+    gender: 1,
   };
   // setup Yup
   const validationSchema = Yup.object().shape({
@@ -119,9 +119,7 @@ export default function GeneralInformation(props) {
                     type={"text"}
                     placeholder={"FullName"}
                     defaultValue={"Tung Ramen"}
-                    {...formikProps.getFieldProps(
-                      "fullname"
-                    )}
+                    {...formikProps.getFieldProps("fullname")}
                     // {...formikProps.getFieldProps("Username")}
                   />
                   <FastField
@@ -132,9 +130,7 @@ export default function GeneralInformation(props) {
                     placeholder={"Username"}
                     disabled={true}
                     defaultValue={"tungramen99"}
-                    {...formikProps.getFieldProps(
-                      "username"
-                    )}
+                    {...formikProps.getFieldProps("username")}
                     // {...formikProps.getFieldProps("Username")}
                   />
 
@@ -146,9 +142,7 @@ export default function GeneralInformation(props) {
                     type={"email"}
                     disabled={true}
                     defaultValue={"tungramen99@gmail.com"}
-                    {...formikProps.getFieldProps(
-                      "email"
-                    )}
+                    {...formikProps.getFieldProps("email")}
                     // {...formikProps.getFieldProps("Email")}
                   />
                   <FastField
@@ -158,9 +152,7 @@ export default function GeneralInformation(props) {
                     placeholder={"Phone Number"}
                     type={"text"}
                     defaultValue={"0989898989"}
-                    {...formikProps.getFieldProps(
-                      "phoneNumber"
-                    )}
+                    {...formikProps.getFieldProps("phoneNumber")}
                     // {...formikProps.getFieldProps("Email")}
                   />
                   <FastField
@@ -171,9 +163,7 @@ export default function GeneralInformation(props) {
                     type={"number"}
                     disabled={true}
                     defaultValue={23}
-                    {...formikProps.getFieldProps(
-                      "age"
-                    )}
+                    {...formikProps.getFieldProps("age")}
                     // {...formikProps.getFieldProps("Email")}
                   />
                   <FastField
@@ -181,9 +171,7 @@ export default function GeneralInformation(props) {
                     label={"Birthday"}
                     name={"birthday"}
                     type={"date"}
-                    {...formikProps.getFieldProps(
-                      "birthday"
-                    )}
+                    {...formikProps.getFieldProps("birthday")}
                     // {...formikProps.getFieldProps("Email")}
                   />
                   <FastField
@@ -193,13 +181,9 @@ export default function GeneralInformation(props) {
                     placeholder={"Address"}
                     type={"text"}
                     defaultValue={"Van Quan, Ha Dong, Ha Noi"}
-                    {...formikProps.getFieldProps(
-                      "address"
-                    )}
+                    {...formikProps.getFieldProps("address")}
                     // {...formikProps.getFieldProps("Email")}
                   />
-
-                  
 
                   <FastField
                     component={InputSelect}
@@ -207,27 +191,26 @@ export default function GeneralInformation(props) {
                     name={"gender"}
                     type={"number"}
                     defaultValue={0}
-                    {...formikProps.getFieldProps(
-                      "gender"
-                    )}
+                    {...formikProps.getFieldProps("gender")}
                     // {...formikProps.getFieldProps("Email")}
                   />
                 </SimpleGrid>
 
-                {/* <Button
-                  loadingText="Signing in..."
+                <Button
+                  mt="24px"
+                  loadingText="Saving ..."
                   isLoading={isSubmitting}
                   spinnerPlacement="start"
                   type="submit"
-                  fontSize="sm"
+                  fontSize="lg"
                   variant="brand"
                   fontWeight="500"
                   w="100%"
                   h="50"
-                  mb="24px"
+                  mb="10px"
                 >
-                  Sign In
-                </Button> */}
+                  Save profile Information
+                </Button>
                 {/* <ErrorMessage type={'invalid'}>{form.errors.name}</ErrorMessage> */}
               </FormControl>
             </Form>
