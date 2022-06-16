@@ -148,7 +148,7 @@ export default function DocumentManageTable(props) {
             return (
               <Tr {...row.getRowProps()} key={indexx}>
                 {row.cells.map((cell, index) => {
-                  //console.log(row.original);
+                  //console.log(row.values);
                   let data = "";
                   if (cell.column.Header === "TICKET ID") {
                     data = (
@@ -245,9 +245,11 @@ export default function DocumentManageTable(props) {
                             setRowData(row.original);
                             onOpen();
                           }}
+                          isDisabled = {row.values.STATUS === 0 ? true: false}
                         />
                         <IconButton
                           colorScheme="purple"
+                          
                           icon={<DeleteIcon />}
                           variant="ghost"
                           onClick={() => {
@@ -258,6 +260,7 @@ export default function DocumentManageTable(props) {
                             setRowData(row.original);
                             onOpen();
                           }}
+                          isDisabled = {row.values.STATUS === 0 ? true: false}
                         />
                       </Flex>
                     );

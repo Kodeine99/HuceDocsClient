@@ -169,7 +169,7 @@ function SignIn() {
           me="auto"
           mb={{ base: "20px", md: "auto" }}
         >
-          <Button
+          {/* <Button
             fontSize="sm"
             me="0px"
             mb="26px"
@@ -185,14 +185,14 @@ function SignIn() {
           >
             <Icon as={FcGoogle} w="20px" h="20px" me="10px" />
             Sign in with Google
-          </Button>
-          <Flex align="center" mb="25px">
+          </Button> */}
+          {/* <Flex align="center" mb="25px">
             <HSeparator />
             <Text color="gray.400" mx="14px">
               or
             </Text>
             <HSeparator />
-          </Flex>
+          </Flex> */}
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -245,12 +245,13 @@ function SignIn() {
                         Keep me logged in
                       </FormLabel>
                     </FormControl> */}
-                      <NavLink to="/auth/forgot-password">
+                      <NavLink to="/auth/forgot-password" >
                         <Text
                           color={textColorBrand}
                           fontSize="sm"
                           w="124px"
                           fontWeight="500"
+                          mt={'20px'}
                         >
                           Forgot password?
                         </Text>

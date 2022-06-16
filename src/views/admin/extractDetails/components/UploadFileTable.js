@@ -13,8 +13,10 @@ import {
   useColorModeValue,
   Button,
   TableContainer,
+  useDisclosure,
+  ModalOverlay,
 } from "@chakra-ui/react";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   useGlobalFilter,
   usePagination,
@@ -29,6 +31,7 @@ import { MdCheckCircle, MdCancel, MdOutlineError } from "react-icons/md";
 // Custom components
 import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
+import NotifyModal from "components/shared/custom/modals/NotifyModal";
 export default function UploadFileTable(props) {
   const { columnsData, tableData } = props;
 
@@ -54,6 +57,19 @@ export default function UploadFileTable(props) {
     initialState,
   } = tableInstance;
   initialState.pageSize = 10;
+
+  // Modal actions
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const OverlayTwo = () => (
+    <ModalOverlay
+      bg="none"
+      backdropFilter="auto"
+      backdropInvert="80%"
+      backdropBlur="2px"
+    />
+  );
+  const [overlay, setOverlay] = useState(<OverlayTwo />);
+  const [modalTitle, setModalTitle] = useState("");
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -85,7 +101,7 @@ export default function UploadFileTable(props) {
       </Flex>
       <TableContainer overflowY="scroll">
         <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
-          <Thead >
+          <Thead>
             {headerGroups.map((headerGroup, index) => (
               <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
                 {headerGroup.headers.map((column, index) => (
@@ -184,23 +200,18 @@ export default function UploadFileTable(props) {
                     } else if (cell.column.Header === "THAO TÁC") {
                       data = (
                         <Flex align="center">
-                          {/* <IconButton  
-                          colorScheme='purple' 
-                          icon={<ViewIcon />} 
-                          variant='ghost'
-                        /> */}
                           <IconButton
                             colorScheme="purple"
                             icon={<DeleteIcon />}
                             variant="ghost"
+
+                            onClick={() => {
+                              setOverlay(<OverlayTwo />);
+  
+                              setModalTitle(row.values.HUCEDOCS_TYPE);
+                              onOpen();
+                            }}
                           />
-                          {/* <Progress
-                          variant='table'
-                          colorScheme='brandScheme'
-                          h='8px'
-                          w='108px'
-                          value={cell.value}
-                        /> */}
                         </Flex>
                       );
                     }
@@ -221,6 +232,13 @@ export default function UploadFileTable(props) {
             })}
           </Tbody>
         </Table>
+        <NotifyModal
+          isOpen={isOpen}
+          onClose={onClose}
+          overlay={overlay}
+          title="Xóa file"
+          modalContent={`Bạn có chắc chắn muốn xóa file này`}
+        />
       </TableContainer>
       <Flex w="100%" mt="20px">
         <Button

@@ -73,7 +73,7 @@ function DocumentField(props) {
             //isRequired={true}
             ms={{ base: "0px", md: "0px" }}
             {...field}
-            fontSize="sm"
+            fontSize="lg"
             placeholder={placeholder}
             color={colorMode === "light" ? "gray.700" : "white"}
             //mb="24px"
