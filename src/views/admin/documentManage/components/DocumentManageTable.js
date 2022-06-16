@@ -45,8 +45,10 @@ import {
 } from "@chakra-ui/icons";
 import { MdCheckCircle, MdOutlineError } from "react-icons/md";
 import EditDocumentModal from "./EditDocumentModal";
+import NotifyModal from "components/shared/custom/modals/NotifyModal";
 export default function DocumentManageTable(props) {
   const { columnsData, tableData } = props;
+  const [renderModal, setRenderModal] = useState(false);
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -236,6 +238,7 @@ export default function DocumentManageTable(props) {
                           icon={<EditIcon />}
                           variant="ghost"
                           onClick={() => {
+                            setRenderModal(false);
                             setOverlay(<OverlayTwo />);
 
                             setModalTitle(row.values.HUCEDOCS_TYPE);
@@ -247,6 +250,14 @@ export default function DocumentManageTable(props) {
                           colorScheme="purple"
                           icon={<DeleteIcon />}
                           variant="ghost"
+                          onClick={() => {
+                            setRenderModal(true);
+                            setOverlay(<OverlayTwo />);
+
+                            setModalTitle(row.values.HUCEDOCS_TYPE);
+                            setRowData(row.original);
+                            onOpen();
+                          }}
                         />
                       </Flex>
                     );
@@ -268,14 +279,26 @@ export default function DocumentManageTable(props) {
           })}
         </Tbody>
       </Table>
-      <EditDocumentModal
+      {renderModal === false ? (
+        <EditDocumentModal
           isOpen={isOpen}
           onClose={onClose}
           onOpen={onOpen}
           modalTitle={modalTitle}
           overlay={overlay}
           data={rowData}
+          size={"full"}
         />
+      ) : (
+        <NotifyModal
+          isOpen={isOpen}
+          onClose={onClose}
+          overlay={overlay}
+          title="Xóa tài liệu"
+          modalContent={`Bạn có chắc chắn muốn xóa tài liệu này`}
+        />
+      )}
+
       <Flex justifyContent="space-between" m={4} alignItems="center">
         <Flex>
           <Tooltip label="First Page">
@@ -294,7 +317,7 @@ export default function DocumentManageTable(props) {
             />
           </Tooltip>
         </Flex>
-        
+
         <Flex alignItems="center">
           <Text flexShrink="0" mr={8}>
             Page{" "}

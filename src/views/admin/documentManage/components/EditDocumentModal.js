@@ -23,7 +23,7 @@ import { useState } from "react";
 import * as Yup from "yup";
 
 export default function EditDocumentModal(props) {
-  const { isOpen, onClose, data, modalTitle, overlay } = props;
+  const { isOpen, onClose, data, modalTitle, overlay, size } = props;
   const arrayToObject = (arr) => {
     return arr.reduce((obj, item) => {
       const key = Object.keys(item)[0];
@@ -58,12 +58,12 @@ export default function EditDocumentModal(props) {
     key,
     value,
   }));
-  console.log("dataKV:", dataKeyValue);
+  //console.log("dataKV:", dataKeyValue);
 
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
 
   return (
-    <Modal onClose={onClose} size="full" isOpen={isOpen}>
+    <Modal onClose={onClose} size={size} isOpen={isOpen}>
       {overlay}
       <ModalContent>
         <ModalHeader>{modalTitle}</ModalHeader>
