@@ -18,8 +18,10 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Select,
+  useDisclosure,
+  ModalOverlay,
 } from "@chakra-ui/react";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   useGlobalFilter,
   usePagination,
@@ -51,12 +53,13 @@ import {
 // Custom components
 import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
+import NotifyModal from "components/shared/custom/modals/NotifyModal";
 export default function ExtrHistoryTable(props) {
   const { columnsData, tableData } = props;
 
+  // React-table configuration
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
-
   const {
     getTableProps,
     getTableBodyProps,
@@ -85,25 +88,19 @@ export default function ExtrHistoryTable(props) {
     useSortBy,
     usePagination
   );
-  // const tableInstance = useTable(
-  //   {
-  //     columns,
-  //     data,
-  //   },
-  //   useGlobalFilter,
-  //   useSortBy,
-  //   usePagination
-  // );
 
-  // const {
-  //   getTableProps,
-  //   getTableBodyProps,
-  //   headerGroups,
-  //   page,
-  //   prepareRow,
-  //   initialState,
-  // } = tableInstance;
-  // initialState.pageSize = 11;
+  // Modal configuration
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const OverlayTwo = () => (
+    <ModalOverlay
+      bg="none"
+      backdropFilter="auto"
+      backdropInvert="80%"
+      backdropBlur="2px"
+    />
+  );
+  const [overlay, setOverlay] = useState(<OverlayTwo />);
+  const [fileName, setFileName] = useState("");
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -155,12 +152,13 @@ export default function ExtrHistoryTable(props) {
             return (
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
+                  //console.log("Row value:",row.values)
                   let data = "";
                   if (cell.column.Header === "TÊN FILE") {
                     data = (
                       <Flex align="center">
                         <Text color={textColor} fontSize="sm" fontWeight="700">
-                          {cell.value[0]}
+                          {cell.value}
                         </Text>
                       </Flex>
                     );
@@ -211,7 +209,7 @@ export default function ExtrHistoryTable(props) {
                     );
                   } else if (cell.column.Header === "THAO TÁC") {
                     data = (
-                      <Flex align="center" pt={'0px'}>
+                      <Flex align="center" pt={"0px"}>
                         {/* <IconButton  
                           colorScheme='purple' 
                           icon={<EditIcon />} 
@@ -223,6 +221,12 @@ export default function ExtrHistoryTable(props) {
                             icon={<MdDelete />}
                             variant="ghost"
                             size={"lg"}
+                            onClick={() => {
+                              setOverlay(<OverlayTwo />);
+
+                              setFileName(row.values.name);
+                              onOpen();
+                            }}
                           />
                         ) : (
                           <IconButton
@@ -259,6 +263,13 @@ export default function ExtrHistoryTable(props) {
             );
           })}
         </Tbody>
+        <NotifyModal
+          isOpen={isOpen}
+          onClose={onClose}
+          overlay={overlay}
+          title="Xóa file"
+          modalContent={`Bạn có chắc chắn muốn xóa file ${ fileName }?`}
+        />
       </Table>
       <Flex justifyContent="space-between" m={4} alignItems="center">
         <Flex>

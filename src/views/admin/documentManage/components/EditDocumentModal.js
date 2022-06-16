@@ -16,8 +16,8 @@ import {
 } from "@chakra-ui/react";
 import Card from "components/card/Card";
 import ExtractResultCard from "components/card/ExtractResultCard";
-import DocumentField from "components/shared/customFields/DocumentField";
-import ProfileField from "components/shared/customFields/ProfileField";
+import DocumentField from "../../../../components/shared/custom/fields/DocumentField";
+import ProfileField from "../../../../components/shared/custom/fields/ProfileField";
 import { FastField, Form, Formik } from "formik";
 import { useState } from "react";
 import * as Yup from "yup";

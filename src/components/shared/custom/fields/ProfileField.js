@@ -53,7 +53,7 @@ function ProfileField(props) {
         variant="floating"
         isInvalid={form.errors.name && form.touched.name}
       >
-        <Flex direction={"columns"}>
+        <Flex direction={"column"}>
           <FormLabel
             mt="5px"
             ms="4px"

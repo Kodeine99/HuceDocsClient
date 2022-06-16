@@ -18,8 +18,8 @@ import * as Yup from "yup";
 import LoginInput from "components/shared/inputField/InputField";
 import InputWithHide from "components/shared/inputField/InputFieldWithHide";
 import { NavLink } from "react-router-dom";
-import ProfileField from "components/shared/customFields/ProfileField";
-import { InputSelect } from "components/shared/customFields/InputSelect";
+import ProfileField from "../../../../components/shared/custom/fields/ProfileField";
+import { InputSelect } from "../../../../components/shared/custom/fields/InputSelect";
 // Assets
 export default function GeneralInformation(props) {
   const { ...rest } = props;
