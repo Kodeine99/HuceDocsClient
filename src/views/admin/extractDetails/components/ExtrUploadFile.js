@@ -53,17 +53,16 @@ export default function ExtrUploadFile(props) {
           <TabPanel>
             <Card {...rest} mb="10px" align="center" p="10px" w="100%" h="68vh">
               <Flex
-                direction={{ base: "column", "2xl": "row" }}
-                maxH={{ base: "60%", lg: "60%", "2xl": "100%" }}
+                direction={{ base: "row", "2xl": "row" }}
+                maxH={{ base: "25%", lg: "25%", "2xl": "30%" }}
                 //minH="50%"
-                minH={{ base: "60%", lg: "60%", "2xl": "100%" }}
+                minH={{ base: "25%", lg: "25%", "2xl": "30%" }}
                 pb="20px"
               >
                 <Dropzone
-                  w={{ base: "100%", "2xl": "30%" }}
+                  w={{ base: "100%", "2xl": "100%" }}
                   me="24px"
-                  maxH={{ base: "25%", lg: "30%", "2xl": "100%" }}
-                  minH={{ base: "25%", lg: "30%", "2xl": "100%" }}
+                  maxH={{ base: "25%", lg: "30%", "2xl": "30%" }}
                   content={
                     <Box>
                       <Icon
@@ -82,16 +81,16 @@ export default function ExtrUploadFile(props) {
                         fontWeight="500"
                         color="secondaryGray.500"
                       >
-                        PNG, JPG files are allowed
+                        PDF, .DOCX files are allowed
                       </Text>
                     </Box>
                   }
                 />
 
-                <UploadFileTable
+                {/* <UploadFileTable
                   columnsData={ColumnUploadFileTable}
                   tableData={UploadFileTableData}
-                />
+                /> */}
               </Flex>
             </Card>
           </TabPanel>

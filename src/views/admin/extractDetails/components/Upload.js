@@ -51,23 +51,7 @@ export default function Upload(props) {
           }
         />
         <Flex direction='column' pe='44px'>
-          {/* <Text
-            color={textColorPrimary}
-            fontWeight='bold'
-            textAlign='start'
-            fontSize='2xl'
-            mt={{ base: "20px", "2xl": "50px" }}>
-            Complete your profile
-          </Text>
-          <Text
-            color={textColorSecondary}
-            fontSize='md'
-            my={{ base: "auto", "2xl": "10px" }}
-            mx='auto'
-            textAlign='start'>
-            Stay on the pulse of distributed projects with an anline whiteboard
-            to plan, coordinate and discuss
-          </Text> */}
+          
           <CheckTable columnsData={columnsDataCheck} tableData={tableDataFiles} />
           <Flex w='100%'>
             <Button
