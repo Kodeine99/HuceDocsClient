@@ -16,9 +16,6 @@ import {
 
 // Custom components
 import Banner from "views/admin/marketplace/components/Banner";
-import TableTopCreators from "views/admin/marketplace/components/TableTopCreators";
-import HistoryItem from "views/admin/marketplace/components/HistoryItem";
-import NFT from "components/card/NFT";
 import Card from "components/card/Card.js";
 import DocCard from "components/card/DocCard.js";
 import ComplexTable from "views/admin/userManage/components/ComplexTable";

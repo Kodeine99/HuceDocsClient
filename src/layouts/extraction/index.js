@@ -8,18 +8,8 @@
  import React, { useState } from "react";
  import { Redirect, Route, Switch } from "react-router-dom";
  import routes from "../../routes/routes";
- import Upload from "views/admin/profile/components/Upload";
 
- // Custom components
-import Banner from "views/admin/profile/components/Banner";
-import General from "views/admin/profile/components/General";
-import Notifications from "views/admin/profile/components/Notifications";
-import Projects from "views/admin/profile/components/Projects";
-import Storage from "views/admin/profile/components/Storage";
 
-// Assets
-import banner from "assets/img/auth/banner.png";
-import avatar from "assets/img/avatars/avatar4.png";
  
  // Custom Chakra theme
  export default function Extraction(props) {

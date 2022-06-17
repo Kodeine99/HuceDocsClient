@@ -26,7 +26,7 @@ import Card from "components/card/Card.js";
 import React from "react";
 // Assets
 import { MdUpload } from "react-icons/md";
-import Dropzone from "views/admin/profile/components/Dropzone";
+import Dropzone from "../components/Dropzone";
 
 import { DeleteIcon } from "@chakra-ui/icons";
 import UploadFileTable from "./UploadFileTable";

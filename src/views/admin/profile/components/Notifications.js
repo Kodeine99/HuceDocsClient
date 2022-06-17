@@ -2,7 +2,7 @@
 import { Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import Card from "components/card/Card.js";
 // Custom components
-import SwitchField from "components/fields/SwitchField";
+import SwitchField from "../../../../components/shared/custom/fields/SwitchField";
 import Menu from "components/menu/MainMenu";
 
 export default function Notifications(props) {
