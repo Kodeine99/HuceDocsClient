@@ -134,11 +134,11 @@ export default function UploadFileTable(props) {
                     if (cell.column.Header === "TÊN FILE") {
                       data = (
                         <Flex align="center">
-                          <Checkbox
+                          {/* <Checkbox
                             defaultChecked={cell.value[1]}
                             colorScheme="brandScheme"
                             me="10px"
-                          />
+                          /> */}
                           <Text
                             color={textColor}
                             fontSize="sm"

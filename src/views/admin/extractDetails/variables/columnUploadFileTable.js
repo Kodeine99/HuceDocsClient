@@ -9,10 +9,6 @@ export const ColumnUploadFileTable = [
     accessor: "status",
   },
   {
-    Header: "SỐ TRANG",
-    accessor: "pageNumber",
-  },
-  {
     Header: "NGÀY TẠO",
     accessor: "date",
   },

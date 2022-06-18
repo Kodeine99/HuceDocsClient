@@ -11,6 +11,7 @@ export default function ExtractDetailsContent(props) {
   return (
     <Box>
       <Box
+      
         mx="auto"
         p={{ base: "20px", md: "30px" }}
         pe="20px"
@@ -18,7 +19,7 @@ export default function ExtractDetailsContent(props) {
         
         pt="50px"
       >
-        <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+        <Box pt={{ base: "130px", md: "80px", xl: "80px" }} >
           {/* Main Fields */}
           <Grid
             templateRows={{

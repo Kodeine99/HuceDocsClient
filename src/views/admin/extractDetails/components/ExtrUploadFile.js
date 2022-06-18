@@ -51,48 +51,8 @@ export default function ExtrUploadFile(props) {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Card {...rest} mb="10px" align="center" p="10px" w="100%" h="68vh">
-              <Flex
-                direction={{ base: "row", "2xl": "row" }}
-                maxH={{ base: "25%", lg: "25%", "2xl": "30%" }}
-                //minH="50%"
-                minH={{ base: "25%", lg: "25%", "2xl": "30%" }}
-                pb="20px"
-              >
-                <Dropzone
-                  w={{ base: "100%", "2xl": "100%" }}
-                  me="24px"
-                  maxH={{ base: "25%", lg: "30%", "2xl": "30%" }}
-                  content={
-                    <Box>
-                      <Icon
-                        as={MdUpload}
-                        w="64px"
-                        h="64px"
-                        color={brandColor}
-                      />
-                      <Flex justify="center" mx="auto" mb="12px">
-                        <Text fontSize="xl" fontWeight="700" color={brandColor}>
-                          Upload Files
-                        </Text>
-                      </Flex>
-                      <Text
-                        fontSize="sm"
-                        fontWeight="500"
-                        color="secondaryGray.500"
-                      >
-                        PDF, .DOCX files are allowed
-                      </Text>
-                    </Box>
-                  }
-                />
-
-                {/* <UploadFileTable
-                  columnsData={ColumnUploadFileTable}
-                  tableData={UploadFileTableData}
-                /> */}
-              </Flex>
-            </Card>
+            <Dropzone/>
+            
           </TabPanel>
           <TabPanel>
             {/* <Divider orientation="horizontal" /> */}
