@@ -29,7 +29,7 @@ import {
   useDisclosure,
   SimpleGrid,
 } from "@chakra-ui/react";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import {
   useGlobalFilter,
   usePagination,
@@ -66,42 +66,44 @@ import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
 import ExtractResultCard from "../../../../components/card/ExtractResultCard";
 export default function ExtrResultTable(props) {
-  const ocrData = [
-    {
-      TYPE: "GIAY_XAC_NHAN_TOEIC",
-      DATA: [
-        {
-          HO_TEN: "Trương Việt Hà",
-          NGAY_SINH: "22/8/1998",
-          MSSV: "68661",
-          LOP: "61MNE",
-          NGANH_HOC: "Kỹ thuật Cấp thoát nước",
-          HE_DAO_TAO: "Đại học chính quy",
-          KHOA: "Kỹ thuật Môi trường",
-          NDXN: "Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.",
-          DIEM_THI: "490/990",
-          DOT_THI: "8/2020",
-          NGAY_XAC_NHAN: "17/12/2021",
-          ECM_ID: "",
-        },
-        {
-          HO_TEN: "Nguyễn Văn Tùng",
-          NGAY_SINH: "25/10/1999",
-          MSSV: "228062",
-          LOP: "62PM1",
-          NGANH_HOC: "Công nghệ phần mềm",
-          HE_DAO_TAO: "Đại học chính quy",
-          KHOA: "Công nghệ thông tin",
-          NDXN: "Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.",
-          DIEM_THI: "825/990",
-          DOT_THI: "1/2022",
-          NGAY_XAC_NHAN: "17/1/2021",
-          ECM_ID: "",
-        },
-      ],
-    },
-  ];
+  // const ocrData = [
+  //   {
+  //     TYPE: "GIAY_XAC_NHAN_TOEIC",
+  //     DATA: [
+  //       {
+  //         HO_TEN: "Trương Việt Hà",
+  //         NGAY_SINH: "22/8/1998",
+  //         MSSV: "68661",
+  //         LOP: "61MNE",
+  //         NGANH_HOC: "Kỹ thuật Cấp thoát nước",
+  //         HE_DAO_TAO: "Đại học chính quy",
+  //         KHOA: "Kỹ thuật Môi trường",
+  //         NDXN: "Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.",
+  //         DIEM_THI: "490/990",
+  //         DOT_THI: "8/2020",
+  //         NGAY_XAC_NHAN: "17/12/2021",
+  //         ECM_ID: "",
+  //       },
+  //       {
+  //         HO_TEN: "Nguyễn Văn Tùng",
+  //         NGAY_SINH: "25/10/1999",
+  //         MSSV: "228062",
+  //         LOP: "62PM1",
+  //         NGANH_HOC: "Công nghệ phần mềm",
+  //         HE_DAO_TAO: "Đại học chính quy",
+  //         KHOA: "Công nghệ thông tin",
+  //         NDXN: "Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.",
+  //         DIEM_THI: "825/990",
+  //         DOT_THI: "1/2022",
+  //         NGAY_XAC_NHAN: "17/1/2021",
+  //         ECM_ID: "",
+  //       },
+  //     ],
+  //   },
+  // ];
+  //console.log("fake data", ocrData);
   const { columnsData, tableData, modalTitle } = props;
+  const [ocrData, setOcrData] = useState([]);
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -153,6 +155,22 @@ export default function ExtrResultTable(props) {
     onOpen();
   };
 
+  const convertToJson = (data) => {
+    //console.log("old Data:", data);
+    let dataAfterReplace = JSON.parse(
+      data
+        .replace('\\"', '"')
+        .replace('"[', "[")
+        .replace(']"', "]")
+        .replace("\\", "")
+        .split("\\")
+        .join("")
+    );
+    //console.log("new Data:", dataAfterReplace);
+    //console.log("js",js);
+    return dataAfterReplace;
+  };
+
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   return (
@@ -192,8 +210,25 @@ export default function ExtrResultTable(props) {
             return (
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
+                  //console.log("rowData", row.original);
                   let data = "";
-                  if (cell.column.Header === "TÊN FILE") {
+                  if (cell.column.Header === "TICKET ID") {
+                    data = (
+                      <Flex align="center">
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                          {cell.value}
+                        </Text>
+                      </Flex>
+                    );
+                  } else if (cell.column.Header === "NGƯỜI TẠO") {
+                    data = (
+                      <Flex align="center">
+                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                          {cell.value}
+                        </Text>
+                      </Flex>
+                    );
+                  } else if (cell.column.Header === "TÊN FILE") {
                     data = (
                       <Flex align="center">
                         <Text color={textColor} fontSize="sm" fontWeight="700">
@@ -209,26 +244,32 @@ export default function ExtrResultTable(props) {
                           h="24px"
                           me="5px"
                           color={
-                            cell.value === "Bóc tách thành công"
+                            cell.value === 1
                               ? "green.500"
-                              : cell.value === "Đang xử lý"
+                              : cell.value === 2
                               ? "grey.500"
-                              : cell.value === "Lỗi"
+                              : cell.value === 0
                               ? "red.500"
                               : null
                           }
                           as={
-                            cell.value === "Bóc tách thành công"
+                            cell.value === 1
                               ? MdDomainVerification
-                              : cell.value === "Đang xử lý"
+                              : cell.value === 2
                               ? MdOutlinePendingActions
-                              : cell.value === "Lỗi"
+                              : cell.value === 0
                               ? MdCancelPresentation
                               : null
                           }
                         />
                         <Text color={textColor} fontSize="sm" fontWeight="700">
-                          {cell.value}
+                          {cell.value === 1
+                            ? "Bóc tách thành công"
+                            : cell.value === 2
+                            ? "Đang xử lý"
+                            : cell.value === 0
+                            ? "Đã hủy"
+                            : null}
                         </Text>
                       </Flex>
                     );
@@ -248,7 +289,7 @@ export default function ExtrResultTable(props) {
                     );
                   } else if (cell.column.Header === "THAO TÁC") {
                     data =
-                      row.values.status === "Bóc tách thành công" ? (
+                      row.values.ocR_Status_Code === 1 ? (
                         <Flex align="center">
                           <IconButton
                             colorScheme="purple"
@@ -257,6 +298,7 @@ export default function ExtrResultTable(props) {
                             onClick={() => {
                               setOverlay(<OverlayTwo />);
                               onOpen();
+                              setOcrData(convertToJson(row.original.jsonData));
                             }}
                             key={size}
                           />
@@ -297,7 +339,7 @@ export default function ExtrResultTable(props) {
           <ModalCloseButton />
           <ModalBody>
             <SimpleGrid columns={{ base: 3, md: 3 }} gap="20px">
-              {ocrData.map((item, index) => {
+              {ocrData?.map((item, index) => {
                 return (
                   <>
                     {typeof item.DATA !== "undefined" && item.DATA.length > 0

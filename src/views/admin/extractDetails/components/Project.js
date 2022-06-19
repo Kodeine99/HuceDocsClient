@@ -14,6 +14,7 @@ import Card from "components/card/Card.js";
 import React from "react";
 // Assets
 import { MdDelete, MdEdit } from "react-icons/md";
+import { BsFileEarmarkCheckFill } from "react-icons/bs";
 
 export default function Project(props) {
   const { filename, fileExtension, link, fileLength, onClick, ...rest } = props;
@@ -26,12 +27,13 @@ export default function Project(props) {
     <Card bg={bg} {...rest} p="10px">
       <Flex align="center" direction={{ base: "column", md: "row" }}>
         {/* <Image h='80px' w='80px' src={image} borderRadius='8px' me='20px' /> */}
+        <Icon color={'whatsapp.500'} mr={'10px'} as={BsFileEarmarkCheckFill}></Icon>
         <Box mt={{ base: "10px", md: "0" }}>
           <Text
             color={textColorPrimary}
             fontWeight="500"
             fontSize="md"
-            mb="4px"
+            //mb="4px"
             display={"inline-block"}
             mr="40px"
           >

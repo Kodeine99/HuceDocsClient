@@ -19,20 +19,28 @@ export const columnsDataDevelopment = [
 
 export const columnsDataExtrResultTable = [
   {
-    Header: "TÊN FILE",
-    accessor: "name",
+    Header: "TICKET ID",
+    accessor: "ticket_Id",
   },
+  // {
+  //   Header: "TÊN FILE",
+  //   accessor: "name",
+  // },
+  // {
+  //   Header: "SỐ TRANG",
+  //   accessor: "pageNumber",
+  // },
   {
-    Header: "TRẠNG THÁI",
-    accessor: "status",
-  },
-  {
-    Header: "SỐ TRANG",
-    accessor: "pageNumber",
+    Header: "NGƯỜI TẠO",
+    accessor: "username",
   },
   {
     Header: "NGÀY TẠO",
-    accessor: "date",
+    accessor: "createTime",
+  },
+  {
+    Header: "TRẠNG THÁI",
+    accessor: "ocR_Status_Code",
   },
   {
     Header: "THAO TÁC",

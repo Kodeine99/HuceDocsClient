@@ -30,7 +30,15 @@ import Project from "../components/Project";
 function Dropzone(props) {
   const { content, ...rest } = props;
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    
+    accept: {
+      'application/pdf': [],
+      'img/tiff': [],
+      'application/msword': [], 
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': [],
+    },
     maxFiles: 5,
+    
   });
   const bg = useColorModeValue("gray.100", "navy.700");
   const borderColor = useColorModeValue("secondaryGray.100", "whiteAlpha.100");
@@ -87,33 +95,7 @@ function Dropzone(props) {
           minH={{ base: "25%", lg: "25%", "2xl": "28%" }}
           pb="20px"
         >
-          {/* <Dropzone
-                  w={{ base: "100%", "2xl": "100%" }}
-                  me="24px"
-                  maxH={{ base: "25%", lg: "100%", "2xl": "100%" }}
-                  content={
-                    <Box>
-                      <Icon
-                        as={MdUpload}
-                        w="64px"
-                        h="64px"
-                        color={brandColor}
-                      />
-                      <Flex justify="center" mx="auto" mb="12px">
-                        <Text fontSize="xl" fontWeight="700" color={brandColor}>
-                          Upload Files
-                        </Text>
-                      </Flex>
-                      <Text
-                        fontSize="sm"
-                        fontWeight="500"
-                        color="secondaryGray.500"
-                      >
-                        PDF, .DOCX files are allowed
-                      </Text>
-                    </Box>
-                  }
-                /> */}
+          
           <Flex
             align="center"
             justify="center"
@@ -138,7 +120,7 @@ function Dropzone(props) {
                   </Text>
                 </Flex>
                 <Text fontSize="sm" fontWeight="500" color="secondaryGray.500">
-                  PDF, .DOCX files are allowed
+                  PDF, .DOCX, .DOC, .TIF and .TIFF files are allowed
                 </Text>
                 <Text fontSize="sm" fontWeight="500" color="secondaryGray.500">
                   (5 files are the maximum number of files you can drop here)

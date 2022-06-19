@@ -1,26 +1,29 @@
 [
   {
-    "name":["Marketplace",false],
-    "pageNumber": 1, 
-    "date": "12.Jan.2021",
-    "status": "Bóc tách thành công" 
+    "id": 1,
+    "ticket_Id": "10520",
+    "jsonData": "[{\"TYPE\":\"GIAY_XAC_NHAN_TOEIC\",\"DATA\":\"[{\\\"HO_TEN\\\":\\\"Nguyễn Hoàng Phương Anh\\\",\\\"NGAY_SINH\\\":\\\"14/07/1999\\\",\\\"MSSV\\\":\\\"86967\\\",\\\"LOP\\\":\\\"62QHDT\\\",\\\"NGANH_HOC\\\":\\\"Quy hoạch vùng và đô thị\\\",\\\"HE_DAO_TAO\\\":\\\"Đại học chính quy\\\",\\\"KHOA\\\":\\\"Quy hoạch và đô thị\\\",\\\"NDXN\\\":\\\"Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.\\\",\\\"DIEM_THI\\\":\\\"450/990\\\",\\\"DOT_THI\\\":\\\"/2021\\\",\\\"NGAY_XAC_NHAN\\\":\\\"12/5/2022\\\",\\\"ECM_ID\\\":\\\"\\\"}]\"}]",
+    "documentId": 1,
+    "userId": 1,
+    "createTime": "2022-06-19T11:16:17.5711073",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJqdGkiOiI4YWZiZDM4MS1hMGI4LTQ4NzYtODY4YS03MDc3MDVjNDY4MjEiLCJlbWFpbCI6InR1bmdyYW1lbjk5QGdtYWlsLmNvbSIsInR5cCI6IkFkbWluIiwibmFtZWlkIjoidHVuZ3JhbWVuOTkiLCJleHAiOjE2NTgyMDQxOTcsInN1YiI6IjEiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAifQ.UI83KC2Iw1Tyoyg5ZNf8fM8ecnAbcfDZz2eEa9vmY2I",
+    "ocR_Status_Code": 1,
+    "verifyLink": "http://10.10.10.99/FlexiCapture12/Verification/Verify?projectId=8&batchId=10520&returnTo=BatchList&mode=mini",
+    "username": "tungramen99",
+    "hFiles": []
   },
   {
-    "name":["Venus DB PRO",true],
-    "pageNumber": 5, 
-    "date": "21.Feb.2021",
-    "status": "Bóc tách thành công"  
-  },
-  {
-    "name":["Venus DS",true],
-    "pageNumber": 30, 
-    "date": "13.Mar.2021",
-    "status": "Đang xử lý"  
-  },
-  {
-    "name":["Venus 3D Asset",true],
-    "pageNumber": 12, 
-    "date": "24.Jan.2021",
-    "status": "Lỗi"  
+    "id": 2,
+    "ticket_Id": "10521",
+    "jsonData": "[{\"TYPE\":\"GIAY_XAC_NHAN_TOEIC\",\"DATA\":\"[{\\\"HO_TEN\\\":\\\"Trần Phương My\\\",\\\"NGAY_SINH\\\":\\\"05/10/1999\\\",\\\"MSSV\\\":\\\"97767\\\",\\\"LOP\\\":\\\"62KTXD\\\",\\\"NGANH_HOC\\\":\\\"Kỹ thuật xây dựng Công trình thủy\\\",\\\"HE_DAO_TAO\\\":\\\"Đại học chính quy\\\",\\\"KHOA\\\":\\\"Kỹ thuật xây dựng\\\",\\\"NDXN\\\":\\\"Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.\\\",\\\"DIEM_THI\\\":\\\"600/990\\\",\\\"DOT_THI\\\":\\\"12/2021\\\",\\\"NGAY_XAC_NHAN\\\":\\\"23/5/2022\\\",\\\"ECM_ID\\\":\\\"\\\"}]\"}]",
+    "documentId": 2,
+    "userId": 1,
+    "createTime": "2022-06-19T11:19:25.5909008",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6IkpXVCJ9.eyJqdGkiOiJiYWU4ZjQ2MS04Mjk5LTQzZmQtYTI0NC03NTNhYzZhNDc1YjEiLCJlbWFpbCI6InR1bmdyYW1lbjk5QGdtYWlsLmNvbSIsInR5cCI6IkFkbWluIiwibmFtZWlkIjoidHVuZ3JhbWVuOTkiLCJleHAiOjE2NTgyMDQzODUsInN1YiI6IjEiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUwMDAifQ.ynqDsXnnKmqj8jqlQBDc3L_9Qwg9P0466LtgvizDkrw",
+    "ocR_Status_Code": 1,
+    "verifyLink": "http://10.10.10.99/FlexiCapture12/Verification/Verify?projectId=8&batchId=10521&returnTo=BatchList&mode=mini",
+    "username": "tungramen99",
+    "hFiles": []
   }
 ]
+

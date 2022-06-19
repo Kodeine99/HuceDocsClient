@@ -42,6 +42,15 @@ export default function ExtrUploadFile(props) {
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
   const brandColor = useColorModeValue("brand.500", "white");
   const textColorSecondary = "gray.400";
+
+  const map = extrResultData.map((item) => {
+    return item.jsonData;
+  }).map((child) => {
+    return child;
+  });
+
+  console.log("map", map);
+
   return (
     <Card {...rest} mb="10px" align="center" p="10px" w="100%">
       <Tabs variant="line" colorScheme="purple">
@@ -51,8 +60,7 @@ export default function ExtrUploadFile(props) {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Dropzone/>
-            
+            <Dropzone />
           </TabPanel>
           <TabPanel>
             {/* <Divider orientation="horizontal" /> */}
@@ -75,6 +83,11 @@ export default function ExtrUploadFile(props) {
               <ExtrResultTable
                 columnsData={columnsDataExtrResultTable}
                 tableData={extrResultData}
+                // ocrData={extrResultData.map((item) => {
+                //   return {
+                //     item.jsonData,
+                //   }
+                // })}
               />
             </Flex>
           </TabPanel>
