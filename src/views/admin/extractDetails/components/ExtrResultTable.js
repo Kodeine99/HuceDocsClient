@@ -104,6 +104,7 @@ export default function ExtrResultTable(props) {
   //console.log("fake data", ocrData);
   const { columnsData, tableData, modalTitle } = props;
   const [ocrData, setOcrData] = useState([]);
+  const [verifyLink, setVerifyLink] = useState("");
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -171,6 +172,13 @@ export default function ExtrResultTable(props) {
     return dataAfterReplace;
   };
 
+  function convertDate(str) {
+    let date = new Date(str),
+      month = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), month, day].join("-");
+  }
+
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   return (
@@ -215,7 +223,7 @@ export default function ExtrResultTable(props) {
                   if (cell.column.Header === "TICKET ID") {
                     data = (
                       <Flex align="center">
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                        <Text color={textColor} fontSize="md" fontWeight="700">
                           {cell.value}
                         </Text>
                       </Flex>
@@ -223,7 +231,7 @@ export default function ExtrResultTable(props) {
                   } else if (cell.column.Header === "NGƯỜI TẠO") {
                     data = (
                       <Flex align="center">
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                        <Text color={textColor} fontSize="md" fontWeight="700">
                           {cell.value}
                         </Text>
                       </Flex>
@@ -231,7 +239,7 @@ export default function ExtrResultTable(props) {
                   } else if (cell.column.Header === "TÊN FILE") {
                     data = (
                       <Flex align="center">
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                        <Text color={textColor} fontSize="md" fontWeight="700">
                           {cell.value[0]}
                         </Text>
                       </Flex>
@@ -262,7 +270,7 @@ export default function ExtrResultTable(props) {
                               : null
                           }
                         />
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                        <Text color={textColor} fontSize="md" fontWeight="700">
                           {cell.value === 1
                             ? "Bóc tách thành công"
                             : cell.value === 2
@@ -276,15 +284,15 @@ export default function ExtrResultTable(props) {
                   } else if (cell.column.Header === "SỐ TRANG") {
                     data = (
                       <Flex align="center">
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                        <Text color={textColor} fontSize="md" fontWeight="700">
                           {cell.value}
                         </Text>
                       </Flex>
                     );
                   } else if (cell.column.Header === "NGÀY TẠO") {
                     data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
-                        {cell.value}
+                      <Text color={textColor} fontSize="md" fontWeight="700">
+                        {convertDate(cell.value)}
                       </Text>
                     );
                   } else if (cell.column.Header === "THAO TÁC") {
@@ -295,10 +303,14 @@ export default function ExtrResultTable(props) {
                             colorScheme="purple"
                             icon={<ViewIcon />}
                             variant="ghost"
-                            onClick={() => {
+                            onClick={async () => {
                               setOverlay(<OverlayTwo />);
                               onOpen();
-                              setOcrData(convertToJson(row.original.jsonData));
+                              await setOcrData(convertToJson(row.original.jsonData));
+                              console.log("data",ocrData);
+                              await setVerifyLink(row.original.verifyLink);
+
+                              console.log("verifyLink",verifyLink);
                             }}
                             key={size}
                           />
@@ -349,10 +361,13 @@ export default function ExtrResultTable(props) {
                               type={item?.TYPE}
                               data={childItem}
                               icon={IoNewspaperOutline}
+                              verifyLink={verifyLink}
                             />
                           );
                         })
-                      : null}
+                      : (
+                        <Text>Không có dữ liệu</Text>
+                      )}
                   </>
                 );
               })}

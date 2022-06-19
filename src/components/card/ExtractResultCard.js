@@ -33,7 +33,7 @@ import { IoNewspaperOutline } from "react-icons/io5";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 function ExtractResultCard(props) {
-  const { type, data, icon } = props;
+  const { type, data, icon, verifyLink } = props;
   let boxBg = useColorModeValue("white !important", "#111c44 !important");
   let secondaryBg = useColorModeValue("gray.300", "whiteAlpha.100");
   let thirdBg = useColorModeValue("gray.100", "whiteAlpha.100");
@@ -41,7 +41,8 @@ function ExtractResultCard(props) {
   let iconBox = useColorModeValue("gray.100", "whiteAlpha.200");
   let iconColor = useColorModeValue("brand.200", "white");
 
-  console.log(data);
+  console.log("ocrData:",data);
+  console.log("verifyLink:",verifyLink);
   return (
     <Flex
       borderRadius="20px"
@@ -115,7 +116,7 @@ function ExtractResultCard(props) {
         <Flex>
           <Spacer />
           <Flex mt="15px" direction={"row"}>
-            <Link to="#" display={"inherit"}>
+            <Link href={verifyLink} display={"inherit"}>
               <Text
                 color={mainText}
                 fontSize="sm"
