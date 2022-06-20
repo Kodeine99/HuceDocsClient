@@ -31,12 +31,12 @@ function Dropzone(props) {
   const { content, ...rest } = props;
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     
-    accept: {
-      'application/pdf': [],
-      'img/tiff': [],
-      'application/msword': [], 
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': [],
-    },
+    // accept: {
+    //   'application/pdf': [],
+    //   'img/tiff': [],
+    //   'application/msword': [], 
+    //   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': [],
+    // },
     maxFiles: 5,
     
   });

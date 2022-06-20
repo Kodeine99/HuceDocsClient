@@ -10,12 +10,21 @@
     "ocR_Status_Code": 1,
     "verifyLink": "http://10.10.10.99/FlexiCapture12/Verification/Verify?projectId=8&batchId=10520&returnTo=BatchList&mode=mini",
     "username": "tungramen99",
-    "hFiles": []
+    "hFiles": [
+      {
+        "id": 1,
+        "documentId": 1,
+        "fileName": "Giấy xác nhận kết quả thi TOEIC_1.pdf",
+        "filePath": "E:\\WorkSpace\\HuceDocs\\HuceDocsWebApi\\HDTest\\FileStorage\\Giấy xác nhận kết quả thi TOEIC_1.pdf",
+        "fileExtension": ".pdf",
+        "status": 1
+      }
+    ]
   },
   {
     "id": 2,
     "ticket_Id": "10521",
-    "jsonData": "[{\"TYPE\":\"GIAY_XAC_NHAN_TOEIC\",\"DATA\":\"[{\\\"HO_TEN\\\":\\\"Trần Phương My\\\",\\\"NGAY_SINH\\\":\\\"05/10/1999\\\",\\\"MSSV\\\":\\\"97767\\\",\\\"LOP\\\":\\\"62KTXD\\\",\\\"NGANH_HOC\\\":\\\"Kỹ thuật xây dựng Công trình thủy\\\",\\\"HE_DAO_TAO\\\":\\\"Đại học chính quy\\\",\\\"KHOA\\\":\\\"Kỹ thuật xây dựng\\\",\\\"NDXN\\\":\\\"Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.\\\",\\\"DIEM_THI\\\":\\\"600/990\\\",\\\"DOT_THI\\\":\\\"12/2021\\\",\\\"NGAY_XAC_NHAN\\\":\\\"23/5/2022\\\",\\\"ECM_ID\\\":\\\"\\\"}]\"}]",
+    "jsonData": "[{\"TYPE\":\"GIAY_XAC_NHAN_TOEIC\",\"DATA\":\"[{\\\"HO_TEN\\\":\\\"Trần Phương My\\\",\\\"NGAY_SINH\\\":\\\"05/10/1999\\\",\\\"MSSV\\\":\\\"97767\\\",\\\"LOP\\\":\\\"62KTXD\\\",\\\"NGANH_HOC\\\":\\\"Kỹ thuật xây dựng Công trình thủy\\\",\\\"HE_DAO_TAO\\\":\\\"Đại học chính quy\\\",\\\"KHOA\\\":\\\"Kỹ thuật xây dựng\\\",\\\"NDXN\\\":\\\"Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.\\\",\\\"DIEM_THI\\\":\\\"600/990\\\",\\\"DOT_THI\\\":\\\"12/2021\\\",\\\"NGAY_XAC_NHAN\\\":\\\"23/5/2022\\\",\\\"ECM_ID\\\":\\\"\\\"},{\\\"HO_TEN\\\":\\\"Nguyễn Hồng Hoa\\\",\\\"NGAY_SINH\\\":\\\"23/7/1998\\\",\\\"MSSV\\\":\\\"387644\\\",\\\"LOP\\\":\\\"62KTXD\\\",\\\"NGANH_HOC\\\":\\\"Kỹ thuật xây dựng Công trình\\\",\\\"HE_DAO_TAO\\\":\\\"Đại học chính quy\\\",\\\"KHOA\\\":\\\"Kỹ thuật xây dựng\\\",\\\"NDXN\\\":\\\"Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.\\\",\\\"DIEM_THI\\\":\\\"850/990\\\",\\\"DOT_THI\\\":\\\"8/2021\\\",\\\"NGAY_XAC_NHAN\\\":\\\"12/12/2021\\\",\\\"ECM_ID\\\":\\\"\\\"}]\"}]",
     "documentId": 2,
     "userId": 1,
     "createTime": "2022-06-19T11:19:25.5909008",
@@ -23,7 +32,24 @@
     "ocR_Status_Code": 1,
     "verifyLink": "http://10.10.10.99/FlexiCapture12/Verification/Verify?projectId=8&batchId=10521&returnTo=BatchList&mode=mini",
     "username": "tungramen99",
-    "hFiles": []
+    "hFiles": [
+      {
+        "id": 2,
+        "documentId": 2,
+        "fileName": "Giấy xác nhận kết quả thi TOEIC_2.pdf",
+        "filePath": "E:\\WorkSpace\\HuceDocs\\HuceDocsWebApi\\HDTest\\FileStorage\\Giấy xác nhận kết quả thi TOEIC_2.pdf",
+        "fileExtension": ".pdf",
+        "status": 1
+      },
+      {
+        "id": 3,
+        "documentId": 2,
+        "fileName": "Mẫu BM.03.01_ Đơn xin nhập học lại_3.pdf",
+        "filePath": "E:\\WorkSpace\\HuceDocs\\HuceDocsWebApi\\HDTest\\FileStorage\\Mẫu BM.03.01_ Đơn xin nhập học lại_3.pdf",
+        "fileExtension": ".pdf",
+        "status": 1
+      }
+    ]
   },
   {
     "id": 3,
@@ -78,4 +104,3 @@
     "hFiles": []
   }
 ]
-

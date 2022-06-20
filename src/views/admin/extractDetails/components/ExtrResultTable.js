@@ -218,7 +218,7 @@ export default function ExtrResultTable(props) {
             return (
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
-                  //console.log("rowData", row.original);
+                  console.log("rowData", row.original);
                   let data = "";
                   if (cell.column.Header === "TICKET ID") {
                     data = (
@@ -240,7 +240,14 @@ export default function ExtrResultTable(props) {
                     data = (
                       <Flex align="center">
                         <Text color={textColor} fontSize="md" fontWeight="700">
-                          {cell.value[0]}
+                          {/* {cell.value[0].fileName} */}
+                          {console.log("file name cell:",cell.value)}
+                          {
+                            typeof(row.original.hFiles) !== "undefined" && row.original.hFiles.length > 0 ?
+                            (row.original.hFiles.map((file, index) => {
+                              return `${file.fileName} \r\n`
+                            })):(<Text>Chưa có file</Text>)
+                          }
                         </Text>
                       </Flex>
                     );

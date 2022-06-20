@@ -22,10 +22,10 @@ export const columnsDataExtrResultTable = [
     Header: "TICKET ID",
     accessor: "ticket_Id",
   },
-  // {
-  //   Header: "TÊN FILE",
-  //   accessor: "name",
-  // },
+  {
+    Header: "TÊN FILE",
+    accessor: "hFiles",
+  },
   // {
   //   Header: "SỐ TRANG",
   //   accessor: "pageNumber",
