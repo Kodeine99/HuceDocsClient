@@ -17,6 +17,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "theme/theme";
 import ExtractionLayout from "layouts/extraction";
 import { RoutesProvider } from "./contexts/RoutesContext";
+import AuthRoute from "routes/AuthRoute";
+import NormalRoute from "routes/NormalRoute";
 
 ReactDOM.render(
   <ChakraProvider theme={theme}>
@@ -26,19 +28,19 @@ ReactDOM.render(
           <BrowserRouter>
             <Switch>
               {/* Authenticate Route */}
-              <Route path="/auth" component={AuthLayout} />
+              <NormalRoute path="/auth" component={AuthLayout} />
 
               {/* User Logined Route */}
-              <Route path="/boctach" component={AdminLayout} />
-              <Route path="/lichsuboctach" component={AdminLayout} />
-              <Route path="/thongtincanhan" exact component={AdminLayout} />
-              <Route path="/tailieuhuongdan" exact component={AdminLayout} />
-              <Route path="/quanlynguoidung" exact component={AdminLayout} />
-              <Route path="/quanlytailieu" exact component={AdminLayout} />
+              <AuthRoute path="/boctach" component={AdminLayout} />
+              <AuthRoute path="/lichsuboctach" component={AdminLayout} />
+              <AuthRoute path="/thongtincanhan" exact component={AdminLayout} />
+              <AuthRoute path="/tailieuhuongdan" exact component={AdminLayout} />
+              <AuthRoute path="/quanlynguoidung" exact component={AdminLayout} />
+              <AuthRoute path="/quanlytailieu" exact component={AdminLayout} />
               {/* <Route path="/extraction" component={ExtractionLayout} /> */}
 
               {/* RTL Route */}
-              <Route path="/rtl" component={RTLLayout} />
+              <AuthRoute path="/rtl" component={RTLLayout} />
 
               <Redirect exact from="*" to="/boctach" />
             </Switch>

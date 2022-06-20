@@ -13,27 +13,16 @@ import { useCookies } from "react-cookie";
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
-  FormErrorMessage,
-  FormLabel,
   Heading,
-  Icon,
-  Input,
-  InputGroup,
-  InputRightElement,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 // Custom components
-import { HSeparator } from "components/separator/Separator";
 import DefaultAuth from "layouts/auth/Default";
 // Assets
 import loginBackground from "assets/img/auth/LoginPage.png";
-import { FcGoogle } from "react-icons/fc";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
-import { RiEyeCloseLine } from "react-icons/ri";
 import {
   login,
   userSelector,
@@ -63,8 +52,9 @@ function SignIn() {
   );
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+
   const history = useHistory();
-  const [setCookie] = useCookies();
+  const [cookies, setCookie, removeCookie] = useCookies();
   const dispatch = useDispatch();
   const { loading, isSuccess, isError, errorMessage } =
     useSelector(userSelector);
@@ -85,30 +75,21 @@ function SignIn() {
     console.log(userData);
   };
   // Handle submit
-  const handleSubmit = async (values, actions) => {
-    console.log("Submit");
-    // const action = await login(values);
-    // const actionResult = await dispatch(action);
-    // const loginResult = unwrapResult(actionResult);
+  const handleSubmit = async (values) => {
+    console.log("Submit", values);
+    const action = await login(values);
+    const actionResult = await dispatch(action);
+    const loginResult = unwrapResult(actionResult);
 
-    // if (loginResult.isOk) {
-    //   const token = loginResult.result.token;
-    //   setCookie("access_token", token, {
-    //     path: "/",
-    //     expires: new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)),
-    //   });
-    //   await getUserData();
-    // }
-  };
-  function validateName(value) {
-    let error;
-    if (!value) {
-      error = "Name is required";
-    } else if (value.toLowerCase() !== "naruto") {
-      error = "Jeez! You're not a fan 😱";
+    if (loginResult.isOk) {
+      const token = loginResult.result.token;
+      setCookie("access_token", token, {
+        path: "/",
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+      });
+      await getUserData();
     }
-    return error;
-  }
+  };
 
   useEffect(() => {
     return () => {
@@ -119,7 +100,7 @@ function SignIn() {
   useEffect(() => {
     if (isSuccess) {
       dispatch(clearState());
-      history.push("/");
+      history.push("/boctach");
     } else if (isError) {
       dispatch(clearState());
     }
@@ -169,37 +150,13 @@ function SignIn() {
           me="auto"
           mb={{ base: "20px", md: "auto" }}
         >
-          {/* <Button
-            fontSize="sm"
-            me="0px"
-            mb="26px"
-            py="15px"
-            h="50px"
-            borderRadius="16px"
-            bg={googleBg}
-            color={googleText}
-            fontWeight="500"
-            _hover={googleHover}
-            _active={googleActive}
-            _focus={googleActive}
-          >
-            <Icon as={FcGoogle} w="20px" h="20px" me="10px" />
-            Sign in with Google
-          </Button> */}
-          {/* <Flex align="center" mb="25px">
-            <HSeparator />
-            <Text color="gray.400" mx="14px">
-              or
-            </Text>
-            <HSeparator />
-          </Flex> */}
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            // onSubmit = {handleSubmit}
+            //onSubmit = {handleSubmit}
             onSubmit={(values, actions) => {
               setTimeout(() => {
-                console.log("Submitted");
+                handleSubmit(values);
                 actions.setSubmitting(false);
               }, 1000);
             }}
@@ -245,13 +202,13 @@ function SignIn() {
                         Keep me logged in
                       </FormLabel>
                     </FormControl> */}
-                      <NavLink to="/auth/forgot-password" >
+                      <NavLink to="/auth/forgot-password">
                         <Text
                           color={textColorBrand}
                           fontSize="sm"
                           w="124px"
                           fontWeight="500"
-                          mt={'20px'}
+                          mt={"20px"}
                         >
                           Forgot password?
                         </Text>

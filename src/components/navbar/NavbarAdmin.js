@@ -14,9 +14,19 @@ import React, { useState, useEffect } from "react";
 import AdminNavbarLinks from "components/navbar/NavbarLinksAdmin";
 import { useHistory, NavLink } from "react-router-dom";
 import routes from "routes/routes";
+import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import { userSelector } from "aaRedux/app/userSlice";
 
 export default function AdminNavbar(props) {
   const [scrolled, setScrolled] = useState(false);
+  const history = useHistory();
+  const [cookie, setCookie, removeCookie] = useCookies();
+  const {userInfor} = useSelector(userSelector);
+
+  const dispatch = useDispatch();
+
+  //console.log("userInfo",userInfor);
 
   useEffect(() => {
     window.addEventListener("scroll", changeNavbar);
@@ -25,6 +35,12 @@ export default function AdminNavbar(props) {
       window.removeEventListener("scroll", changeNavbar);
     };
   });
+
+  // Logout
+  const logout = () => {
+    removeCookie("access_token");
+    history.push("/auth");
+  }
 
   const { secondary, message, brandText, brandTextChild, navbarTitle } = props;
 
@@ -164,6 +180,8 @@ export default function AdminNavbar(props) {
             secondary={props.secondary}
             fixed={props.fixed}
             scrolled={scrolled}
+            logout={logout}
+            userInfor={userInfor}
           />
         </Box>
       </Flex>

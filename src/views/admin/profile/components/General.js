@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/card/Card.js";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Information from "views/admin/profile/components/Information";
 // Formik Control
 import { Formik, Field, FastField, ErrorMessage, Form } from "formik";
@@ -17,12 +17,15 @@ import { Formik, Field, FastField, ErrorMessage, Form } from "formik";
 import * as Yup from "yup";
 import LoginInput from "components/shared/inputField/InputField";
 import InputWithHide from "components/shared/inputField/InputFieldWithHide";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import ProfileField from "../../../../components/shared/custom/fields/ProfileField";
 import { InputSelect } from "../../../../components/shared/custom/fields/InputSelect";
+
+import { useDispatch, useSelector } from "react-redux";
+import { userSelector } from "aaRedux/app/userSlice";
 // Assets
 export default function GeneralInformation(props) {
-  const { ...rest } = props;
+  const { userinfo,...rest } = props;
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
   const textColorSecondary = "gray.400";
@@ -32,25 +35,62 @@ export default function GeneralInformation(props) {
   );
   const textColorBrand = useColorModeValue("brand.500", "white");
 
-  const [show, setShow] = React.useState(false);
+  const [show, setShow] = useState(false);
   //const handleClick = () => setShow(!show);
-  //const history = useHistory();
+  const history = useHistory();
   //const [setCookie] = useCookies();
-  //const dispatch = useDispatch();
-  // const { loading, isSuccess, isError, errorMessage } =
-  //   useSelector(userSelector);
+  const dispatch = useDispatch();
+  //const { userInfo } = useSelector(userSelector);
+
+  console.log("userInfo2:", userinfo)
+
+  const [initialValues, setInitialValues] = useState({
+    active: true,
+    address: "",
+    age: null,
+    birthday: null,
+    email: "",
+    fullName: "",
+    gender: null,
+    phoneNumber: "",
+    userName: "",
+  });
+
+  const onLoad = () => {
+    //console.log("us2", userInfo);
+    const {
+      address,
+      age,
+      birthday,
+      email,
+      fullName,
+      gender,
+      phoneNumber,
+      userName,
+    } = userinfo;
+    const newDOb = converDate(new Date(birthday));
+
+    setInitialValues({
+      fullName: fullName,
+      userName: userName,
+      email: email,
+      phoneNumber: phoneNumber,
+      age: age,
+      birthday: newDOb,
+      gender: gender,
+      address: address,
+    });
+  };
+  useEffect(() => {
+    userinfo && onLoad();
+    // eslint-disable-next-line
+  }, [userinfo]);
 
   // setup formik
-  const initialValues = {
-    fullname: "Tung Ramen",
-    username: "tungramen99",
-    email: "tungramen99@gmail.com",
-    phoneNumber: "0989898989",
-    age: 23,
-    birthday: "",
-    address: "Van Quan, Ha Dong, Ha Noi",
-    gender: 1,
-  };
+  // const initialValues = {
+  //   ...userInfo,
+  // };
+  console.log(initialValues);
   // setup Yup
   const validationSchema = Yup.object().shape({
     username: Yup.string().required("Username is required"),
@@ -62,6 +102,13 @@ export default function GeneralInformation(props) {
     gender: Yup.string().required("This field is require."),
     address: Yup.string().required("This field is require."),
   });
+  // Convert format date
+  const converDate = (dateString) => {
+    let date = new Date(dateString),
+      month = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), month, day].join("-");
+  };
   return (
     <Card mb={{ base: "0px", "2xl": "10px" }} {...rest}>
       <Text
@@ -73,24 +120,6 @@ export default function GeneralInformation(props) {
       >
         Thông tin cá nhân
       </Text>
-
-      {/* <SimpleGrid columns="2" gap="20px">
-        {Object.entries(userInfo)
-          .map(([key, value]) => ({
-            key,
-            value,
-          }))
-          .map((dataItem, key) => {
-            return (
-              <Information
-                boxShadow={cardShadow}
-                key={key}
-                title={dataItem.key}
-                value={dataItem.value}
-              />
-            );
-          })}
-      </SimpleGrid> */}
 
       <Formik
         initialValues={initialValues}
@@ -117,7 +146,7 @@ export default function GeneralInformation(props) {
                     name={"fullname"}
                     type={"text"}
                     placeholder={"FullName"}
-                    defaultValue={"Tung Ramen"}
+                    //defaultValue={"Tung Ramen"}
                     {...formikProps.getFieldProps("fullname")}
                     // {...formikProps.getFieldProps("Username")}
                   />
@@ -128,7 +157,7 @@ export default function GeneralInformation(props) {
                     type={"text"}
                     placeholder={"Username"}
                     disabled={true}
-                    defaultValue={"tungramen99"}
+                    //defaultValue={"tungramen99"}
                     {...formikProps.getFieldProps("username")}
                     // {...formikProps.getFieldProps("Username")}
                   />
@@ -140,7 +169,7 @@ export default function GeneralInformation(props) {
                     placeholder={"Email"}
                     type={"email"}
                     disabled={true}
-                    defaultValue={"tungramen99@gmail.com"}
+                    //defaultValue={"tungramen99@gmail.com"}
                     {...formikProps.getFieldProps("email")}
                     // {...formikProps.getFieldProps("Email")}
                   />
@@ -150,7 +179,7 @@ export default function GeneralInformation(props) {
                     name={"phoneNumber"}
                     placeholder={"Phone Number"}
                     type={"text"}
-                    defaultValue={"0989898989"}
+                    //defaultValue={"0989898989"}
                     {...formikProps.getFieldProps("phoneNumber")}
                     // {...formikProps.getFieldProps("Email")}
                   />
@@ -161,7 +190,7 @@ export default function GeneralInformation(props) {
                     placeholder={"Age"}
                     type={"number"}
                     disabled={true}
-                    defaultValue={23}
+                    //defaultValue={23}
                     {...formikProps.getFieldProps("age")}
                     // {...formikProps.getFieldProps("Email")}
                   />
@@ -179,7 +208,7 @@ export default function GeneralInformation(props) {
                     name={"address"}
                     placeholder={"Address"}
                     type={"text"}
-                    defaultValue={"Van Quan, Ha Dong, Ha Noi"}
+                    //defaultValue={"Van Quan, Ha Dong, Ha Noi"}
                     {...formikProps.getFieldProps("address")}
                     // {...formikProps.getFieldProps("Email")}
                   />
@@ -189,7 +218,7 @@ export default function GeneralInformation(props) {
                     label={"Gender"}
                     name={"gender"}
                     type={"number"}
-                    defaultValue={0}
+                    //defaultValue={0}
                     {...formikProps.getFieldProps("gender")}
                     // {...formikProps.getFieldProps("Email")}
                   />

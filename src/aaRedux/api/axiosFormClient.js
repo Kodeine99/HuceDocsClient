@@ -6,6 +6,7 @@ import store from "../app/store";
 // Setup default config for http requests
 const axiosFormClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
+  //baseURL: "http://10.10.10.122:5000",
   headers: {
     'Content-type': 'multipart/form-data',
   },

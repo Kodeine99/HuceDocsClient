@@ -28,7 +28,7 @@ import { FaEthereum } from "react-icons/fa";
 import routes from "../../routes/routes";
 import { NavLink, Router } from "react-router-dom";
 export default function HeaderLinks(props) {
-  const { secondary } = props;
+  const { secondary, logout, userInfor } = props;
   const { colorMode, toggleColorMode } = useColorMode();
   // Chakra Color Mode
   const navbarIcon = useColorModeValue("gray.400", "white");
@@ -225,7 +225,7 @@ export default function HeaderLinks(props) {
               fontWeight="700"
               color={textColor}
             >
-              👋&nbsp; Hey, Tung Ramen
+              👋&nbsp; Hey, {userInfor ? userInfor.fullName : ""}
             </Text>
           </Flex>
           <Flex flexDirection="column" p="10px">
@@ -252,6 +252,7 @@ export default function HeaderLinks(props) {
               color="red.400"
               borderRadius="8px"
               px="14px"
+              onClick={() => logout()}
             >
               <Text fontSize="sm">Log out</Text>
             </MenuItem>

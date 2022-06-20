@@ -4,6 +4,7 @@ import store from "../app/store";
 // Setups the axios client for http requests
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
+  //baseURL: "http://10.10.10.122:5000",
   headers: {
     'Content-Type': 'application/json',
   },
@@ -12,7 +13,7 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use((config) => {
   // Handle token here
-  const access_token = store.getState().user.access_token;
+  const access_token = store.getState().user.token;
   if (access_token) {
     config.headers.Authorization = `Bearer ${access_token}`;
   }

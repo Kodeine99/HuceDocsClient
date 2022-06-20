@@ -9,10 +9,16 @@ const userApi = {
       username: username,
       password: password,
     });
+    console.log(process.env.REACT_APP_API_URL)
     return axiosClient.post(
       `${process.env.REACT_APP_API_URL}/user/login`,
       data
     );
+
+    // return axiosClient.post(
+    //   "http://10.10.10.122:5000/user/login",
+    //   data
+    // )
   },
   
   register:(
