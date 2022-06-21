@@ -19,16 +19,16 @@ import ExtractionLayout from "layouts/extraction";
 import { RoutesProvider } from "./contexts/RoutesContext";
 import AuthRoute from "routes/AuthRoute";
 import NormalRoute from "routes/NormalRoute";
-import { persistStore } from "redux-persist";
-import { PersistGate } from "redux-persist/integration/react";
+// import { persistStore } from "redux-persist";
+// import { PersistGate } from "redux-persist/integration/react";
 
-let persistor = persistStore(store);
+// let persistor = persistStore(store);
 
 ReactDOM.render(
   <ChakraProvider theme={theme}>
     <React.StrictMode>
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        {/* <PersistGate loading={null} persistor={persistor}> */}
           <RoutesProvider>
             <BrowserRouter>
               <Switch>
@@ -67,7 +67,7 @@ ReactDOM.render(
               </Switch>
             </BrowserRouter>
           </RoutesProvider>
-        </PersistGate>
+        {/* </PersistGate> */}
       </Provider>
     </React.StrictMode>
   </ChakraProvider>,

@@ -33,6 +33,10 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import LoginInput from "components/shared/inputField/InputField";
 import InputWithHide from "components/shared/inputField/InputFieldWithHide";
 
+// Toast
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function SignIn() {
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
@@ -74,12 +78,25 @@ function SignIn() {
     const userData = dispatch(getUserByToken());
     console.log(userData);
   };
+
+  //Show toast
+  // const showToast = (errMessage) => {
+  //   toast({
+  //     title: "Login failed!",
+  //     description: errMessage,
+  //     status: "error",
+  //     duration: 9000,
+  //     isClosable: true,
+  //   });
+  // };
+
   // Handle submit
   const handleSubmit = async (values) => {
     //console.log("Submit", values);
     const action = await login(values);
     const actionResult = await dispatch(action);
     const loginResult = unwrapResult(actionResult);
+    console.log("login Result", loginResult);
 
     if (loginResult.isOk) {
       const token = loginResult.result.token;
@@ -102,92 +119,101 @@ function SignIn() {
       dispatch(clearState());
       history.push("/boctach");
     } else if (isError) {
+      console.log("errMess", errorMessage);
+      
+      toast.error(errorMessage, {
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored"
+      });
       dispatch(clearState());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, isError]);
 
   return (
-    <DefaultAuth
-      illustrationBackground={loginBackground}
-      image={loginBackground}
-    >
-      <Flex
-        maxW={{ base: "100%", md: "max-content" }}
-        w="100%"
-        mx={{ base: "auto", lg: "0px" }}
-        me="auto"
-        h="100%"
-        alignItems="start"
-        justifyContent="center"
-        mb={{ base: "30px", md: "60px" }}
-        px={{ base: "25px", md: "0px" }}
-        mt={{ base: "40px", md: "14vh" }}
-        flexDirection="column"
+    <>
+      <ToastContainer />
+      <DefaultAuth
+        illustrationBackground={loginBackground}
+        image={loginBackground}
       >
-        <Box me="auto">
-          <Heading color={textColor} fontSize="36px" mb="10px">
-            Sign In
-          </Heading>
-          <Text
-            mb="36px"
-            ms="4px"
-            color={textColorSecondary}
-            fontWeight="400"
-            fontSize="md"
-          >
-            Enter your <b>username & password</b> to sign in!
-          </Text>
-        </Box>
         <Flex
-          zIndex="2"
-          direction="column"
-          w={{ base: "100%", md: "420px" }}
-          maxW="100%"
-          background="transparent"
-          borderRadius="15px"
-          mx={{ base: "auto", lg: "unset" }}
+          maxW={{ base: "100%", md: "max-content" }}
+          w="100%"
+          mx={{ base: "auto", lg: "0px" }}
           me="auto"
-          mb={{ base: "20px", md: "auto" }}
+          h="100%"
+          alignItems="start"
+          justifyContent="center"
+          mb={{ base: "30px", md: "60px" }}
+          px={{ base: "25px", md: "0px" }}
+          mt={{ base: "40px", md: "14vh" }}
+          flexDirection="column"
         >
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            //onSubmit = {handleSubmit}
-            onSubmit={(values, actions) => {
-              setTimeout( async () => {
-                await handleSubmit(values);
-                actions.setSubmitting(false);
-              }, 1000);
-            }}
+          <Box me="auto">
+            <Heading color={textColor} fontSize="36px" mb="10px">
+              Sign In
+            </Heading>
+            <Text
+              mb="36px"
+              ms="4px"
+              color={textColorSecondary}
+              fontWeight="400"
+              fontSize="md"
+            >
+              Enter your <b>username & password</b> to sign in!
+            </Text>
+          </Box>
+          <Flex
+            zIndex="2"
+            direction="column"
+            w={{ base: "100%", md: "420px" }}
+            maxW="100%"
+            background="transparent"
+            borderRadius="15px"
+            mx={{ base: "auto", lg: "unset" }}
+            me="auto"
+            mb={{ base: "20px", md: "auto" }}
           >
-            {(formikProps) => {
-              // do somethings
-              const { values, errors, touched, isSubmitting } = formikProps;
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              //onSubmit = {handleSubmit}
+              onSubmit={(values, actions) => {
+                setTimeout(async () => {
+                  const submitResult = handleSubmit(values);
+                  console.log("subResult", submitResult);
+                  actions.setSubmitting(false);
+                }, 1000);
+              }}
+            >
+              {(formikProps) => {
+                // do somethings
+                const { values, errors, touched, isSubmitting } = formikProps;
 
-              return (
-                <Form>
-                  <FormControl>
-                    <FastField
-                      component={LoginInput}
-                      label={"Username"}
-                      name={"username"}
-                      type={"text"}
-                      placeholder={"Username"}
-                    />
+                return (
+                  <Form>
+                    <FormControl>
+                      <FastField
+                        component={LoginInput}
+                        label={"Username"}
+                        name={"username"}
+                        type={"text"}
+                        placeholder={"Username"}
+                      />
 
-                    <FastField
-                      component={InputWithHide}
-                      label={"Password"}
-                      name={"password"}
-                      placeholder={"Min. 8 characters"}
-                    />
-                    <Flex
-                      justifyContent="space-between"
-                      align="center"
-                      mb="24px"
-                    >
-                      {/* <FormControl display='flex' alignItems='center'>
+                      <FastField
+                        component={InputWithHide}
+                        label={"Password"}
+                        name={"password"}
+                        placeholder={"Min. 8 characters"}
+                      />
+                      <Flex
+                        justifyContent="space-between"
+                        align="center"
+                        mb="24px"
+                      >
+                        {/* <FormControl display='flex' alignItems='center'>
                       <Checkbox
                         id='remember-login'
                         colorScheme='brandScheme'
@@ -202,62 +228,63 @@ function SignIn() {
                         Keep me logged in
                       </FormLabel>
                     </FormControl> */}
-                      <NavLink to="/auth/forgot-password">
-                        <Text
-                          color={textColorBrand}
-                          fontSize="sm"
-                          w="124px"
-                          fontWeight="500"
-                          mt={"20px"}
-                        >
-                          Forgot password?
-                        </Text>
-                      </NavLink>
-                    </Flex>
-                    <Button
-                      loadingText="Signing in..."
-                      isLoading={isSubmitting}
-                      spinnerPlacement="start"
-                      type="submit"
-                      fontSize="sm"
-                      variant="brand"
-                      fontWeight="500"
-                      w="100%"
-                      h="50"
-                      mb="24px"
-                    >
-                      Sign In
-                    </Button>
-                    {/* <ErrorMessage type={'invalid'}>{form.errors.name}</ErrorMessage> */}
-                  </FormControl>
-                </Form>
-              );
-            }}
-          </Formik>
-          <Flex
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="start"
-            maxW="100%"
-            mt="0px"
-          >
-            <Text color={textColorDetails} fontWeight="400" fontSize="14px">
-              Not registered yet?
-              <NavLink to="/auth/sign-up">
-                <Text
-                  color={textColorBrand}
-                  as="span"
-                  ms="5px"
-                  fontWeight="500"
-                >
-                  Contact to Admin to create an Account
-                </Text>
-              </NavLink>
-            </Text>
+                        <NavLink to="/auth/forgot-password">
+                          <Text
+                            color={textColorBrand}
+                            fontSize="sm"
+                            w="124px"
+                            fontWeight="500"
+                            mt={"20px"}
+                          >
+                            Forgot password?
+                          </Text>
+                        </NavLink>
+                      </Flex>
+                      <Button
+                        loadingText="Signing in..."
+                        isLoading={isSubmitting}
+                        spinnerPlacement="start"
+                        type="submit"
+                        fontSize="sm"
+                        variant="brand"
+                        fontWeight="500"
+                        w="100%"
+                        h="50"
+                        mb="24px"
+                      >
+                        Sign In
+                      </Button>
+                      {/* <ErrorMessage type={'invalid'}>{form.errors.name}</ErrorMessage> */}
+                    </FormControl>
+                  </Form>
+                );
+              }}
+            </Formik>
+            <Flex
+              flexDirection="column"
+              justifyContent="center"
+              alignItems="start"
+              maxW="100%"
+              mt="0px"
+            >
+              <Text color={textColorDetails} fontWeight="400" fontSize="14px">
+                Not registered yet?
+                <NavLink to="/auth/sign-up">
+                  <Text
+                    color={textColorBrand}
+                    as="span"
+                    ms="5px"
+                    fontWeight="500"
+                  >
+                    Contact to Admin to create an Account
+                  </Text>
+                </NavLink>
+              </Text>
+            </Flex>
           </Flex>
         </Flex>
-      </Flex>
-    </DefaultAuth>
+      </DefaultAuth>
+    </>
   );
 }
 SignIn.propTypes = {

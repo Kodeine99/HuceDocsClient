@@ -29,16 +29,19 @@ import Card from "components/card/Card";
 import * as Yup from "yup";
 
 // Toast
-import { useToast } from "@chakra-ui/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { unwrapResult } from "@reduxjs/toolkit";
 import { updateUserInfo } from "aaRedux/app/userSlice";
 import { getUserByToken } from "aaRedux/app/userSlice";
+import { clearState } from "aaRedux/app/userSlice";
 
 export default function Overview(props) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { userInfor } = useSelector(userSelector);
-  const toast = useToast();
+  const { userInfor, loading, isSuccess, isError, errorMessage } =
+    useSelector(userSelector);
 
   // const userInfo = {
   //   FullName: "Tung Ramen",
@@ -118,6 +121,7 @@ export default function Overview(props) {
 
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
 
+  const updateMessage = () => toast(updateMessage);
   const handleSubmit = async (values) => {
     //console.log("value",values)
     const newValues = {
@@ -130,223 +134,217 @@ export default function Overview(props) {
     console.log("AcResult", actionResult);
     const updateResult = await unwrapResult(actionResult);
     console.log("UpdateResult", updateResult);
-    updateResult?.isOk === true ? (
-      toast({
-        title: 'Update success!',
-        description: "Cập nhật thành công",
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-      })
-    ) : (
-      toast({
-        title: 'Update failed!',
-        description: "Cập nhật thất bại",
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      })
-    )
+    updateResult?.isOk === true
+      ? toast.success("Cập nhật thành công", {
+          position: toast.POSITION.TOP_CENTER,
+        })
+      : toast.error("Cập nhật thất bại", {
+          position: toast.POSITION.TOP_CENTER,
+          theme: "colored",
+        });
     await getUserData();
   };
 
   return (
-    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      {/* Main Fields */}
-      <Grid
-        templateColumns={{
-          base: "1fr",
-          lg: "1.34fr 1fr 1.62fr",
-        }}
-        templateRows={{
-          base: "repeat(2, 1fr)",
-          lg: "1fr",
-        }}
-        gap={{ base: "20px", xl: "20px" }}
-      >
-        <Banner
-          gridArea="1 / 1 / 2 / 2"
-          banner={banner}
-          avatar={avatar}
-          name="Tung Ramen"
-          job="HUCE Student 🤍"
-          posts="25"
-          followers="9.9k"
-          following="1"
-        />
-        {/* <Storage
+    <>
+      <ToastContainer />
+
+      <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+        {/* Main Fields */}
+        <Grid
+          templateColumns={{
+            base: "1fr",
+            lg: "1.34fr 1fr 1.62fr",
+          }}
+          templateRows={{
+            base: "repeat(2, 1fr)",
+            lg: "1fr",
+          }}
+          gap={{ base: "20px", xl: "20px" }}
+        >
+          <Banner
+            gridArea="1 / 1 / 2 / 2"
+            banner={banner}
+            avatar={avatar}
+            name="Tung Ramen"
+            job="HUCE Student 🤍"
+            posts="25"
+            followers="9.9k"
+            following="1"
+          />
+          {/* <Storage
           gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 1 / 1 / 3" }}
           used={25.6}
           total={50}
         /> */}
-        <GridItem colSpan={2}>
-          {/* <General
+          <GridItem colSpan={2}>
+            {/* <General
             userinfo={userInfo}
             //gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 2 / 2 / 3" }}
             minH="365px"
             pe="20px"
           /> */}
 
-          <Card mb={{ base: "0px", "2xl": "10px" }}>
-            <Text
-              color={textColorPrimary}
-              fontWeight="bold"
-              fontSize="2xl"
-              mt="10px"
-              mb="4px"
-            >
-              Thông tin cá nhân
-            </Text>
+            <Card mb={{ base: "0px", "2xl": "10px" }}>
+              <Text
+                color={textColorPrimary}
+                fontWeight="bold"
+                fontSize="2xl"
+                mt="10px"
+                mb="4px"
+              >
+                Thông tin cá nhân
+              </Text>
 
-            <Formik
-              enableReinitialize={true}
-              initialValues={initialValues}
-              validationSchema={validationSchema}
-              // onSubmit = {handleSubmit}
-              onSubmit={(values, actions) => {
-                setTimeout( async () => {
-                  await handleSubmit(values);
-                  
-                  actions.setSubmitting(false);
-                  
-                }, 1000);
-              }}
-            >
-              {(formikProps) => {
-                // do somethings
-                const { values, errors, touched, isSubmitting } = formikProps;
+              <Formik
+                enableReinitialize={true}
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                // onSubmit = {handleSubmit}
+                onSubmit={(values, actions) => {
+                  setTimeout(async () => {
+                    await handleSubmit(values);
 
-                return (
-                  <Form>
-                    <FormControl>
-                      <SimpleGrid columns={2} gap="10px">
-                        <FastField
-                          component={ProfileField}
-                          label={"Fullname"}
-                          name={"fullName"}
-                          type={"text"}
-                          placeholder={"FullName"}
-                          //defaultValue={"Tung Ramen"}
-                          {...formikProps.getFieldProps("fullName")}
-                          // {...formikProps.getFieldProps("Username")}
-                        />
-                        <FastField
-                          component={ProfileField}
-                          label={"Username"}
-                          name={"userName"}
-                          type={"text"}
-                          placeholder={"Username"}
-                          disabled={true}
-                          //defaultValue={"tungramen99"}
-                          {...formikProps.getFieldProps("userName")}
-                          // {...formikProps.getFieldProps("Username")}
-                        />
+                    actions.setSubmitting(false);
+                  }, 1000);
+                }}
+              >
+                {(formikProps) => {
+                  // do somethings
+                  const { values, errors, touched, isSubmitting } = formikProps;
 
-                        <FastField
-                          component={ProfileField}
-                          label={"Email"}
-                          name={"email"}
-                          placeholder={"Email"}
-                          type={"email"}
-                          disabled={true}
-                          //defaultValue={"tungramen99@gmail.com"}
-                          {...formikProps.getFieldProps("email")}
-                          // {...formikProps.getFieldProps("Email")}
-                        />
-                        <FastField
-                          component={ProfileField}
-                          label={"Phone number"}
-                          name={"phoneNumber"}
-                          placeholder={"Phone Number"}
-                          type={"text"}
-                          //defaultValue={"0989898989"}
-                          {...formikProps.getFieldProps("phoneNumber")}
-                          // {...formikProps.getFieldProps("Email")}
-                        />
-                        <FastField
-                          component={ProfileField}
-                          label={"Age"}
-                          name={"age"}
-                          placeholder={"Age"}
-                          type={"number"}
-                          disabled={true}
-                          //defaultValue={23}
-                          {...formikProps.getFieldProps("age")}
-                          // {...formikProps.getFieldProps("Email")}
-                        />
-                        <FastField
-                          component={ProfileField}
-                          label={"Birthday"}
-                          name={"birthday"}
-                          type={"date"}
-                          {...formikProps.getFieldProps("birthday")}
-                          // {...formikProps.getFieldProps("Email")}
-                        />
-                        <FastField
-                          component={ProfileField}
-                          label={"Address"}
-                          name={"address"}
-                          placeholder={"Address"}
-                          type={"text"}
-                          //defaultValue={"Van Quan, Ha Dong, Ha Noi"}
-                          {...formikProps.getFieldProps("address")}
-                          // {...formikProps.getFieldProps("Email")}
-                        />
+                  return (
+                    <Form>
+                      <FormControl>
+                        <SimpleGrid columns={2} gap="10px">
+                          <FastField
+                            component={ProfileField}
+                            label={"Fullname"}
+                            name={"fullName"}
+                            type={"text"}
+                            placeholder={"FullName"}
+                            //defaultValue={"Tung Ramen"}
+                            {...formikProps.getFieldProps("fullName")}
+                            // {...formikProps.getFieldProps("Username")}
+                          />
+                          <FastField
+                            component={ProfileField}
+                            label={"Username"}
+                            name={"userName"}
+                            type={"text"}
+                            placeholder={"Username"}
+                            disabled={true}
+                            //defaultValue={"tungramen99"}
+                            {...formikProps.getFieldProps("userName")}
+                            // {...formikProps.getFieldProps("Username")}
+                          />
 
-                        <FastField
-                          component={InputSelect}
-                          label={"Gender"}
-                          name={"gender"}
-                          type={"number"}
-                          //defaultValue={0}
-                          {...formikProps.getFieldProps("gender")}
-                          // {...formikProps.getFieldProps("Email")}
-                        />
-                      </SimpleGrid>
+                          <FastField
+                            component={ProfileField}
+                            label={"Email"}
+                            name={"email"}
+                            placeholder={"Email"}
+                            type={"email"}
+                            disabled={true}
+                            //defaultValue={"tungramen99@gmail.com"}
+                            {...formikProps.getFieldProps("email")}
+                            // {...formikProps.getFieldProps("Email")}
+                          />
+                          <FastField
+                            component={ProfileField}
+                            label={"Phone number"}
+                            name={"phoneNumber"}
+                            placeholder={"Phone Number"}
+                            type={"text"}
+                            //defaultValue={"0989898989"}
+                            {...formikProps.getFieldProps("phoneNumber")}
+                            // {...formikProps.getFieldProps("Email")}
+                          />
+                          <FastField
+                            component={ProfileField}
+                            label={"Age"}
+                            name={"age"}
+                            placeholder={"Age"}
+                            type={"number"}
+                            disabled={true}
+                            //defaultValue={23}
+                            {...formikProps.getFieldProps("age")}
+                            // {...formikProps.getFieldProps("Email")}
+                          />
+                          <FastField
+                            component={ProfileField}
+                            label={"Birthday"}
+                            name={"birthday"}
+                            type={"date"}
+                            {...formikProps.getFieldProps("birthday")}
+                            // {...formikProps.getFieldProps("Email")}
+                          />
+                          <FastField
+                            component={ProfileField}
+                            label={"Address"}
+                            name={"address"}
+                            placeholder={"Address"}
+                            type={"text"}
+                            //defaultValue={"Van Quan, Ha Dong, Ha Noi"}
+                            {...formikProps.getFieldProps("address")}
+                            // {...formikProps.getFieldProps("Email")}
+                          />
 
-                      {userInfor ? (
-                        <Button
-                          mt="24px"
-                          loadingText="Saving ..."
-                          isLoading={isSubmitting}
-                          spinnerPlacement="start"
-                          type="submit"
-                          fontSize="lg"
-                          variant="brand"
-                          fontWeight="500"
-                          w="100%"
-                          h="50"
-                          mb="10px"
-                        >
-                          Save profile Information
-                        </Button>
-                      ) : (
-                        <Button
-                          mt="24px"
-                          loadingText="Saving ..."
-                          isLoading={isSubmitting}
-                          spinnerPlacement="start"
-                          type="submit"
-                          fontSize="lg"
-                          variant="brand"
-                          fontWeight="500"
-                          w="100%"
-                          h="50"
-                          mb="10px"
-                          disabled={true}
-                        >
-                          Save profile Information
-                        </Button>
-                      )}
-                      {/* <ErrorMessage type={'invalid'}>{form.errors.name}</ErrorMessage> */}
-                    </FormControl>
-                  </Form>
-                );
-              }}
-            </Formik>
-          </Card>
-        </GridItem>
-      </Grid>
-    </Box>
+                          <FastField
+                            component={InputSelect}
+                            label={"Gender"}
+                            name={"gender"}
+                            type={"number"}
+                            //defaultValue={0}
+                            {...formikProps.getFieldProps("gender")}
+                            // {...formikProps.getFieldProps("Email")}
+                          />
+                        </SimpleGrid>
+
+                        {userInfor ? (
+                          <Button
+                            mt="24px"
+                            loadingText="Saving ..."
+                            isLoading={isSubmitting}
+                            spinnerPlacement="start"
+                            type="submit"
+                            fontSize="lg"
+                            variant="brand"
+                            fontWeight="500"
+                            w="100%"
+                            h="50"
+                            mb="10px"
+                          >
+                            Save profile Information
+                          </Button>
+                        ) : (
+                          <Button
+                            mt="24px"
+                            loadingText="Saving ..."
+                            isLoading={isSubmitting}
+                            spinnerPlacement="start"
+                            type="submit"
+                            fontSize="lg"
+                            variant="brand"
+                            fontWeight="500"
+                            w="100%"
+                            h="50"
+                            mb="10px"
+                            disabled={true}
+                          >
+                            Save profile Information
+                          </Button>
+                        )}
+                        {/* <ErrorMessage type={'invalid'}>{form.errors.name}</ErrorMessage> */}
+                      </FormControl>
+                    </Form>
+                  );
+                }}
+              </Formik>
+            </Card>
+          </GridItem>
+        </Grid>
+      </Box>
+    </>
   );
 }
