@@ -15,10 +15,6 @@ const userApi = {
       data
     );
 
-    // return axiosClient.post(
-    //   "http://10.10.10.122:5000/user/login",
-    //   data
-    // )
   },
   
   register:(
@@ -53,8 +49,79 @@ const userApi = {
     return axiosClient.get(
       `${process.env.REACT_APP_API_URL}/user/getUserById?userId=${userId}`
     );
-  }
-  
+  },
+
+  updateUserInfo: (
+    fullName,
+    userName,
+    email,
+    phoneNumber,
+    age,
+    address,
+    birthday,
+    gender,
+  ) => {
+    const data = JSON.stringify({
+      username: userName,
+      fullname: fullName,
+      email: email,
+      phoneNumber: phoneNumber,
+      age: age,
+      address: address,
+      gender: gender,
+      birthday: birthday,
+    });
+    return axiosClient.put(
+      `${process.env.REACT_APP_API_URL}/user/update`,
+      data
+    );
+  },
+
+  getAllMember: (
+    FullName,
+    UserName,
+    PhoneNumber,
+    Active
+  ) => {
+    const reqBody = JSON.stringify({
+    
+      fullName: FullName,
+      username: UserName,
+      phoneNumber: PhoneNumber,
+      active: Active,
+    });
+    return axiosClient.post(
+      `${process.env.REACT_APP_API_URL}/user/getall`,
+      reqBody
+    );
+  },
+
+  updateMemberActive: (isActive, memberId) => {
+    const reqBody = JSON.stringify({
+      Active: isActive,
+    });
+    console.log("reqBody", reqBody);
+    return axiosClient.put(
+      `${process.env.REACT_APP_API_URL}/user/adminactive/${memberId}`,
+      reqBody
+    );
+  },
+
+  changePassword: (params) => {
+    const { CurrentPassword, NewPassword, ConfirmNewPassword } = params;
+    const reqBody = JSON.stringify({
+      CurrentPassword: CurrentPassword,
+      NewPassword: NewPassword,
+      ConfirmNewPassword: ConfirmNewPassword,
+    });
+    console.log(reqBody);
+    return axiosClient.post(
+      `${process.env.REACT_APP_API_URL}/user/change-password`,
+      reqBody
+    );
+  },
 }
+
+
 
 export default userApi;

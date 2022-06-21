@@ -76,7 +76,7 @@ function SignIn() {
   };
   // Handle submit
   const handleSubmit = async (values) => {
-    console.log("Submit", values);
+    //console.log("Submit", values);
     const action = await login(values);
     const actionResult = await dispatch(action);
     const loginResult = unwrapResult(actionResult);
@@ -155,8 +155,8 @@ function SignIn() {
             validationSchema={validationSchema}
             //onSubmit = {handleSubmit}
             onSubmit={(values, actions) => {
-              setTimeout(() => {
-                handleSubmit(values);
+              setTimeout( async () => {
+                await handleSubmit(values);
                 actions.setSubmitting(false);
               }, 1000);
             }}

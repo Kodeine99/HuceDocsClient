@@ -12,7 +12,7 @@ import {
 
 // Custom components
 import Banner from "views/admin/profile/components/Banner";
-import General from "views/admin/profile/components/General";
+//import General from "views/admin/profile/components/General";
 
 // Assets
 import banner from "assets/img/auth/banner.png";
@@ -28,10 +28,16 @@ import ProfileField from "components/shared/custom/fields/ProfileField";
 import Card from "components/card/Card";
 import * as Yup from "yup";
 
+// Toast
+import { useToast } from "@chakra-ui/react";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { updateUserInfo } from "aaRedux/app/userSlice";
+
 export default function Overview(props) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { userInfor } = useSelector(userSelector);
+  const toast = useToast();
 
   // const userInfo = {
   //   FullName: "Tung Ramen",
@@ -87,6 +93,8 @@ export default function Overview(props) {
       gender: gender,
       address: address,
     });
+
+    console.log("init value",initialValues);
   };
 
   const validationSchema = Yup.object().shape({
@@ -106,9 +114,36 @@ export default function Overview(props) {
 
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
 
-  const handleSubmit = (values) => {
-    console.log("Submmit:", values)
-  }
+  const handleSubmit = async (values) => {
+    console.log("value",values)
+    const newValues = {
+      ...values,
+      gender: parseInt(values.gender),
+    };
+    console.log(newValues);
+    const action = await updateUserInfo(newValues);
+    const actionResult = await dispatch(action);
+    console.log("AcResult", actionResult);
+    const updateResult = await unwrapResult(actionResult);
+    console.log("UpdateResult", updateResult);
+    updateResult?.isOk === true ? (
+      toast({
+        title: 'Update success!',
+        description: "Cập nhật thành công",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      })
+    ) : (
+      toast({
+        title: 'Update failed!',
+        description: "Cập nhật thất bại",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
+    )
+  };
 
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
@@ -164,9 +199,11 @@ export default function Overview(props) {
               validationSchema={validationSchema}
               // onSubmit = {handleSubmit}
               onSubmit={(values, actions) => {
-                setTimeout(() => {
-                  handleSubmit(values);
+                setTimeout( async () => {
+                  await handleSubmit(values);
+                  
                   actions.setSubmitting(false);
+                  
                 }, 1000);
               }}
             >
@@ -264,37 +301,37 @@ export default function Overview(props) {
 
                       {userInfor ? (
                         <Button
-                        mt="24px"
-                        loadingText="Saving ..."
-                        isLoading={isSubmitting}
-                        spinnerPlacement="start"
-                        type="submit"
-                        fontSize="lg"
-                        variant="brand"
-                        fontWeight="500"
-                        w="100%"
-                        h="50"
-                        mb="10px"
-                      >
-                        Save profile Information
-                      </Button>
-                      ): (
+                          mt="24px"
+                          loadingText="Saving ..."
+                          isLoading={isSubmitting}
+                          spinnerPlacement="start"
+                          type="submit"
+                          fontSize="lg"
+                          variant="brand"
+                          fontWeight="500"
+                          w="100%"
+                          h="50"
+                          mb="10px"
+                        >
+                          Save profile Information
+                        </Button>
+                      ) : (
                         <Button
-                        mt="24px"
-                        loadingText="Saving ..."
-                        isLoading={isSubmitting}
-                        spinnerPlacement="start"
-                        type="submit"
-                        fontSize="lg"
-                        variant="brand"
-                        fontWeight="500"
-                        w="100%"
-                        h="50"
-                        mb="10px"
-                        disabled={true}
-                      >
-                        Save profile Information
-                      </Button>
+                          mt="24px"
+                          loadingText="Saving ..."
+                          isLoading={isSubmitting}
+                          spinnerPlacement="start"
+                          type="submit"
+                          fontSize="lg"
+                          variant="brand"
+                          fontWeight="500"
+                          w="100%"
+                          h="50"
+                          mb="10px"
+                          disabled={true}
+                        >
+                          Save profile Information
+                        </Button>
                       )}
                       {/* <ErrorMessage type={'invalid'}>{form.errors.name}</ErrorMessage> */}
                     </FormControl>

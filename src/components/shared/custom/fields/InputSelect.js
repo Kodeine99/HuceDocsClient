@@ -44,7 +44,7 @@ export function InputSelect(props) {
           {label}
           {/* <Text color={brandStars}>*</Text> */}
         </FormLabel>
-        <Select placeholder={placeholder} defaultValue={defaultValue} size="lg">
+        <Select type={type} placeholder={placeholder} {...field}  size="lg">
           <option value="">Choose</option>
           <option value={0}>Female</option>
           <option value={1}>Male</option>

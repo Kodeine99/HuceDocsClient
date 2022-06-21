@@ -1,12 +1,12 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import userApi from '../api/userApi';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import userApi from "../api/userApi";
 
 // Create Async actions
 
 // Login action
 export const login = createAsyncThunk(
-  'user/login',
-  async ({username, password}, {rejectWithValue}) => {
+  "user/login",
+  async ({ username, password }, { rejectWithValue }) => {
     try {
       const response = await userApi.login(username, password);
       return response;
@@ -14,17 +14,23 @@ export const login = createAsyncThunk(
       return rejectWithValue(e.response.data);
     }
   }
-)
+);
 
 //Register action
 export const userRegister = createAsyncThunk(
-  'user/register',
+  "user/register",
   async (
-    {fullName, username, email, phoneNumber, password, confirmPassword}, {rejectWithValue}
+    { fullName, username, email, phoneNumber, password, confirmPassword },
+    { rejectWithValue }
   ) => {
     try {
       return await userApi.register(
-        fullName, username, email, phoneNumber, password, confirmPassword
+        fullName,
+        username,
+        email,
+        phoneNumber,
+        password,
+        confirmPassword
       );
     } catch (e) {
       return rejectWithValue(e.response.data);
@@ -49,10 +55,67 @@ export const getUserById = createAsyncThunk(
   }
 );
 
+// update user info
+export const updateUserInfo = createAsyncThunk(
+  "user/updateUserInfo",
+  ({
+    fullName,
+    userName,
+    email,
+    phoneNumber,
+    age,
+    address,
+    birthday,
+    gender,
+  }) => {
+    return userApi.updateUserInfo(
+      fullName,
+      userName,
+      email,
+      phoneNumber,
+      age,
+      address,
+      birthday,
+      gender
+    );
+  }
+);
+
+export const getAllMember = createAsyncThunk(
+  "user/getAllMember",
+  ({ FullName, UserName, PhoneNumber, Active }) => {
+    return userApi.getAllMember(
+      
+      FullName,
+      UserName,
+      PhoneNumber,
+      Active
+    );
+  }
+);
+
+export const adminUpdateActive = createAsyncThunk(
+  "user/adminUpdateActive",
+  ({ isActive, memberId }) => {
+    return userApi.updateMemberActive(isActive, memberId);
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "user/change-password",
+  async (params, { rejectWithValue }) => {
+    try {
+      console.log(params);
+      return await userApi.changePassword(params);
+    } catch (e) {
+      return rejectWithValue(e.response.data);
+    }
+  }
+);
 
 // Create the slice
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState: {
     token: null,
     userInfor: null,
@@ -66,16 +129,16 @@ const userSlice = createSlice({
       state.isError = false;
       state.isSuccess = false;
       state.loading = false;
-    
+
       return state;
     },
     setAuth: (state, token) => {
       state.token = token.payload;
-    }
+    },
   },
 
   extraReducers: {
-    // Login 
+    // Login
     [login.pending]: (state) => {
       state.loading = true;
     },
@@ -83,7 +146,6 @@ const userSlice = createSlice({
       state.loading = false;
       state.isError = true;
       state.errorMessage = action.payload.message;
-
     },
     [login.fulfilled]: (state, action) => {
       state.loading = false;
@@ -126,11 +188,11 @@ const userSlice = createSlice({
       state.loading = false;
       state.isSuccess = true;
       state.userInfor = action.payload;
-    }
-  }
+    },
+  },
 });
 
-const {actions, reducer : userReducer} = userSlice;
-export const {clearState, setAuth} = actions;
+const { actions, reducer: userReducer } = userSlice;
+export const { clearState, setAuth } = actions;
 export default userReducer;
 export const userSelector = (state) => state.user;
