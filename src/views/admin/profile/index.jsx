@@ -32,6 +32,7 @@ import * as Yup from "yup";
 import { useToast } from "@chakra-ui/react";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { updateUserInfo } from "aaRedux/app/userSlice";
+import { getUserByToken } from "aaRedux/app/userSlice";
 
 export default function Overview(props) {
   const history = useHistory();
@@ -68,6 +69,9 @@ export default function Overview(props) {
       day = ("0" + date.getDate()).slice(-2);
     return [date.getFullYear(), month, day].join("-");
   };
+  const getUserData = () => {
+    dispatch(getUserByToken());
+  };
 
   const onLoad = () => {
     //console.log("us2", userInfo);
@@ -94,7 +98,7 @@ export default function Overview(props) {
       address: address,
     });
 
-    console.log("init value",initialValues);
+    //console.log("init value",initialValues);
   };
 
   const validationSchema = Yup.object().shape({
@@ -115,12 +119,12 @@ export default function Overview(props) {
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
 
   const handleSubmit = async (values) => {
-    console.log("value",values)
+    //console.log("value",values)
     const newValues = {
       ...values,
       gender: parseInt(values.gender),
     };
-    console.log(newValues);
+    //console.log(newValues);
     const action = await updateUserInfo(newValues);
     const actionResult = await dispatch(action);
     console.log("AcResult", actionResult);
@@ -143,6 +147,7 @@ export default function Overview(props) {
         isClosable: true,
       })
     )
+    await getUserData();
   };
 
   return (
