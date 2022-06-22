@@ -39,7 +39,7 @@ import {} from "@chakra-ui/react";
 // Assets
 import { MdTimer, MdVideoLibrary } from "react-icons/md";
 import { IoNewspaperOutline } from "react-icons/io5";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { DownloadIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import ExtrResultTable from "views/admin/extractDetails/components/ExtrResultTable";
 import { columnsDataExtrResultTable } from "views/admin/extractDetails/variables/columnsDataExtrResultTable";
 import ColumnsTable from "views/admin/dataTables/components/ColumnsTable";
@@ -48,7 +48,7 @@ import CustomEditable from "components/husky/CustomEditable";
 import TableReal from "components/husky/TableReal";
 
 function ExtractResultCard(props) {
-  const { type, data, icon, verifyLink } = props;
+  const { type, data, icon, verifyLink, fullData } = props;
   let boxBg = useColorModeValue("white !important", "#111c44 !important");
   let secondaryBg = useColorModeValue("gray.300", "whiteAlpha.100");
   let thirdBg = useColorModeValue("gray.100", "whiteAlpha.100");
@@ -58,33 +58,29 @@ function ExtractResultCard(props) {
 
   console.log("ocrData:", data);
   console.log("verifyLink:", verifyLink);
+  console.log("fullData:", fullData);
 
   let { MARK_TABLE, ECM_ID, ...cloneData } = data;
   const markTableObj = {};
 
   markTableObj["MARK_TABLE"] = data["MARK_TABLE"];
   const markTableData = markTableObj?.MARK_TABLE;
-  console.log(markTableData);
+  console.log("markTableData:", markTableData);
 
-  const columnsDataColumns = [
-    {
-      Header: "NAME",
-      accessor: "name",
-    },
-    {
-      Header: "PROGRESS",
-      accessor: "progress",
-    },
-    {
-      Header: "QUANTITY",
-      accessor: "quantity",
-    },
-    {
-      Header: "DATE",
-      accessor: "date",
-    },
-  ];
+  const handleSaveOcrData = (data, markTableData) => {
+    const { ticket_Id, createTime, ocR_Status_Code, username } = fullData;
+    const dataSubmit = {
+      ...data,
+      MARK_TABLE: JSON.stringify(markTableData),
+      TICKET_ID: ticket_Id,
+      CREATE_DATE: createTime,
+      STATUS: ocR_Status_Code,
+      USER_CREATE: username,
+    };
+    console.log(dataSubmit);
 
+    console.log("Saving data...");
+  };
   return (
     <Flex
       borderRadius="20px"
@@ -156,7 +152,7 @@ function ExtractResultCard(props) {
           </List>
           {typeof markTableData !== "undefined" && markTableData.length > 0 ? (
             <>
-              <Text mt={'10px'} as={"span"} fontWeight={"bold"}>
+              <Text mt={"10px"} as={"span"} fontWeight={"bold"}>
                 MARK_TABLE
               </Text>
               <TableContainer>
@@ -183,12 +179,11 @@ function ExtractResultCard(props) {
                               value,
                             }))
                             .map((cell, index) => {
-                              return <Td >{cell.value}</Td>;
+                              return <Td>{cell.value}</Td>;
                             })}
                         </Tr>
                       );
                     })}
-                    
                   </Tbody>
                 </Table>
               </TableContainer>
@@ -197,7 +192,18 @@ function ExtractResultCard(props) {
             <>Ko co du lieu</>
           )}
         </Box>
-        <Flex>
+        <Flex justifyContent={"space-between"} mt={"15px"}>
+          {fullData?.ocR_Status_Code === 0 ? (
+            <Button
+              colorScheme="whatsapp"
+              rightIcon={<DownloadIcon />}
+              onClick={() => handleSaveOcrData(data, markTableData)}
+            >
+              Lưu kết quả bóc tách
+            </Button>
+          ) : (
+            <></>
+          )}
           <Spacer />
           <Flex mt="15px" direction={"row"}>
             <Link href={verifyLink} display={"inherit"}>

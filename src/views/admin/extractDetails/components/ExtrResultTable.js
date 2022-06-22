@@ -124,9 +124,10 @@ function fuzzyTextFilterFn(rows, id, filterValue) {
 // Let the table remove the filter if the string is empty
 fuzzyTextFilterFn.autoRemove = (val) => !val;
 export default function ExtrResultTable(props) {
-  
   const { columnsData, tableData, modalTitle } = props;
+
   const [ocrData, setOcrData] = useState([]);
+  const [fullData, setFullData] = useState();
   const [verifyLink, setVerifyLink] = useState("");
 
   const columns = useMemo(() => columnsData, [columnsData]);
@@ -206,13 +207,10 @@ export default function ExtrResultTable(props) {
   );
   const [overlay, setOverlay] = React.useState(<OverlayTwo />);
 
-  const handleSizeClick = (newSize) => {
-    setSize(newSize);
-    onOpen();
-  };
+  
 
   const convertToJson = (data) => {
-    //console.log("old Data:", data);
+    console.log("old Data:", data);
     let dataAfterReplace = JSON.parse(
       data
         .replace('\\"', '"')
@@ -222,9 +220,21 @@ export default function ExtrResultTable(props) {
         .split("\\")
         .join("")
     );
-    //console.log("new Data:", dataAfterReplace);
+    console.log("new Data:", dataAfterReplace);
     //console.log("js",js);
     return dataAfterReplace;
+  };
+
+  const handleStateChange = async (fullData, ocrData, verifyLink) => {
+    await setFullData(fullData);
+    console.log("fullData:", fullData);
+
+    await setOcrData(convertToJson(ocrData));
+    console.log("ocrData:", ocrData);
+
+    await setVerifyLink(verifyLink);
+    console.log("verifyLink:", verifyLink);
+
   };
 
   function convertDate(str) {
@@ -310,13 +320,15 @@ export default function ExtrResultTable(props) {
                       <Flex align="center">
                         <Text color={textColor} fontSize="md" fontWeight="700">
                           {/* {cell.value[0].fileName} */}
-                          {console.log("file name cell:",cell.value)}
-                          {
-                            typeof(row.original.hFiles) !== "undefined" && row.original.hFiles.length > 0 ?
-                            (row.original.hFiles.map((file, index) => {
-                              return `${file.fileName} \r\n`
-                            })):(<Text>Chưa có file</Text>)
-                          }
+                          {console.log("file name cell:", cell.value)}
+                          {typeof row.original.hFiles !== "undefined" &&
+                          row.original.hFiles.length > 0 ? (
+                            row.original.hFiles.map((file, index) => {
+                              return `${file.fileName} \r\n`;
+                            })
+                          ) : (
+                            <Text>Chưa có file</Text>
+                          )}
                         </Text>
                       </Flex>
                     );
@@ -381,12 +393,21 @@ export default function ExtrResultTable(props) {
                             variant="ghost"
                             onClick={async () => {
                               setOverlay(<OverlayTwo />);
-                              onOpen();
-                              await setOcrData(convertToJson(row.original.jsonData));
-                              console.log("data",ocrData);
-                              await setVerifyLink(row.original.verifyLink);
+                              // await setFullData(row.original);
+                              // console.log("fullData:", fullData);
+                              // await setOcrData(
+                              //   convertToJson(row.original.jsonData)
+                              // );
+                              // console.log("data", ocrData);
+                              // await setVerifyLink(row.original.verifyLink);
+                              // console.log("verifyLink", verifyLink);
 
-                              console.log("verifyLink",verifyLink);
+                              await handleStateChange(
+                                row.original,
+                                row.original.jsonData,
+                                row.original.verifyLink
+                              );
+                              onOpen();
                             }}
                             key={size}
                           />
@@ -430,20 +451,22 @@ export default function ExtrResultTable(props) {
               {ocrData?.map((item, index) => {
                 return (
                   <>
-                    {typeof item.DATA !== "undefined" && item.DATA.length > 0
-                      ? item.DATA.map((childItem, index) => {
-                          return (
-                            <ExtractResultCard
-                              type={item?.TYPE}
-                              data={childItem}
-                              icon={IoNewspaperOutline}
-                              verifyLink={verifyLink}
-                            />
-                          );
-                        })
-                      : (
-                        <Text>Không có dữ liệu</Text>
-                      )}
+                    {typeof item.DATA !== "undefined" &&
+                    item.DATA.length > 0 ? (
+                      item.DATA.map((childItem, index) => {
+                        return (
+                          <ExtractResultCard
+                            type={item?.TYPE}
+                            data={childItem}
+                            icon={IoNewspaperOutline}
+                            verifyLink={verifyLink}
+                            fullData = {fullData}
+                          />
+                        );
+                      })
+                    ) : (
+                      <Text>Không có dữ liệu</Text>
+                    )}
                   </>
                 );
               })}
