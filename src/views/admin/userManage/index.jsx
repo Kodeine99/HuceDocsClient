@@ -15,7 +15,7 @@ import Usa from "assets/img/dashboards/usa.png";
 import MiniCalendar from "components/calendar/MiniCalendar";
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   MdAddTask,
   MdAttachMoney,
@@ -31,20 +31,55 @@ import Tasks from "views/admin/userManage/components/Tasks";
 import TotalSpent from "views/admin/userManage/components/TotalSpent";
 import WeeklyRevenue from "views/admin/userManage/components/WeeklyRevenue";
 import {
-  columnsDataCheck,
-  columnsDataComplex,
   columnsUserManageData,
 } from "views/admin/userManage/variables/columnsData";
-import tableDataCheck from "views/admin/userManage/variables/tableDataCheck.json";
-import tableDataComplex from "views/admin/userManage/variables/tableDataComplex.json";
 import userTableData from "views/admin/userManage/variables/userTableData.json";
-import Banner from "views/admin/marketplace/components/Banner";
 import UserManageTable from "./components/UserManageTable";
+
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { getAllUsers } from "aaRedux/app/userSlice";
+import { adminUpdateActive } from "aaRedux/app/userSlice";
+
 
 export default function UserManage() {
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
+
+  // get & manage data
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [listUser, setListUser] = useState([]);
+  const [values, setValues] = useState({});
+  const [reload, setReload] = useState(0);
+
+
+
+  const onLoadData = async (values) => {
+    const actionResult = await dispatch(
+      getAllUsers({...values})
+    )
+
+    const apiResult = await unwrapResult(actionResult);
+    const users = apiResult.result;
+    //console.log("users:",users);
+
+    setListUser(users);
+  }
+
+  
+
+  useEffect(() => {
+    const loadData = async () => {
+      await onLoadData(values);
+
+    }
+    loadData();
+    //console.log("values state",values);
+    // eslint-disable-next-line
+  }, [loading, reload])
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
@@ -152,7 +187,9 @@ export default function UserManage() {
       <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap="20px" mb="20px">
         <UserManageTable
           columnsData={columnsUserManageData}
-          tableData={userTableData}
+          tableData={listUser}
+          loadIndex={reload}
+          reload={(loadIndex) => setReload(loadIndex)}
         />
         {/* <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
           <Tasks />

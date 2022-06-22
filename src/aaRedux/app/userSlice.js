@@ -81,10 +81,10 @@ export const updateUserInfo = createAsyncThunk(
   }
 );
 
-export const getAllMember = createAsyncThunk(
+export const getAllUsers = createAsyncThunk(
   "user/getAllMember",
   ({ FullName, UserName, PhoneNumber, Active }) => {
-    return userApi.getAllMember(
+    return userApi.getAllUsers(
       
       FullName,
       UserName,

@@ -10,7 +10,7 @@ import {
   Thead,
   Tr,
   useColorModeValue,
-  IconButton, 
+  IconButton,
   Tooltip,
   NumberInput,
   NumberInputField,
@@ -27,7 +27,8 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  ModalOverlay
+  ModalOverlay,
+  Input,
 } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
 import {
@@ -35,23 +36,131 @@ import {
   usePagination,
   useSortBy,
   useTable,
+  useFilters,
+  useAsyncDebounce,
 } from "react-table";
 // Icons
-import {ViewIcon, DeleteIcon, EditIcon, UnlockIcon, LockIcon, ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, ArrowRightIcon} from '@chakra-ui/icons';
+import {
+  ViewIcon,
+  DeleteIcon,
+  EditIcon,
+  UnlockIcon,
+  LockIcon,
+  ArrowLeftIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ArrowRightIcon,
+} from "@chakra-ui/icons";
 
 // Custom components
 import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
 
 // Assets
-import { MdCheckCircle, MdCancel, MdOutlineError, MdEdit } from "react-icons/md";
+import {
+  MdCheckCircle,
+  MdCancel,
+  MdOutlineError,
+  MdEdit,
+} from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import ExtractResultCard from "components/card/ExtractResultCard";
+import { matchSorter } from "match-sorter";
+
+import { useDispatch } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { adminUpdateActive } from "aaRedux/app/userSlice";
+import { toast, ToastContainer } from "react-toastify";
+
+function GlobalFilter({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}) {
+  const count = preGlobalFilteredRows.length;
+  const [value, setValue] = React.useState(globalFilter);
+  const onChange = useAsyncDebounce((value) => {
+    setGlobalFilter(value || undefined);
+  }, 200);
+
+  return (
+    <span>
+      Search:{" "}
+      <Input
+        mt={"10px"}
+        value={value || ""}
+        onChange={(e) => {
+          setValue(e.target.value);
+          onChange(e.target.value);
+        }}
+        placeholder={`${count} records...`}
+        style={{
+          fontSize: "14px",
+          border: "0",
+        }}
+        color="gray.500"
+      />
+    </span>
+  );
+}
+
+function DefaultColumnFilter({
+  column: { filterValue, preFilteredRows, setFilter },
+}) {
+  const count = preFilteredRows.length;
+
+  return (
+    <Input
+      value={filterValue || ""}
+      onChange={(e) => {
+        setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+      }}
+      placeholder={`Search ${count} records...`}
+    />
+  );
+}
+
+function fuzzyTextFilterFn(rows, id, filterValue) {
+  return matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
+}
+
+// Let the table remove the filter if the string is empty
+fuzzyTextFilterFn.autoRemove = (val) => !val;
+
 export default function UserManageTable(props) {
+  const dispatch = useDispatch();
   const { columnsData, tableData } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
+
+  const filterTypes = useMemo(
+    () => ({
+      // Add a new fuzzyTextFilterFn filter type.
+      fuzzyText: fuzzyTextFilterFn,
+      // Or, override the default text filter to use
+      // "startWith"
+      text: (rows, id, filterValue) => {
+        return rows.filter((row) => {
+          const rowValue = row.values[id];
+          return rowValue !== undefined
+            ? String(rowValue)
+                .toLowerCase()
+                .startsWith(String(filterValue).toLowerCase())
+            : true;
+        });
+      },
+    }),
+    []
+  );
+
+  const defaultColumn = useMemo(
+    () => ({
+      // Let's set up our default Filter UI
+      Filter: DefaultColumnFilter,
+    }),
+    []
+  );
 
   const {
     getTableProps,
@@ -70,13 +179,20 @@ export default function UserManageTable(props) {
     nextPage,
     previousPage,
     setPageSize,
+    visibleColumns,
+    state,
+    preGlobalFilteredRows,
+    setGlobalFilter,
     state: { pageIndex, pageSize },
   } = useTable(
     {
       columns,
       data,
+      filterTypes,
+
       initialState: { pageIndex: 0, pageSize: 5 },
     },
+    useFilters,
     useGlobalFilter,
     useSortBy,
     usePagination
@@ -100,6 +216,7 @@ export default function UserManageTable(props) {
   //   initialState,
   // } = tableInstance;
   // initialState.pageSize = 10;
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [size, setSize] = useState("md");
 
@@ -114,44 +231,92 @@ export default function UserManageTable(props) {
   const [overlay, setOverlay] = useState(<OverlayTwo />);
   const [modalTitle, setModalTitle] = useState("");
   const [modalText, setModalText] = useState("");
+  const [isActive, setIsActive] = useState();
+  const [userId, setUserId] = useState(null);
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
+
+  const updateActive = async (isActive, userId) => {
+    let reqObj = {
+      isActive: !isActive,
+      memberId: userId,
+    };
+
+    console.log("req", reqObj);
+    const actionResult = await dispatch(adminUpdateActive(reqObj));
+    const result = await unwrapResult(actionResult);
+    console.log("Result", result);
+
+    
+    await result?.isOk === true
+      ? toast.success("Cập nhật thành công", {
+          position: toast.POSITION.TOP_CENTER,
+        })
+      : toast.error("Cập nhật thất bại", {
+          position: toast.POSITION.TOP_CENTER,
+          theme: "colored",
+        });
+
+    props.reload(props.loadIndex + 1);
+    //await getUserData();
+  };
   return (
+    <>
+    <ToastContainer />
     <Card
-      direction='column'
-      w='100%'
-      px='0px'
-      overflowX={{ sm: "scroll", lg: "hidden" }}>
-      <Flex px='25px' justify='space-between' mb='10px' align='center'>
+      direction="column"
+      w="100%"
+      px="0px"
+      overflowX={{ sm: "scroll", lg: "hidden" }}
+    >
+      <Flex px="25px" justify="space-between" mb="10px" align="center">
         <Text
           color={textColor}
-          fontSize='22px'
-          fontWeight='700'
-          lineHeight='100%'>
+          fontSize="22px"
+          fontWeight="700"
+          lineHeight="100%"
+        >
           Quản lý users
         </Text>
       </Flex>
-      <Table {...getTableProps()} variant='simple' color='gray.500' mb='24px'>
+      <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
         <Thead>
           {headerGroups.map((headerGroup, index) => (
             <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
               {headerGroup.headers.map((column, index) => (
                 <Th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  pe='10px'
+                  pe="10px"
                   key={index}
-                  borderColor={borderColor}>
+                  borderColor={borderColor}
+                >
                   <Flex
-                    justify='space-between'
-                    align='center'
+                    justify="space-between"
+                    align="center"
                     fontSize={{ sm: "12px", lg: "14px" }}
-                    color='gray.400'>
+                    color="gray.400"
+                  >
                     {column.render("Header")}
+                    {/* <div>{column.canFilter ? column.render("Filter") : null}</div> */}
                   </Flex>
                 </Th>
               ))}
             </Tr>
           ))}
+          <Tr>
+            <Th
+              colSpan={visibleColumns.length}
+              style={{
+                textAlign: "left",
+              }}
+            >
+              <GlobalFilter
+                preGlobalFilteredRows={preGlobalFilteredRows}
+                globalFilter={state.globalFilter}
+                setGlobalFilter={setGlobalFilter}
+              />
+            </Th>
+          </Tr>
         </Thead>
         <Tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
@@ -162,52 +327,52 @@ export default function UserManageTable(props) {
                   let data = "";
                   if (cell.column.Header === "Username") {
                     data = (
-                      <Text color={textColor} fontSize='md' fontWeight='700'>
+                      <Text color={textColor} fontSize="md" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
                   } else if (cell.column.Header === "Email") {
                     data = (
-                      <Text color={textColor} fontSize='md' fontWeight='700'>
+                      <Text color={textColor} fontSize="md" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
                   } else if (cell.column.Header === "Trạng thái") {
                     data = (
-                      <Flex align='center'>
+                      <Flex align="center">
                         <Icon
-                          w='24px'
-                          h='24px'
-                          me='5px'
+                          w="24px"
+                          h="24px"
+                          me="5px"
                           color={
-                            cell.value === "Active"
+                            cell.value === true
                               ? "green.500"
-                              : cell.value === "Deactive"
+                              : cell.value === false
                               ? "red.500"
                               : null
                           }
                           as={
-                            cell.value === "Active"
+                            cell.value === true
                               ? MdCheckCircle
-                              : cell.value === "Deactive"
+                              : cell.value === false
                               ? MdOutlineError
                               : null
                           }
                         />
-                        <Text color={textColor} fontSize='md' fontWeight='700'>
-                          {cell.value}
+                        <Text color={textColor} fontSize="md" fontWeight="700">
+                          {cell.value === true ? "Hoạt động" : "Bị khoá"}
                         </Text>
                       </Flex>
                     );
-                  } else if (cell.column.Header === "Ngày tạo") {
+                  } else if (cell.column.Header === "Phone number") {
                     data = (
-                      <Text color={textColor} fontSize='md' fontWeight='700'>
+                      <Text color={textColor} fontSize="md" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
                   } else if (cell.column.Header === "Thao tác") {
                     data = (
-                      <Flex align='center'>
+                      <Flex align="center">
                         {/* <IconButton  
                           //as={MdEdit}
                           colorScheme='purple' 
@@ -215,20 +380,31 @@ export default function UserManageTable(props) {
                           variant='ghost'
                           size="md"
                         /> */}
-                        <IconButton  
+                        <IconButton
                           //as={MdEdit}
-                          colorScheme='purple' 
-                          icon={row.values.status === "Active" ?<LockIcon /> : <UnlockIcon/>} 
-                          variant='ghost'
+                          colorScheme="purple"
+                          icon={
+                            row.values.active === true ? (
+                              <LockIcon />
+                            ) : (
+                              <UnlockIcon />
+                            )
+                          }
+                          variant="ghost"
                           size="md"
                           onClick={() => {
                             setOverlay(<OverlayTwo />);
-                            row.values.status === "Active" ? setModalTitle("Khóa tài khoản") : setModalTitle("Mở khóa tài khoản");
-                            row.values.status === "Active" ? setModalText("Bạn muốn khoá tài khoản này?") : setModalText("Bạn muốn mở khóa tài khoản này?");
+                            row.values.active === true
+                              ? setModalTitle("Khóa tài khoản")
+                              : setModalTitle("Mở khóa tài khoản");
+                            row.values.active === true
+                              ? setModalText("Bạn muốn khoá tài khoản này?")
+                              : setModalText("Bạn muốn mở khóa tài khoản này?");
                             onOpen();
+                            setIsActive(row.values.active);
+                            setUserId(row.original.id);
                           }}
                         />
-                        
                       </Flex>
                     );
                   }
@@ -238,10 +414,11 @@ export default function UserManageTable(props) {
                       {...cell.getCellProps()}
                       key={index}
                       fontSize={{ sm: "14px" }}
-                      maxH='30px !important'
-                      py='8px'
+                      maxH="30px !important"
+                      py="8px"
                       minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                      borderColor='transparent'>
+                      borderColor="transparent"
+                    >
                       {data}
                     </Td>
                   );
@@ -257,11 +434,24 @@ export default function UserManageTable(props) {
           <ModalHeader>{modalTitle}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text fontSize={'24px'} fontWeight="bold" >{modalText}</Text>
+            <Text fontSize={"24px"} fontWeight="bold">
+              {modalText}
+            </Text>
           </ModalBody>
           <ModalFooter>
-            <Button mr={'20px'} colorScheme={'whatsapp'} onClick={onClose}>Yes</Button>
-            <Button colorScheme={'red'} onClick={onClose}>No</Button>
+            <Button
+              mr={"20px"}
+              colorScheme={"whatsapp"}
+              onClick={async () => {
+                await updateActive(isActive, userId);
+                onClose();
+              }}
+            >
+              Yes
+            </Button>
+            <Button colorScheme={"red"} onClick={onClose}>
+              No
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
@@ -348,5 +538,6 @@ export default function UserManageTable(props) {
         </Flex>
       </Flex>
     </Card>
+    </>
   );
 }

@@ -77,7 +77,7 @@ const userApi = {
     );
   },
 
-  getAllMember: (
+  getAllUsers: (
     FullName,
     UserName,
     PhoneNumber,
@@ -91,14 +91,14 @@ const userApi = {
       active: Active,
     });
     return axiosClient.post(
-      `${process.env.REACT_APP_API_URL}/user/getall`,
+      `${process.env.REACT_APP_API_URL}/user/getallusers`,
       reqBody
     );
   },
 
   updateMemberActive: (isActive, memberId) => {
     const reqBody = JSON.stringify({
-      Active: isActive,
+      isActive: isActive,
     });
     console.log("reqBody", reqBody);
     return axiosClient.put(

@@ -37,19 +37,19 @@ export const columnsDataComplex = [
 export const columnsUserManageData = [
   {
     Header: "Username",
-    accessor: "name",
+    accessor: "userName",
   },
   {
     Header: "Email",
     accessor: "email",
   },
   {
-    Header: "Ngày tạo",
-    accessor: "date",
+    Header: "Phone number",
+    accessor: "phoneNumber",
   },
   {
     Header: "Trạng thái",
-    accessor: "status",
+    accessor: "active",
   },
   {
     Header: "Thao tác",
