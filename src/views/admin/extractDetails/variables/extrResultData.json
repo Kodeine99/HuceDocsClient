@@ -80,7 +80,7 @@
   {
     "id": 5,
     "ticket_Id": "10524",
-    "jsonData": "[{\"TYPE\":\"GIAY_CAM_KET_TRA_NO\",\"DATA\":\"[{\\\"MAU_SO\\\":\\\"05/TDSV\\\",\\\"HO_TEN_SV\\\":\\\"Hoàng Việt Dũng\\\",\\\"NGAY_SINH\\\":\\\"30/6/1999\\\",\\\"GIOI_TINH\\\":\\\"\\\",\\\"CMND\\\":\\\"123456768969\\\",\\\"NGAY_CAP_CMND\\\":\\\"12/05/2018\\\",\\\"NOI_CAP\\\":\\\"Cục Cảnh sát quản lý hành\\\",\\\"LOP\\\":\\\"62KTCS -\\\",\\\"KHOA\\\":\\\"\\\",\\\"SO_THE_HSSV\\\":\\\"977976\\\",\\\"NIEN_KHOA\\\":\\\"62\\\",\\\"LOAI_HINH_DAO_TAO\\\":\\\"Đại học chính quy\\\",\\\"NGAY_NHAP_HOC\\\":\\\"10/05/2017\\\",\\\"NGAY_RA_TRUONG\\\":\\\"11/06/2022\\\",\\\"MA_TRUONG\\\":\\\"\\\",\\\"NGUOI_DUNG_TEN\\\":\\\"Nguyễn Văn Hùng\\\",\\\"DIA_CHI_NGUOI_DUNG_TEN\\\":\\\" Số nhà 245, đường Hoàng Văn Thụ, phường 2, thành phố Ninh Bình, tỉnh Ninh Bình\\\",\\\"NGAN_HANG_VAY_VON\\\":\\\"Ngân hàng Chính sách xã hội Vietin Bank\\\",\\\"SO_TIEN_BANG_SO\\\":\\\"80.000.000\\\",\\\"SO_TIEN_BANG_CHU\\\":\\\" Tám mươi triệu đồng).\\\",\\\"NGAY_KY\\\":\\\"12/12/2021\\\",\\\"ECM_ID\\\":\\\"\\\"}]\"}]",
+    "jsonData": "[{\"TYPE\":\"BANG_DIEM_TIENG_ANH\",\"DATA\":\"[{\\\"FULL_NAME\\\":\\\"TRAN THANH LOAN\\\",\\\"DOB\\\":\\\"25/05/99\\\",\\\"MAJOR\\\":\\\"Transportation Engineering\\\",\\\"STUDENT_ID\\\":\\\"765468\\\",\\\"S_CLASS\\\":\\\"01QHDT\\\",\\\"TRAINING_FORM\\\":\\\"Full-time\\\",\\\"GPA_10SCALE\\\":\\\"7.5\\\",\\\"GPA_4SCALE\\\":\\\"2.9\\\",\\\"TOTAL_CREDITS\\\":\\\"26.0\\\",\\\"CLASSIFICATION\\\":\\\"Good\\\",\\\"MARK_TABLE\\\":[{\\\"SUBJECT_CODE\\\":\\\"580101\\\",\\\"NAME_OF_SUBJECTS\\\":\\\"English 1\\\",\\\"CLASS_HOURS\\\":\\\"120\\\",\\\"CREDITS\\\":\\\"2\\\",\\\"GRADE_POINT\\\":\\\"8.5\\\",\\\"LETTER_GRADE\\\":\\\"A\\\"},{\\\"SUBJECT_CODE\\\":\\\"580102\\\",\\\"NAME_OF_SUBJECTS\\\":\\\"English 2\\\",\\\"CLASS_HOURS\\\":\\\"120\\\",\\\"CREDITS\\\":\\\"2\\\",\\\"GRADE_POINT\\\":\\\"8.5\\\",\\\"LETTER_GRADE\\\":\\\"A\\\"},{\\\"SUBJECT_CODE\\\":\\\"580103\\\",\\\"NAME_OF_SUBJECTS\\\":\\\"English 3\\\",\\\"CLASS_HOURS\\\":\\\"120\\\",\\\"CREDITS\\\":\\\"2\\\",\\\"GRADE_POINT\\\":\\\"7.1\\\",\\\"LETTER_GRADE\\\":\\\"B+\\\"},{\\\"SUBJECT_CODE\\\":\\\"580104\\\",\\\"NAME_OF_SUBJECTS\\\":\\\"English 4\\\",\\\"CLASS_HOURS\\\":\\\"120\\\",\\\"CREDITS\\\":\\\"2\\\",\\\"GRADE_POINT\\\":\\\"7.5\\\",\\\"LETTER_GRADE\\\":\\\"B+\\\"},{\\\"SUBJECT_CODE\\\":\\\"300101\\\",\\\"NAME_OF_SUBJECTS\\\":\\\"Descriptive Geometry\\\",\\\"CLASS_HOURS\\\":\\\"39\\\",\\\"CREDITS\\\":\\\"2\\\",\\\"GRADE_POINT\\\":\\\"5.8\\\",\\\"LETTER_GRADE\\\":\\\"C\\\"},{\\\"SUBJECT_CODE\\\":\\\"390111\\\",\\\"NAME_OF_SUBJECTS\\\":\\\"Algebra\\\",\\\"CLASS_HOURS\\\":\\\"60\\\",\\\"CREDITS\\\":\\\"3\\\",\\\"GRADE_POINT\\\":\\\"7.0\\\",\\\"LETTER_GRADE\\\":\\\"B\\\"},{\\\"SUBJECT_CODE\\\":\\\"390121\\\",\\\"NAME_OF_SUBJECTS\\\":\\\"Calculus 1\\\",\\\"CLASS_HOURS\\\":\\\"60\\\",\\\"CREDITS\\\":\\\"3\\\",\\\"GRADE_POINT\\\":\\\"7.3\\\",\\\"LETTER_GRADE\\\":\\\"B\\\"},{\\\"SUBJECT_CODE\\\":\\\"420101\\\",\\\"NAME_OF_SUBJECTS\\\":\\\"Basic Principles of Marxism - Leninism 1\\\",\\\"CLASS_HOURS\\\":\\\"39\\\",\\\"CREDITS\\\":\\\"2\\\",\\\"GRADE_POINT\\\":\\\"6.0\\\",\\\"LETTER_GRADE\\\":\\\"C\\\"},{\\\"SUBJECT_CODE\\\":\\\"580105\\\",\\\"NAME_OF_SUBJECTS\\\":\\\"English 5\\\",\\\"CLASS_HOURS\\\":\\\"80\\\",\\\"CREDITS\\\":\\\"2\\\",\\\"GRADE_POINT\\\":\\\"8.3\\\",\\\"LETTER_GRADE\\\":\\\"B+\\\"},{\\\"SUBJECT_CODE\\\":\\\"580106\\\",\\\"NAME_OF_SUBJECTS\\\":\\\"English 6\\\",\\\"CLASS_HOURS\\\":\\\"80\\\",\\\"CREDITS\\\":\\\"2\\\",\\\"GRADE_POINT\\\":\\\"7.8\\\",\\\"LETTER_GRADE\\\":\\\"B\\\"},{\\\"SUBJECT_CODE\\\":\\\"580107\\\",\\\"NAME_OF_SUBJECTS\\\":\\\"English 7\\\",\\\"CLASS_HOURS\\\":\\\"80\\\",\\\"CREDITS\\\":\\\"2\\\",\\\"GRADE_POINT\\\":\\\"9.0\\\",\\\"LETTER_GRADE\\\":\\\"A\\\"},{\\\"SUBJECT_CODE\\\":\\\"580108\\\",\\\"NAME_OF_SUBJECTS\\\":\\\"English 8\\\",\\\"CLASS_HOURS\\\":\\\"80\\\",\\\"CREDITS\\\":\\\"2\\\",\\\"GRADE_POINT\\\":\\\"10.0\\\",\\\"LETTER_GRADE\\\":\\\"A\\\"}],\\\"ECM_ID\\\":\\\"\\\"}]\"}]",
     "documentId": 5,
     "userId": 1,
     "createTime": "2022-06-19T11:21:07.3957466",
@@ -88,7 +88,16 @@
     "ocR_Status_Code": 1,
     "verifyLink": "http://10.10.10.99/FlexiCapture12/Verification/Verify?projectId=8&batchId=10524&returnTo=BatchList&mode=mini",
     "username": "tungramen99",
-    "hFiles": []
+    "hFiles": [
+      {
+          "id": 1002,
+          "documentId": 7,
+          "fileName": "Bang diem tieng Anh cho cac lop Anh ngu tu_3.pdf",
+          "filePath": "E:\\WorkSpace\\HuceDocs\\HuceDocsWebApi\\HDTest\\FileStorage\\Bang diem tieng Anh cho cac lop Anh ngu tu_3.pdf",
+          "fileExtension": ".pdf",
+          "status": 1
+      }
+  ]
   },
   {
     "id": 6,

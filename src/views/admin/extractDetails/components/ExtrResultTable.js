@@ -28,14 +28,17 @@ import {
   Button,
   useDisclosure,
   SimpleGrid,
+  Input,
 } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
 import {
+  useAsyncDebounce,
   useGlobalFilter,
   usePagination,
   useSortBy,
   useTable,
 } from "react-table";
+import { matchSorter } from "match-sorter";
 
 // Assets
 import {
@@ -65,49 +68,97 @@ import IoNewspaperOutline from "../../../../assets/img/docs/documentCheck.png";
 import Card from "components/card/Card";
 import Menu from "components/menu/MainMenu";
 import ExtractResultCard from "../../../../components/card/ExtractResultCard";
+
+function GlobalFilter({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}) {
+  const count = preGlobalFilteredRows.length;
+  const [value, setValue] = React.useState(globalFilter);
+  const onChange = useAsyncDebounce((value) => {
+    setGlobalFilter(value || undefined);
+  }, 200);
+
+  return (
+    <span>
+      Search:{" "}
+      <Input
+        mt={"10px"}
+        value={value || ""}
+        onChange={(e) => {
+          setValue(e.target.value);
+          onChange(e.target.value);
+        }}
+        placeholder={`${count} records...`}
+        style={{
+          fontSize: "14px",
+          border: "0",
+        }}
+        color="gray.500"
+      />
+    </span>
+  );
+}
+
+function DefaultColumnFilter({
+  column: { filterValue, preFilteredRows, setFilter },
+}) {
+  const count = preFilteredRows.length;
+
+  return (
+    <Input
+      value={filterValue || ""}
+      onChange={(e) => {
+        setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+      }}
+      placeholder={`Search ${count} records...`}
+    />
+  );
+}
+
+function fuzzyTextFilterFn(rows, id, filterValue) {
+  return matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
+}
+
+// Let the table remove the filter if the string is empty
+fuzzyTextFilterFn.autoRemove = (val) => !val;
 export default function ExtrResultTable(props) {
-  // const ocrData = [
-  //   {
-  //     TYPE: "GIAY_XAC_NHAN_TOEIC",
-  //     DATA: [
-  //       {
-  //         HO_TEN: "Trương Việt Hà",
-  //         NGAY_SINH: "22/8/1998",
-  //         MSSV: "68661",
-  //         LOP: "61MNE",
-  //         NGANH_HOC: "Kỹ thuật Cấp thoát nước",
-  //         HE_DAO_TAO: "Đại học chính quy",
-  //         KHOA: "Kỹ thuật Môi trường",
-  //         NDXN: "Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.",
-  //         DIEM_THI: "490/990",
-  //         DOT_THI: "8/2020",
-  //         NGAY_XAC_NHAN: "17/12/2021",
-  //         ECM_ID: "",
-  //       },
-  //       {
-  //         HO_TEN: "Nguyễn Văn Tùng",
-  //         NGAY_SINH: "25/10/1999",
-  //         MSSV: "228062",
-  //         LOP: "62PM1",
-  //         NGANH_HOC: "Công nghệ phần mềm",
-  //         HE_DAO_TAO: "Đại học chính quy",
-  //         KHOA: "Công nghệ thông tin",
-  //         NDXN: "Đã tham gia kỳ thi đánh giá trình độ tiếng Anh nội bộ theo dạng thức TOEIC.",
-  //         DIEM_THI: "825/990",
-  //         DOT_THI: "1/2022",
-  //         NGAY_XAC_NHAN: "17/1/2021",
-  //         ECM_ID: "",
-  //       },
-  //     ],
-  //   },
-  // ];
-  //console.log("fake data", ocrData);
+  
   const { columnsData, tableData, modalTitle } = props;
   const [ocrData, setOcrData] = useState([]);
   const [verifyLink, setVerifyLink] = useState("");
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
+
+  const filterTypes = useMemo(
+    () => ({
+      // Add a new fuzzyTextFilterFn filter type.
+      fuzzyText: fuzzyTextFilterFn,
+      // Or, override the default text filter to use
+      // "startWith"
+      text: (rows, id, filterValue) => {
+        return rows.filter((row) => {
+          const rowValue = row.values[id];
+          return rowValue !== undefined
+            ? String(rowValue)
+                .toLowerCase()
+                .startsWith(String(filterValue).toLowerCase())
+            : true;
+        });
+      },
+    }),
+    []
+  );
+
+  const defaultColumn = useMemo(
+    () => ({
+      // Let's set up our default Filter UI
+      Filter: DefaultColumnFilter,
+    }),
+    []
+  );
 
   const {
     getTableProps,
@@ -126,6 +177,10 @@ export default function ExtrResultTable(props) {
     nextPage,
     previousPage,
     setPageSize,
+    visibleColumns,
+    state,
+    preGlobalFilteredRows,
+    setGlobalFilter,
     state: { pageIndex, pageSize },
   } = useTable(
     {
@@ -211,6 +266,20 @@ export default function ExtrResultTable(props) {
               ))}
             </Tr>
           ))}
+          <Tr>
+            <Th
+              colSpan={visibleColumns.length}
+              style={{
+                textAlign: "left",
+              }}
+            >
+              <GlobalFilter
+                preGlobalFilteredRows={preGlobalFilteredRows}
+                globalFilter={state.globalFilter}
+                setGlobalFilter={setGlobalFilter}
+              />
+            </Th>
+          </Tr>
         </Thead>
         <Tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
@@ -357,7 +426,7 @@ export default function ExtrResultTable(props) {
           <ModalHeader>{modalTitle}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <SimpleGrid columns={{ base: 3, md: 3 }} gap="20px">
+            <SimpleGrid columns={{ base: 1, md: 1 }} gap="20px">
               {ocrData?.map((item, index) => {
                 return (
                   <>

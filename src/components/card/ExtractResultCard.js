@@ -20,6 +20,15 @@ import {
   Icon,
   Link,
   Spacer,
+  TableContainer,
+  TableCaption,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  Tfoot,
+  Table,
 } from "@chakra-ui/react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { MdLocalShipping } from "react-icons/md";
@@ -31,6 +40,12 @@ import {} from "@chakra-ui/react";
 import { MdTimer, MdVideoLibrary } from "react-icons/md";
 import { IoNewspaperOutline } from "react-icons/io5";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
+import ExtrResultTable from "views/admin/extractDetails/components/ExtrResultTable";
+import { columnsDataExtrResultTable } from "views/admin/extractDetails/variables/columnsDataExtrResultTable";
+import ColumnsTable from "views/admin/dataTables/components/ColumnsTable";
+import tableDataColumns from "../../views/admin/dataTables/variables/tableDataColumns.json";
+import CustomEditable from "components/husky/CustomEditable";
+import TableReal from "components/husky/TableReal";
 
 function ExtractResultCard(props) {
   const { type, data, icon, verifyLink } = props;
@@ -41,14 +56,41 @@ function ExtractResultCard(props) {
   let iconBox = useColorModeValue("gray.100", "whiteAlpha.200");
   let iconColor = useColorModeValue("brand.200", "white");
 
-  console.log("ocrData:",data);
-  console.log("verifyLink:",verifyLink);
+  console.log("ocrData:", data);
+  console.log("verifyLink:", verifyLink);
+
+  let { MARK_TABLE, ECM_ID, ...cloneData } = data;
+  const markTableObj = {};
+
+  markTableObj["MARK_TABLE"] = data["MARK_TABLE"];
+  const markTableData = markTableObj?.MARK_TABLE;
+  console.log(markTableData);
+
+  const columnsDataColumns = [
+    {
+      Header: "NAME",
+      accessor: "name",
+    },
+    {
+      Header: "PROGRESS",
+      accessor: "progress",
+    },
+    {
+      Header: "QUANTITY",
+      accessor: "quantity",
+    },
+    {
+      Header: "DATE",
+      accessor: "date",
+    },
+  ];
+
   return (
     <Flex
       borderRadius="20px"
       bg={secondaryBg}
       //h="px"
-      w={{ base: "500px", md: "550px" }}
+      //w={{ base: "500px", md: "550px" }}
       direction="column"
     >
       <Box p="20px">
@@ -94,7 +136,7 @@ function ExtractResultCard(props) {
       >
         <Box h="100%">
           <List spacing={2}>
-            {Object.entries(data)
+            {Object.entries(cloneData)
               .map(([key, value]) => ({
                 key,
                 value,
@@ -112,6 +154,48 @@ function ExtractResultCard(props) {
                 );
               })}
           </List>
+          {typeof markTableData !== "undefined" && markTableData.length > 0 ? (
+            <>
+              <Text mt={'10px'} as={"span"} fontWeight={"bold"}>
+                MARK_TABLE
+              </Text>
+              <TableContainer>
+                <Table variant="simple">
+                  <Thead>
+                    <Tr>
+                      {Object.entries(markTableData[0])
+                        .map(([key, value]) => ({
+                          key,
+                          value,
+                        }))
+                        .map((item, key) => {
+                          return <Td>{item.key}</Td>;
+                        })}
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {markTableData.map((row, index) => {
+                      return (
+                        <Tr>
+                          {Object.entries(row)
+                            .map(([key, value]) => ({
+                              key,
+                              value,
+                            }))
+                            .map((cell, index) => {
+                              return <Td >{cell.value}</Td>;
+                            })}
+                        </Tr>
+                      );
+                    })}
+                    
+                  </Tbody>
+                </Table>
+              </TableContainer>
+            </>
+          ) : (
+            <>Ko co du lieu</>
+          )}
         </Box>
         <Flex>
           <Spacer />
