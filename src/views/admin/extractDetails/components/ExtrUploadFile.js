@@ -41,7 +41,7 @@ import { useState } from "react";
 import { unwrapResult } from "@reduxjs/toolkit";
 
 export default function ExtrUploadFile(props) {
-  const { used, total, ...rest } = props;
+  const { used, total, extractType, ...rest } = props;
 
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
@@ -51,6 +51,7 @@ export default function ExtrUploadFile(props) {
   const [loadingData, setLoadingData] = useState(false);
   const [ocrRequestData, setOcrRequestData] = useState([]);
 
+
   const map = extrResultData
     .map((item) => {
       return item.jsonData;
@@ -59,7 +60,8 @@ export default function ExtrUploadFile(props) {
       return child;
     });
 
-  console.log("map", map);
+  // console.log("map", map);
+
 
   const dispatch = useDispatch();
 
@@ -85,13 +87,13 @@ export default function ExtrUploadFile(props) {
   useEffect(() => {
     const loadData = async () => {
       await loadOcrRequestData(initFilter);
-      console.log("initFilter:",initFilter);
+      // console.log("initFilter:",initFilter);
     };
     loadData();
     // eslint-disable-next-line
   }, [loadingData]);
 
-  console.log("ocrReqData", ocrRequestData)
+  // console.log("ocrReqData", ocrRequestData)
 
   return (
     <Card {...rest} mb="10px" align="center" p="10px" w="100%">
@@ -102,7 +104,7 @@ export default function ExtrUploadFile(props) {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Dropzone />
+            <Dropzone extractType={extractType} />
           </TabPanel>
           <TabPanel>
             {/* <Divider orientation="horizontal" /> */}
@@ -131,6 +133,8 @@ export default function ExtrUploadFile(props) {
                 //     item.jsonData,
                 //   }
                 // })}
+                
+
               />
             </Flex>
           </TabPanel>

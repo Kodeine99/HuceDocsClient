@@ -8,6 +8,7 @@ import ExtrUploadFile from "../extractDetails/components/ExtrUploadFile";
 
 // Custom Chakra theme
 export default function ExtractDetailsContent(props) {
+  const {extractType }= props;
   return (
     <Box>
       <Box
@@ -28,7 +29,7 @@ export default function ExtractDetailsContent(props) {
             }}
             gap={{ base: "20px", xl: "20px" }}
           >
-            <ExtrUploadFile />
+            <ExtrUploadFile extractType={extractType} />
           </Grid>
         </Box>
       </Box>

@@ -129,6 +129,7 @@ export default function ExtrResultTable(props) {
   const [ocrData, setOcrData] = useState([]);
   const [fullData, setFullData] = useState();
   const [verifyLink, setVerifyLink] = useState("");
+  const [loadData, setLoadData] = useState(false);
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -207,10 +208,8 @@ export default function ExtrResultTable(props) {
   );
   const [overlay, setOverlay] = React.useState(<OverlayTwo />);
 
-  
-
   const convertToJson = (data) => {
-    console.log("old Data:", data);
+    //console.log("old Data:", data);
     let dataAfterReplace = JSON.parse(
       data
         .replace('\\"', '"')
@@ -220,21 +219,20 @@ export default function ExtrResultTable(props) {
         .split("\\")
         .join("")
     );
-    console.log("new Data:", dataAfterReplace);
+    //console.log("new Data:", dataAfterReplace);
     //console.log("js",js);
     return dataAfterReplace;
   };
 
   const handleStateChange = async (fullData, ocrData, verifyLink) => {
     await setFullData(fullData);
-    console.log("fullData:", fullData);
+    //console.log("fullData:", fullData);
 
     await setOcrData(convertToJson(ocrData));
-    console.log("ocrData:", ocrData);
+    //console.log("ocrData:", ocrData);
 
     await setVerifyLink(verifyLink);
-    console.log("verifyLink:", verifyLink);
-
+    //console.log("verifyLink:", verifyLink);
   };
 
   function convertDate(str) {
@@ -253,6 +251,7 @@ export default function ExtrResultTable(props) {
       px="0px"
       //overflowX={{ sm: "scroll", lg: "hidden" }}
     >
+      {/* <Button onClick={() => }>F5</Button> */}
       <Table {...getTableProps()} variant="simple" color="gray.500">
         <Thead>
           {headerGroups.map((headerGroup, index) => (
@@ -297,7 +296,7 @@ export default function ExtrResultTable(props) {
             return (
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
-                  console.log("rowData", row.original);
+                  //console.log("rowData", row.original);
                   let data = "";
                   if (cell.column.Header === "TICKET ID") {
                     data = (
@@ -320,7 +319,7 @@ export default function ExtrResultTable(props) {
                       <Flex align="center">
                         <Text color={textColor} fontSize="md" fontWeight="700">
                           {/* {cell.value[0].fileName} */}
-                          {console.log("file name cell:", cell.value)}
+                          {/* {console.log("file name cell:", cell.value)} */}
                           {typeof row.original.hFiles !== "undefined" &&
                           row.original.hFiles.length > 0 ? (
                             row.original.hFiles.map((file, index) => {
@@ -460,7 +459,7 @@ export default function ExtrResultTable(props) {
                             data={childItem}
                             icon={IoNewspaperOutline}
                             verifyLink={verifyLink}
-                            fullData = {fullData}
+                            fullData={fullData}
                           />
                         );
                       })

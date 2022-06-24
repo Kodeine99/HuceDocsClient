@@ -19,25 +19,25 @@ import { RoutesContext } from "../../../contexts/RoutesContext";
           <SomeComponent />
         </Route>
         <Route path={`${path}/thesinhvien`}>
-          <ExtractDetailsContent />
+          <ExtractDetailsContent extractType="THE_SINH_VIEN" />
         </Route>
         <Route path={`${path}/bangdiem`}>
-          <ExtractDetailsContent />
+          <ExtractDetailsContent extractType="BANG_DIEM" />
         </Route>
         <Route path={`${path}/bangdiemtienganh`}>
-          <ExtractDetailsContent />
+          <ExtractDetailsContent extractType="BANG_DIEM_TIENG_ANH" />
         </Route>
         <Route path={`${path}/camkettrano`}>
-          <ExtractDetailsContent />
+          <ExtractDetailsContent extractType ="GIAY_CAM_KET_TRA_NO" />
         </Route>
         <Route path={`${path}/donxinnhaphoc`}>
-          <ExtractDetailsContent />
+          <ExtractDetailsContent extractType ="DON_XIN_NHAP_HOC"/>
         </Route>
         <Route path={`${path}/giayxacnhantoeic`}>
-          <ExtractDetailsContent />
+          <ExtractDetailsContent extractType ="GIAY_XAC_NHAN_TOEIC"/>
         </Route>
         <Route path={`${path}/giayxacnhanvayvon`}>
-          <ExtractDetailsContent />
+          <ExtractDetailsContent extractType ="GIAY_XAC_NHAN_VAY_VON"/>
         </Route>
       </Switch>
     </>

@@ -16,22 +16,12 @@ export default function DocumentManage() {
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: "20px", xl: "20px" }}
       >
-        {/* <DevelopmentTable
-          columnsData={columnsDataDevelopment}
-          tableData={tableDataDevelopment}
-        /> */}
+        
         <DocumentManageTable
           columnsData={columnsDataDocTable}
           tableData={tableDataFiles}
         />
-        {/* <ColumnsTable
-          columnsData={columnsDataColumns}
-          tableData={tableDataColumns}
-        /> */}
-        {/* <ComplexTable
-          columnsData={columnsDataComplex}
-          tableData={tableDataComplex}
-        /> */}
+        
       </SimpleGrid>
     </Box>
   );

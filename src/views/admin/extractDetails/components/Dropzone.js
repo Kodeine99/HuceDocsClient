@@ -26,20 +26,26 @@ import { ColumnUploadFileTable } from "../variables/columnUploadFileTable";
 import UploadFileTable from "./UploadFileTable";
 import UploadFileTableData from "../variables/uploadFiletableData.json";
 import Project from "../components/Project";
+import { userSelector } from "aaRedux/app/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { extraction } from "aaRedux/app/extractionSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { toast, ToastContainer } from "react-toastify";
 
 function Dropzone(props) {
-  const { content, ...rest } = props;
+  const { content, extractType, ...rest } = props;
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    
     // accept: {
     //   'application/pdf': [],
     //   'img/tiff': [],
-    //   'application/msword': [], 
+    //   'application/msword': [],
     //   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': [],
     // },
     maxFiles: 5,
-    
   });
+
+  const [exType, setExType] = useState(extractType);
+
   const bg = useColorModeValue("gray.100", "navy.700");
   const borderColor = useColorModeValue("secondaryGray.100", "whiteAlpha.100");
   const brandColor = useColorModeValue("brand.500", "white");
@@ -48,6 +54,11 @@ function Dropzone(props) {
     "0px 18px 40px rgba(112, 144, 176, 0.12)",
     "unset"
   );
+  const [loadListFile, setLoadListFile] = useState(1);
+  const dispatch = useDispatch();
+
+  const { userInfor, loading, isSuccess, isError, errorMessage } =
+    useSelector(userSelector);
 
   function bytesToSize(bytes, seperator = "") {
     const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
@@ -57,14 +68,38 @@ function Dropzone(props) {
     return `${(bytes / 1024 ** i).toFixed(1)}${seperator}${sizes[i]}`;
   }
 
+  // Remove file from listFiles
   const removeFile = (file) => () => {
-    console.log('removeFile...')
-    acceptedFiles.splice(acceptedFiles.indexOf(file), 1)
-    setLoadListFile(loadListFile + 1)
-  }
+    //console.log('removeFile...')
+    acceptedFiles.splice(acceptedFiles.indexOf(file), 1);
+    setLoadListFile(loadListFile + 1);
+  };
 
+  const handleExtraction = async (userId, extractType, files) => {
+    const extractReq = {
+      userId: userId,
+      extractType: extractType,
+      files: files,
+    };
+    console.log("req", extractReq);
 
-  const [loadListFile, setLoadListFile] = useState(1);
+    // const actionResult = dispatch(extraction(userId, extractType, files));
+    const actionResult = await dispatch(extraction(extractReq));
+    console.log("actionResult", actionResult);
+
+    const extractionResult = await unwrapResult(actionResult);
+    console.log("extractionResult", extractionResult);
+
+    if (extractionResult?.isOk === true) {
+      toast.success("Đang tiến hành bóc tách, vui lòng chờ kết quả", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } else {
+      toast.error("Bóc tách thất bại", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  };
 
   // const files = listFile?.map(
   //   (file) => (
@@ -87,6 +122,7 @@ function Dropzone(props) {
   // );
   return (
     <>
+      <ToastContainer />
       <Card {...rest} mb="10px" p="10px" w="100%" h="100vh">
         <Flex
           direction={{ base: "column", "2xl": "column" }}
@@ -95,7 +131,6 @@ function Dropzone(props) {
           minH={{ base: "25%", lg: "25%", "2xl": "28%" }}
           pb="20px"
         >
-          
           <Flex
             align="center"
             justify="center"
@@ -130,17 +165,30 @@ function Dropzone(props) {
           </Flex>
 
           <Box mt={"20px"} maxH="100%">
-            {acceptedFiles?.map((file) => (
+            {acceptedFiles?.map((file, index) => (
               <Project
+                key={index}
                 boxShadow={cardShadow}
                 mb="20px"
                 //image={Project1}
                 fileExtension="1"
                 filename={file.name}
                 fileLength={bytesToSize(file.size)}
-                onClick = {removeFile(file)}
+                onClick={removeFile(file)}
               />
             ))}
+            <Button
+              variant={"outline"}
+              colorScheme={"teal"}
+              onClick={async () => {
+                await handleExtraction(userInfor?.id, exType, acceptedFiles);
+                acceptedFiles.forEach((file) => {
+                  removeFile(file);
+                });
+              }}
+            >
+              Bóc tách
+            </Button>
           </Box>
         </Flex>
       </Card>
