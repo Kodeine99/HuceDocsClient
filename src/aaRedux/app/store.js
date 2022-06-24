@@ -5,6 +5,8 @@ import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 // import the reducer
 import userReducer from './userSlice';
+import docOcrResultReducer from './userSlice';
+import ocrRequestReducer from './ocrRequestSlice';
 
 // const rootReducer = combineReducers({
 //   // add the reducer here
@@ -12,7 +14,9 @@ import userReducer from './userSlice';
 // });
 
 const rootReducer = {
-  user: userReducer
+  user: userReducer,
+  docOcrResult: docOcrResultReducer,
+  ocrRequest: ocrRequestReducer
 }
 
 // const persistConfig = {

@@ -9,7 +9,6 @@ const userApi = {
       username: username,
       password: password,
     });
-    console.log(process.env.REACT_APP_API_URL)
     return axiosClient.post(
       `${process.env.REACT_APP_API_URL}/user/login`,
       data

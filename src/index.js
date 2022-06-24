@@ -19,10 +19,15 @@ import ExtractionLayout from "layouts/extraction";
 import { RoutesProvider } from "./contexts/RoutesContext";
 import AuthRoute from "routes/AuthRoute";
 import NormalRoute from "routes/NormalRoute";
+import { useCookies } from "react-cookie";
+import { userSelector } from "aaRedux/app/userSlice";
+import App from "App";
 // import { persistStore } from "redux-persist";
 // import { PersistGate } from "redux-persist/integration/react";
 
 // let persistor = persistStore(store);
+
+
 
 ReactDOM.render(
   <ChakraProvider theme={theme}>
@@ -30,42 +35,7 @@ ReactDOM.render(
       <Provider store={store}>
         {/* <PersistGate loading={null} persistor={persistor}> */}
           <RoutesProvider>
-            <BrowserRouter>
-              <Switch>
-                {/* Authenticate Route */}
-                <NormalRoute path="/auth" component={AuthLayout} />
-
-                {/* User Logined Route */}
-                <AuthRoute path="/boctach" component={AdminLayout} />
-                <AuthRoute path="/lichsuboctach" component={AdminLayout} />
-                <AuthRoute
-                  path="/thongtincanhan"
-                  exact
-                  component={AdminLayout}
-                />
-                <AuthRoute
-                  path="/tailieuhuongdan"
-                  exact
-                  component={AdminLayout}
-                />
-                <AuthRoute
-                  path="/quanlynguoidung"
-                  exact
-                  component={AdminLayout}
-                />
-                <AuthRoute
-                  path="/quanlytailieu"
-                  exact
-                  component={AdminLayout}
-                />
-                {/* <Route path="/extraction" component={ExtractionLayout} /> */}
-
-                {/* RTL Route */}
-                <AuthRoute path="/rtl" component={RTLLayout} />
-
-                <Redirect exact from="*" to="/boctach" />
-              </Switch>
-            </BrowserRouter>
+            <App></App>
           </RoutesProvider>
         {/* </PersistGate> */}
       </Provider>

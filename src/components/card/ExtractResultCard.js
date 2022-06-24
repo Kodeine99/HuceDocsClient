@@ -46,8 +46,13 @@ import ColumnsTable from "views/admin/dataTables/components/ColumnsTable";
 import tableDataColumns from "../../views/admin/dataTables/variables/tableDataColumns.json";
 import CustomEditable from "components/husky/CustomEditable";
 import TableReal from "components/husky/TableReal";
+import { createDocOcr } from "aaRedux/app/docOcrResultSlice";
+import { useDispatch } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
+
 
 function ExtractResultCard(props) {
+  const dispatch = useDispatch();
   const { type, data, icon, verifyLink, fullData } = props;
   let boxBg = useColorModeValue("white !important", "#111c44 !important");
   let secondaryBg = useColorModeValue("gray.300", "whiteAlpha.100");
@@ -56,6 +61,7 @@ function ExtractResultCard(props) {
   let iconBox = useColorModeValue("gray.100", "whiteAlpha.200");
   let iconColor = useColorModeValue("brand.200", "white");
 
+  console.log("DocType",type)
   console.log("ocrData:", data);
   console.log("verifyLink:", verifyLink);
   console.log("fullData:", fullData);
@@ -67,19 +73,77 @@ function ExtractResultCard(props) {
   const markTableData = markTableObj?.MARK_TABLE;
   console.log("markTableData:", markTableData);
 
-  const handleSaveOcrData = (data, markTableData) => {
+  //Get documentType
+  const getDocType = (type) => {
+    let documentType = "";
+    switch (type) {
+      case "GIAY_XAC_NHAN_TOEIC":
+        documentType = "GiayXacNhanToeic"
+        break;
+      
+      case "BANG_DIEM_TIENG_ANH":
+        documentType = "BangDiemTiengAnh"
+        break;
+
+      case "BANG_DIEM": 
+        documentType = "BangDiem"
+        break;
+      
+      case "GIAY_CAM_KET_TRA_NO":
+        documentType = "GiayCamKetTraNo"
+        break;
+      default:
+        break;
+    }
+    return documentType;
+  }
+  function convert(str) {
+    let date = new Date(str),
+      month = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), month, day].join("-");
+  }
+
+  const handleSaveOcrData = async (data, markTableData) => {
     const { ticket_Id, createTime, ocR_Status_Code, username } = fullData;
-    const dataSubmit = {
-      ...data,
-      MARK_TABLE: JSON.stringify(markTableData),
-      TICKET_ID: ticket_Id,
-      CREATE_DATE: createTime,
-      STATUS: ocR_Status_Code,
-      USER_CREATE: username,
-    };
+    let dataSubmit = {};
+    const documentType = getDocType(type);
+
+    typeof(markTableData) !== "undefined" && markTableData.length > 0 ? 
+    (
+      dataSubmit = {
+        ...data,
+        MARK_TABLE: JSON.stringify(markTableData),
+        TICKET_ID: ticket_Id,
+        CREATE_DATE: createTime,
+        STATUS: ocR_Status_Code,
+        USER_CREATE: username,
+        HUCEDOCS_TYPE: documentType,
+        
+      }
+    ) : (
+      dataSubmit = {
+        ...data,
+        TICKET_ID: ticket_Id,
+        CREATE_DATE: createTime,
+        STATUS: ocR_Status_Code,
+        USER_CREATE: username,
+        HUCEDOCS_TYPE: documentType
+
+      }
+    )
+    
     console.log(dataSubmit);
 
+
+    console.log("DocumentType",documentType);
+
     console.log("Saving data...");
+    
+    const actionResult = await dispatch(createDocOcr(dataSubmit))
+    const result = await unwrapResult(actionResult);
+    console.log("Result",result)
+
   };
   return (
     <Flex
@@ -193,7 +257,7 @@ function ExtractResultCard(props) {
           )}
         </Box>
         <Flex justifyContent={"space-between"} mt={"15px"}>
-          {fullData?.ocR_Status_Code === 0 ? (
+          {fullData?.ocR_Status_Code === 1 ? (
             <Button
               colorScheme="whatsapp"
               rightIcon={<DownloadIcon />}

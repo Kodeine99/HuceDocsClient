@@ -5,7 +5,7 @@ import Footer from "components/footer/FooterAdmin.js";
 import Navbar from "components/navbar/NavbarAdmin.js";
 import Sidebar from "components/sidebar/Sidebar.js";
 import { SidebarContext } from "contexts/SidebarContext";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Redirect,
   Route,
@@ -59,6 +59,8 @@ export default function Dashboard(props) {
     });
     return result;
 
+    
+
 
     // let activeRoute = "Default Brand Text";
     // for (let i = 0; i < routes.length; i++) {
@@ -82,6 +84,8 @@ export default function Dashboard(props) {
     // }
     // return activeRoute;
   };
+
+  
 
   const getNavbarTitle = (routes) => {
     const urlArray = location.pathname
