@@ -253,7 +253,7 @@ function ExtractResultCard(props) {
               </TableContainer>
             </>
           ) : (
-            <>Ko co du lieu</>
+            <></>
           )}
         </Box>
         <Flex justifyContent={"space-between"} mt={"15px"}>

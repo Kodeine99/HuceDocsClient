@@ -9,7 +9,7 @@ import {
 // Custom components
 import React from "react";
 
-export default function Default(props) {
+export default function InputField(props) {
   const { id, label, extra, placeholder, type, mb, ...rest } = props;
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
@@ -20,12 +20,12 @@ export default function Default(props) {
         display='flex'
         ms='10px'
         htmlFor={id}
-        fontSize='sm'
+        fontSize='lg'
         color={textColorPrimary}
         fontWeight='bold'
         _hover={{ cursor: "pointer" }}>
         {label}
-        <Text fontSize='sm' fontWeight='400' ms='2px'>
+        <Text fontSize='lg' fontWeight='400' ms='2px'>
           {extra}
         </Text>
       </FormLabel>

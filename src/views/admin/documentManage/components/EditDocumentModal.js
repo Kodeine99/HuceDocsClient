@@ -123,6 +123,7 @@ export default function EditDocumentModal(props) {
           </SimpleGrid>
         </ModalBody>
         <ModalFooter>
+          <Button mr="20px" colorScheme={'whatsapp'} onClick={onClose}>Lưu</Button>
           <Button onClick={onClose}>Close</Button>
         </ModalFooter>
       </ModalContent>

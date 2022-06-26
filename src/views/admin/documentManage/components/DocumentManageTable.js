@@ -2,6 +2,7 @@ import {
   Flex,
   Icon,
   IconButton,
+  Input,
   Modal,
   ModalCloseButton,
   ModalContent,
@@ -26,6 +27,8 @@ import {
 } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
 import {
+  useAsyncDebounce,
+  useFilters,
   useGlobalFilter,
   usePagination,
   useSortBy,
@@ -46,12 +49,97 @@ import {
 import { MdCheckCircle, MdOutlineError } from "react-icons/md";
 import EditDocumentModal from "./EditDocumentModal";
 import NotifyModal from "components/shared/custom/modals/NotifyModal";
+import { matchSorter } from "match-sorter";
+
+function GlobalFilter({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}) {
+  const count = preGlobalFilteredRows.length;
+  const [value, setValue] = React.useState(globalFilter);
+  const onChange = useAsyncDebounce((value) => {
+    setGlobalFilter(value || undefined);
+  }, 200);
+
+  return (
+    <span>
+      Search:{" "}
+      <Input
+        mt={"10px"}
+        value={value || ""}
+        onChange={(e) => {
+          setValue(e.target.value);
+          onChange(e.target.value);
+        }}
+        placeholder={`${count} records...`}
+        style={{
+          fontSize: "14px",
+          border: "0",
+        }}
+        color="gray.500"
+      />
+    </span>
+  );
+}
+
+function DefaultColumnFilter({
+  column: { filterValue, preFilteredRows, setFilter },
+}) {
+  const count = preFilteredRows.length;
+
+  return (
+    <Input
+      value={filterValue || ""}
+      onChange={(e) => {
+        setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+      }}
+      placeholder={`Search ${count} records...`}
+    />
+  );
+}
+
+function fuzzyTextFilterFn(rows, id, filterValue) {
+  return matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
+}
+
+// Let the table remove the filter if the string is empty
+fuzzyTextFilterFn.autoRemove = (val) => !val;
+
 export default function DocumentManageTable(props) {
   const { columnsData, tableData } = props;
   const [renderModal, setRenderModal] = useState(false);
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
+
+  const filterTypes = useMemo(
+    () => ({
+      // Add a new fuzzyTextFilterFn filter type.
+      fuzzyText: fuzzyTextFilterFn,
+      // Or, override the default text filter to use
+      // "startWith"
+      text: (rows, id, filterValue) => {
+        return rows.filter((row) => {
+          const rowValue = row.values[id];
+          return rowValue !== undefined
+            ? String(rowValue)
+                .toLowerCase()
+                .startsWith(String(filterValue).toLowerCase())
+            : true;
+        });
+      },
+    }),
+    []
+  );
+
+  const defaultColumn = useMemo(
+    () => ({
+      // Let's set up our default Filter UI
+      Filter: DefaultColumnFilter,
+    }),
+    []
+  );
 
   const {
     getTableProps,
@@ -70,6 +158,10 @@ export default function DocumentManageTable(props) {
     nextPage,
     previousPage,
     setPageSize,
+    visibleColumns,
+    state,
+    preGlobalFilteredRows,
+    setGlobalFilter,
     state: { pageIndex, pageSize },
   } = useTable(
     {
@@ -77,6 +169,7 @@ export default function DocumentManageTable(props) {
       data,
       initialState: { pageIndex: 0, pageSize: 5 },
     },
+    useFilters,
     useGlobalFilter,
     useSortBy,
     usePagination
@@ -139,6 +232,20 @@ export default function DocumentManageTable(props) {
               ))}
             </Tr>
           ))}
+          <Tr>
+            <Th
+              colSpan={visibleColumns.length}
+              style={{
+                textAlign: "left",
+              }}
+            >
+              <GlobalFilter
+                preGlobalFilteredRows={preGlobalFilteredRows}
+                globalFilter={state.globalFilter}
+                setGlobalFilter={setGlobalFilter}
+              />
+            </Th>
+          </Tr>
         </Thead>
         {/* Table Content */}
         <Tbody {...getTableBodyProps()}>
@@ -245,11 +352,10 @@ export default function DocumentManageTable(props) {
                             setRowData(row.original);
                             onOpen();
                           }}
-                          isDisabled = {row.values.STATUS === 0 ? true: false}
+                          isDisabled={row.values.STATUS === 0 ? true : false}
                         />
                         <IconButton
                           colorScheme="purple"
-                          
                           icon={<DeleteIcon />}
                           variant="ghost"
                           onClick={() => {
@@ -260,7 +366,7 @@ export default function DocumentManageTable(props) {
                             setRowData(row.original);
                             onOpen();
                           }}
-                          isDisabled = {row.values.STATUS === 0 ? true: false}
+                          isDisabled={row.values.STATUS === 0 ? true : false}
                         />
                       </Flex>
                     );

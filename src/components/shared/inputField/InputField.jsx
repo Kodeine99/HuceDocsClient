@@ -46,7 +46,7 @@ function LoginInput(props) {
           //isRequired={true}
           {...field}
           variant="auth"
-          fontSize="sm"
+          fontSize="lg"
           ms={{ base: "0px", md: "0px" }}
           type={type}
           placeholder={placeholder}
