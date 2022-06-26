@@ -189,6 +189,23 @@ const userSlice = createSlice({
       state.isSuccess = true;
       state.userInfor = action.payload;
     },
+
+    [changePassword.pending]: (state) => {
+      state.loading = true;
+    },
+    [changePassword.rejected]: (state, action) => {
+      state.loading = false;
+      state.isError = true;
+      if (action.payload.errors) {
+        if (action.payload.errors.ConfirmNewPassword) {
+          state.errorMessage = action.payload.errors.ConfirmNewPassword;
+        }
+      } else state.errorMessage = action.payload.message;
+    },
+    [changePassword.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.isSuccess = true;
+    },
   },
 });
 

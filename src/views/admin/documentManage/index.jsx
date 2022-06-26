@@ -16,12 +16,10 @@ export default function DocumentManage() {
         columns={{ sm: 1, md: 1 }}
         spacing={{ base: "20px", xl: "20px" }}
       >
-        
         <DocumentManageTable
           columnsData={columnsDataDocTable}
           tableData={tableDataFiles}
         />
-        
       </SimpleGrid>
     </Box>
   );

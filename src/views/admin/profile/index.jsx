@@ -2,12 +2,21 @@
 import {
   Box,
   Button,
+  Flex,
   FormControl,
   Grid,
   GridItem,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   SimpleGrid,
   Text,
   useColorModeValue,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 // Custom components
@@ -36,12 +45,24 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { updateUserInfo } from "aaRedux/app/userSlice";
 import { getUserByToken } from "aaRedux/app/userSlice";
 import { clearState } from "aaRedux/app/userSlice";
+import ChangePassword from "./components/ChangePassword";
 
 export default function Overview(props) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { userInfor, loading, isSuccess, isError, errorMessage } =
     useSelector(userSelector);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const OverlayTwo = () => (
+    <ModalOverlay
+      bg="none"
+      backdropFilter="auto"
+      backdropInvert="80%"
+      backdropBlur="2px"
+    />
+  );
+  const [overlay, setOverlay] = React.useState(<OverlayTwo />);
 
   // const userInfo = {
   //   FullName: "Tung Ramen",
@@ -172,6 +193,7 @@ export default function Overview(props) {
             followers="9.9k"
             following="1"
           />
+
           {/* <Storage
           gridArea={{ base: "2 / 1 / 3 / 2", lg: "1 / 1 / 1 / 3" }}
           used={25.6}
@@ -186,15 +208,38 @@ export default function Overview(props) {
           /> */}
 
             <Card mb={{ base: "0px", "2xl": "10px" }}>
-              <Text
-                color={textColorPrimary}
-                fontWeight="bold"
-                fontSize="2xl"
-                mt="10px"
-                mb="4px"
-              >
-                Thông tin cá nhân
-              </Text>
+              <Flex justify={"space-between"} alignItems="center">
+                <Text
+                  color={textColorPrimary}
+                  fontWeight="bold"
+                  fontSize="2xl"
+                  mt="10px"
+                  mb="4px"
+                >
+                  Thông tin cá nhân
+                </Text>
+                <Button
+                  mt="24px"
+                  loadingText="Saving ..."
+                  // isLoading={isSubmitting}
+                  spinnerPlacement="start"
+                  type="submit"
+                  fontSize="lg"
+                  variant="brand"
+                  fontWeight="500"
+                  w="200px"
+                  h="50"
+                  mb="10px"
+                  // disabled={true}
+                  onClick={() => {
+                    setOverlay(<OverlayTwo />);
+
+                    onOpen();
+                  }}
+                >
+                  Đổi mật khẩu
+                </Button>
+              </Flex>
 
               <Formik
                 enableReinitialize={true}
@@ -342,6 +387,19 @@ export default function Overview(props) {
                 }}
               </Formik>
             </Card>
+            <Modal onClose={onClose} size="md" isOpen={isOpen}>
+              {overlay}
+              <ModalContent>
+                <ModalHeader>Đổi mật khẩu</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <ChangePassword />
+                </ModalBody>
+                <ModalFooter>
+                  <Button onClick={onClose}>Close</Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
           </GridItem>
         </Grid>
       </Box>

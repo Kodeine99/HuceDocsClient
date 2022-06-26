@@ -37,7 +37,7 @@ import InputWithHide from "components/shared/inputField/InputFieldWithHide";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function SignIn() {
+function SignIn(props) {
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
@@ -130,6 +130,15 @@ function SignIn() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, isError]);
 
+
+  useEffect(() => {
+    const message = props.location.state?.message;
+    message && toast.success(message, {
+      position: toast.POSITION.TOP_CENTER
+    });
+
+    // eslint-disable-next-line
+  }, []);
   return (
     <>
       <ToastContainer />
