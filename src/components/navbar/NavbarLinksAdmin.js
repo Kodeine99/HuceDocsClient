@@ -254,7 +254,7 @@ export default function HeaderLinks(props) {
               px="14px"
               onClick={() => logout()}
             >
-              <Text fontSize="sm">Log out</Text>
+              <Text fontSize="sm">Đăng xuất</Text>
             </MenuItem>
           </Flex>
         </MenuList>

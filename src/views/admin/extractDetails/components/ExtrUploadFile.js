@@ -39,9 +39,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { userGetAll } from "aaRedux/app/ocrRequestSlice";
 import { useState } from "react";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { userSelector } from "aaRedux/app/userSlice";
+import { Base64 } from "js-base64";
 
 export default function ExtrUploadFile(props) {
   const { used, total, extractType, ...rest } = props;
+  const {userInfor, token} = useSelector(userSelector);
 
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
@@ -61,6 +64,19 @@ export default function ExtrUploadFile(props) {
     });
 
   // console.log("map", map);
+
+  // check role
+  const getTokenRole = async (token) => {
+    // const role = await token && JSON.parse(Base64.decode(token.split(".")[1])).typ === 'admin' ? (
+    //   console.log(role)
+    // ) : console.log("user")
+
+    const role = token && JSON.parse(Base64.decode(token.split(".")[1])).typ
+
+    console.log(role);
+  }
+
+
 
 
   const dispatch = useDispatch();
@@ -97,6 +113,7 @@ export default function ExtrUploadFile(props) {
 
   return (
     <Card {...rest} mb="10px" align="center" p="10px" w="100%">
+      <Button onClick={() => getTokenRole(token)}>Caheck role</Button>
       <Tabs variant="line" colorScheme="purple">
         <TabList>
           <Tab>Bóc tách</Tab>
