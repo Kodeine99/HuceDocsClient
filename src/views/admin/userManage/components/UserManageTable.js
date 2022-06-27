@@ -463,6 +463,8 @@ export default function UserManageTable(props) {
             onClose={onClose}
             isOpen={isOpen}
             overlay={overlay}
+            loadIndex={props.reload}
+            reload={(loadIndex) => props.setReload(loadIndex)}
           />
         ) : (
           <Modal onClose={onClose} size="xl" isOpen={isOpen}>

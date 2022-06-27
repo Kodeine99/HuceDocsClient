@@ -113,6 +113,17 @@ export const changePassword = createAsyncThunk(
   }
 );
 
+export const addNewUser = createAsyncThunk(
+  "user/addnew",
+  async (params, {rejectWithValue}) => {
+    try {
+      return await userApi.addNewUser(params);
+    } catch (e) {
+      return rejectWithValue(e.response.data);
+    }
+  }
+)
+
 // Create the slice
 const userSlice = createSlice({
   name: "user",

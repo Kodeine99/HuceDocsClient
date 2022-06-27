@@ -119,6 +119,22 @@ const userApi = {
       reqBody
     );
   },
+
+  addNewUser: (params) => {
+    const {Fullname, Address, Email, Password, PhoneNumber, Username} = params;
+    const reqBody = JSON.stringify({
+      fullName: Fullname,
+      userName: Username,
+      email: Email,
+      password: Password,
+      address: Address,
+      phoneNumber: PhoneNumber
+    })
+    return axiosClient.post(
+      `${process.env.REACT_APP_API_URL}/user/addnew`,
+      reqBody
+    )
+  }
 }
 
 

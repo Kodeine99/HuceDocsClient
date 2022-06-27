@@ -136,16 +136,7 @@ function AddNewUserForm(props) {
                     // {...formikProps.getFieldProps("Username")}
                   />
                   
-                  {/* <FastField
-                    component={InputWithHide}
-                    label={"Confirm password"}
-                    name={"ConfirmPassword"}
-                    type={"password"}
-                    placeholder={"Confirm password"}
-                    //defaultValue={"Tung Ramen"}
-                    {...formikProps.getFieldProps("ConfirmPassword")}
-                    // {...formikProps.getFieldProps("Username")}
-                  /> */}
+                  
                   <FastField
                     component={LoginInput}
                     label={"Address"}
