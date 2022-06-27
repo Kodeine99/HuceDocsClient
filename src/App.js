@@ -17,6 +17,7 @@ import { userSelector } from "aaRedux/app/userSlice";
 import {useDispatch, useSelector} from "react-redux"
 import { setAuth } from "aaRedux/app/userSlice";
 import { getUserByToken } from "aaRedux/app/userSlice";
+import ProtectedRoute from "routes/ProtectedRoute";
 
 function App() {
   const [cookie] = useCookies();
@@ -56,7 +57,7 @@ function App() {
                   exact
                   component={AdminLayout}
                 />
-                <AuthRoute
+                <ProtectedRoute
                   path="/quanlynguoidung"
                   exact
                   component={AdminLayout}

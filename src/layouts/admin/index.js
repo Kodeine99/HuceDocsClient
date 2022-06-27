@@ -21,11 +21,16 @@ import ExtrHistory from "../../views/admin/extrHistory/index";
 import ExtractDetails from "../../views/admin/extractDetails/index";
 import UserManageView from "../../views/admin/userManage/index";
 import DocumentManage from "views/admin/documentManage";
+import { userSelector } from "aaRedux/app/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 
 export default function Dashboard(props) {
   const { ...rest } = props;
   const { url } = useRouteMatch();
   const location = useLocation();
+  const { userInfor } =
+    useSelector(userSelector);
   // states and functions
   const [fixed] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -197,7 +202,7 @@ export default function Dashboard(props) {
           setToggleSidebar,
         }}
       >
-        <Sidebar routes={routes} display="none" {...rest} />
+        <Sidebar routes={routes} display="none" {...rest} userInfor={userInfor} />
         <Box
           float="right"
           minHeight="100vh"

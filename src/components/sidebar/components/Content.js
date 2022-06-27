@@ -9,7 +9,7 @@ import React from "react";
 // FUNCTIONS
 
 function SidebarContent(props) {
-  const { routes } = props;
+  const { routes, userInfor } = props;
   // SIDEBAR
   return (
     <Flex direction='column' height='100%' pt='25px' borderRadius='30px'>

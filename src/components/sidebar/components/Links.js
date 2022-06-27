@@ -3,8 +3,14 @@ import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 // chakra imports
 import { Box, Flex, HStack, Text, useColorModeValue } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import { userSelector } from "aaRedux/app/userSlice";
+import { Base64 } from "js-base64";
 
 export function SidebarLinks(props) {
+
+  const {token} = useSelector(userSelector);
+
   //   Chakra color mode
   let location = useLocation();
   let activeColor = useColorModeValue("gray.700", "white");
@@ -18,6 +24,13 @@ export function SidebarLinks(props) {
 
   const { routes } = props;
 
+  // check role
+  const getTokenRole = (token) => {
+    const role = token && JSON.parse(Base64.decode(token.split(".")[1])).typ;
+    console.log("role", role)
+    return role;
+  };
+
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
     return location.pathname.includes(routeName);
@@ -25,6 +38,20 @@ export function SidebarLinks(props) {
 
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
   const createLinks = (routes) => {
+    const role = getTokenRole(token);
+    // role == "Admin" 
+    // ? routes = routes
+    // : routes =  routes.filter((obj) => {
+    //   return obj.name !== "Quản lý người dùng"
+    // })
+    console.log("Role2", role)
+    if (role !== "Admin") {
+      routes = routes.filter((obj) => {
+        return obj.name !== "Quản lý người dùng"
+      })
+    }
+
+    console.log("routes", routes)
     return routes.map((route, index) => {
       if (route.category) {
         return (
@@ -32,23 +59,23 @@ export function SidebarLinks(props) {
             <Text
               fontSize={"md"}
               color={activeColor}
-              fontWeight='bold'
-              mx='auto'
+              fontWeight="bold"
+              mx="auto"
               ps={{
                 sm: "10px",
                 xl: "16px",
               }}
-              pt='18px'
-              pb='12px'
-              key={index}>
+              pt="18px"
+              pb="12px"
+              key={index}
+            >
               {route.name}
             </Text>
             {createLinks(route.items)}
           </>
         );
       } else if (
-        route.isShow === true &&
-        route.layout === "" ||
+        (route.isShow === true && route.layout === "") ||
         route.layout === "/auth" ||
         route.layout === "/rtl" ||
         route.layout === "/extraction"
@@ -61,20 +88,22 @@ export function SidebarLinks(props) {
                   spacing={
                     activeRoute(route.path.toLowerCase()) ? "22px" : "26px"
                   }
-                  py='5px'
-                  ps='10px'>
-                  <Flex w='100%' alignItems='center' justifyContent='center'>
+                  py="5px"
+                  ps="10px"
+                >
+                  <Flex w="100%" alignItems="center" justifyContent="center">
                     <Box
                       color={
                         activeRoute(route.path.toLowerCase())
                           ? activeIcon
                           : textColor
                       }
-                      me='18px'>
+                      me="18px"
+                    >
                       {route.icon}
                     </Box>
                     <Text
-                      me='auto'
+                      me="auto"
                       color={
                         activeRoute(route.path.toLowerCase())
                           ? activeColor
@@ -84,19 +113,20 @@ export function SidebarLinks(props) {
                         activeRoute(route.path.toLowerCase())
                           ? "bold"
                           : "normal"
-                      }>
+                      }
+                    >
                       {route.name}
                     </Text>
                   </Flex>
                   <Box
-                    h='36px'
-                    w='4px'
+                    h="36px"
+                    w="4px"
                     bg={
                       activeRoute(route.path.toLowerCase())
                         ? brandColor
                         : "transparent"
                     }
-                    borderRadius='5px'
+                    borderRadius="5px"
                   />
                 </HStack>
               </Box>
@@ -106,10 +136,11 @@ export function SidebarLinks(props) {
                   spacing={
                     activeRoute(route.path.toLowerCase()) ? "22px" : "26px"
                   }
-                  py='5px'
-                  ps='10px'>
+                  py="5px"
+                  ps="10px"
+                >
                   <Text
-                    me='auto'
+                    me="auto"
                     color={
                       activeRoute(route.path.toLowerCase())
                         ? activeColor
@@ -117,10 +148,11 @@ export function SidebarLinks(props) {
                     }
                     fontWeight={
                       activeRoute(route.path.toLowerCase()) ? "bold" : "normal"
-                    }>
+                    }
+                  >
                     {route.name}
                   </Text>
-                  <Box h='36px' w='4px' bg='brand.400' borderRadius='5px' />
+                  <Box h="36px" w="4px" bg="brand.400" borderRadius="5px" />
                 </HStack>
               </Box>
             )}

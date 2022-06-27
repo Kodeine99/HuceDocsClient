@@ -113,7 +113,7 @@ export default function ExtrUploadFile(props) {
 
   return (
     <Card {...rest} mb="10px" align="center" p="10px" w="100%">
-      <Button onClick={() => getTokenRole(token)}>Caheck role</Button>
+      <Button onClick={() => getTokenRole(token)}>check role</Button>
       <Tabs variant="line" colorScheme="purple">
         <TabList>
           <Tab>Bóc tách</Tab>
