@@ -39,7 +39,6 @@ export default function UserManage() {
 
     const apiResult = await unwrapResult(actionResult);
     const users = apiResult.result;
-    //console.log("users:",users);
 
     setListUser(users);
   };
@@ -138,7 +137,7 @@ export default function UserManage() {
             />
           }
           name="Total Users"
-          value="10"
+          value={listUser?.length}
         />
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap="20px" mb="20px">

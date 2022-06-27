@@ -1,7 +1,6 @@
 import {
   Flex,
   Table,
-  Checkbox,
   Icon,
   IconButton,
   Tbody,
@@ -17,49 +16,143 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Select,
-  useDisclosure,
+  Modal,
   ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+  SimpleGrid,
+  Input,
 } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
 import {
+  useAsyncDebounce,
   useGlobalFilter,
   usePagination,
   useSortBy,
   useTable,
 } from "react-table";
+import { matchSorter } from "match-sorter";
 
 // Assets
 import {
   ViewIcon,
-  DeleteIcon,
-  EditIcon,
   ArrowLeftIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   ArrowRightIcon,
+  ViewOffIcon,
 } from "@chakra-ui/icons";
+
 import {
-  MdCheckCircle,
-  MdCancel,
-  MdOutlineError,
   MdOutlinePendingActions,
   MdDomainVerification,
   MdCancelPresentation,
-  MdDeleteForever,
-  MdDelete,
 } from "react-icons/md";
+
+import IoNewspaperOutline from "../../../../assets/img/docs/documentCheck.png";
 
 // Custom components
 import Card from "components/card/Card";
-import Menu from "components/menu/MainMenu";
-import NotifyModal from "components/shared/custom/modals/NotifyModal";
-export default function ExtrHistoryTable(props) {
-  const { columnsData, tableData } = props;
+import ExtractResultCard from "../../../../components/card/ExtractResultCard";
 
-  // React-table configuration
+function GlobalFilter({
+  preGlobalFilteredRows,
+  globalFilter,
+  setGlobalFilter,
+}) {
+  const count = preGlobalFilteredRows.length;
+  const [value, setValue] = React.useState(globalFilter);
+  const onChange = useAsyncDebounce((value) => {
+    setGlobalFilter(value || undefined);
+  }, 200);
+
+  return (
+    <span>
+      Search:{" "}
+      <Input
+        mt={"10px"}
+        value={value || ""}
+        onChange={(e) => {
+          setValue(e.target.value);
+          onChange(e.target.value);
+        }}
+        placeholder={`${count} records...`}
+        style={{
+          fontSize: "14px",
+          border: "0",
+        }}
+        color="gray.500"
+      />
+    </span>
+  );
+}
+
+// function DefaultColumnFilter({
+//   column: { filterValue, preFilteredRows, setFilter },
+// }) {
+//   const count = preFilteredRows.length;
+
+//   return (
+//     <Input
+//       value={filterValue || ""}
+//       onChange={(e) => {
+//         setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+//       }}
+//       placeholder={`Search ${count} records...`}
+//     />
+//   );
+// }
+
+function fuzzyTextFilterFn(rows, id, filterValue) {
+  return matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
+}
+
+// Let the table remove the filter if the string is empty
+fuzzyTextFilterFn.autoRemove = (val) => !val;
+export default function ExtrHistoryTable(props) {
+  const { columnsData, tableData, modalTitle } = props;
+
+  const [ocrData, setOcrData] = useState([]);
+  const [fullData, setFullData] = useState();
+  const [verifyLink, setVerifyLink] = useState("");
+  //const [loadData, setLoadData] = useState(false);
+
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
+
+  // const filterTypes = useMemo(
+  //   () => ({
+  //     // Add a new fuzzyTextFilterFn filter type.
+  //     fuzzyText: fuzzyTextFilterFn,
+  //     // Or, override the default text filter to use
+  //     // "startWith"
+  //     text: (rows, id, filterValue) => {
+  //       return rows.filter((row) => {
+  //         const rowValue = row.values[id];
+  //         return rowValue !== undefined
+  //           ? String(rowValue)
+  //               .toLowerCase()
+  //               .startsWith(String(filterValue).toLowerCase())
+  //           : true;
+  //       });
+  //     },
+  //   }),
+  //   []
+  // );
+
+  // const defaultColumn = useMemo(
+  //   () => ({
+  //     // Let's set up our default Filter UI
+  //     Filter: DefaultColumnFilter,
+  //   }),
+  //   []
+  // );
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -76,8 +169,11 @@ export default function ExtrHistoryTable(props) {
     gotoPage,
     nextPage,
     previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize },
+    visibleColumns,
+    state,
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    state: { pageIndex },
   } = useTable(
     {
       columns,
@@ -88,9 +184,10 @@ export default function ExtrHistoryTable(props) {
     useSortBy,
     usePagination
   );
-
-  // Modal configuration
+  // Test Modal
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [size, setSize] = React.useState("md");
+
   const OverlayTwo = () => (
     <ModalOverlay
       bg="none"
@@ -99,8 +196,41 @@ export default function ExtrHistoryTable(props) {
       backdropBlur="2px"
     />
   );
-  const [overlay, setOverlay] = useState(<OverlayTwo />);
-  const [fileName, setFileName] = useState("");
+  const [overlay, setOverlay] = React.useState(<OverlayTwo />);
+
+  const convertToJson = (data) => {
+    //console.log("old Data:", data);
+    let dataAfterReplace = JSON.parse(
+      data
+        .replace('\\"', '"')
+        .replace('"[', "[")
+        .replace(']"', "]")
+        .replace("\\", "")
+        .split("\\")
+        .join("")
+    );
+    //console.log("new Data:", dataAfterReplace);
+    //console.log("js",js);
+    return dataAfterReplace;
+  };
+
+  const handleStateChange = async (fullData, ocrData, verifyLink) => {
+    await setFullData(fullData);
+    //console.log("fullData:", fullData);
+
+    await setOcrData(convertToJson(ocrData));
+    //console.log("ocrData:", ocrData);
+
+    await setVerifyLink(verifyLink);
+    //console.log("verifyLink:", verifyLink);
+  };
+
+  function convertDate(str) {
+    let date = new Date(str),
+      month = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), month, day].join("-");
+  }
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -109,20 +239,11 @@ export default function ExtrHistoryTable(props) {
       direction="column"
       w="100%"
       px="0px"
-      overflowX={{ sm: "scroll", lg: "hidden" }}
+      //overflowX={{ sm: "scroll", lg: "hidden" }}
     >
-      <Flex px="25px" justify="space-between" mb="20px" align="center">
-        <Text
-          color={textColor}
-          fontSize="22px"
-          fontWeight="700"
-          lineHeight="100%"
-        >
-          Danh sách các files bóc tách
-        </Text>
-        {/* <Menu /> */}
-      </Flex>
-      <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
+      {/* <Button onClick={() => }>F5</Button> */}
+      <Table {...getTableProps()} variant="simple" color="gray.500">
+        
         <Thead>
           {headerGroups.map((headerGroup, index) => (
             <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
@@ -145,6 +266,20 @@ export default function ExtrHistoryTable(props) {
               ))}
             </Tr>
           ))}
+          <Tr>
+          <Th
+            colSpan={visibleColumns.length}
+            style={{
+              textAlign: "left",
+            }}
+          >
+            <GlobalFilter
+              preGlobalFilteredRows={preGlobalFilteredRows}
+              globalFilter={state.globalFilter}
+              setGlobalFilter={setGlobalFilter}
+            />
+          </Th>
+        </Tr>
         </Thead>
         <Tbody {...getTableBodyProps()}>
           {page.map((row, index) => {
@@ -152,13 +287,38 @@ export default function ExtrHistoryTable(props) {
             return (
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
-                  //console.log("Row value:",row.values)
+                  //console.log("rowData", row.original);
                   let data = "";
-                  if (cell.column.Header === "TÊN FILE") {
+                  if (cell.column.Header === "TICKET ID") {
                     data = (
                       <Flex align="center">
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                        <Text color={textColor} fontSize="md" fontWeight="700">
                           {cell.value}
+                        </Text>
+                      </Flex>
+                    );
+                  } else if (cell.column.Header === "NGƯỜI TẠO") {
+                    data = (
+                      <Flex align="center">
+                        <Text color={textColor} fontSize="md" fontWeight="700">
+                          {cell.value}
+                        </Text>
+                      </Flex>
+                    );
+                  } else if (cell.column.Header === "TÊN FILE") {
+                    data = (
+                      <Flex align="center">
+                        <Text color={textColor} fontSize="md" fontWeight="700">
+                          {/* {cell.value[0].fileName} */}
+                          {/* {console.log("file name cell:", cell.value)} */}
+                          {typeof row.original.hFiles !== "undefined" &&
+                          row.original.hFiles.length > 0 ? (
+                            row.original.hFiles.map((file, index) => {
+                              return `${file.fileName} \r\n`;
+                            })
+                          ) : (
+                            <Text>Chưa có file</Text>
+                          )}
                         </Text>
                       </Flex>
                     );
@@ -170,89 +330,96 @@ export default function ExtrHistoryTable(props) {
                           h="24px"
                           me="5px"
                           color={
-                            cell.value === "Bóc tách thành công"
+                            cell.value === 1
                               ? "green.500"
-                              : cell.value === "Đang xử lý"
+                              : cell.value === 2
                               ? "grey.500"
-                              : cell.value === "Lỗi"
+                              : cell.value === 0
                               ? "red.500"
                               : null
                           }
                           as={
-                            cell.value === "Bóc tách thành công"
+                            cell.value === 1
                               ? MdDomainVerification
-                              : cell.value === "Đang xử lý"
+                              : cell.value === 2
                               ? MdOutlinePendingActions
-                              : cell.value === "Lỗi"
+                              : cell.value === 0
                               ? MdCancelPresentation
                               : null
                           }
                         />
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
-                          {cell.value}
+                        <Text color={textColor} fontSize="md" fontWeight="700">
+                          {cell.value === 1
+                            ? "Bóc tách thành công"
+                            : cell.value === 2
+                            ? "Đang xử lý"
+                            : cell.value === 0
+                            ? "Đã hủy"
+                            : null}
                         </Text>
                       </Flex>
                     );
                   } else if (cell.column.Header === "SỐ TRANG") {
                     data = (
                       <Flex align="center">
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
+                        <Text color={textColor} fontSize="md" fontWeight="700">
                           {cell.value}
                         </Text>
                       </Flex>
                     );
                   } else if (cell.column.Header === "NGÀY TẠO") {
                     data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
-                        {cell.value}
+                      <Text color={textColor} fontSize="md" fontWeight="700">
+                        {convertDate(cell.value)}
                       </Text>
                     );
                   } else if (cell.column.Header === "THAO TÁC") {
-                    data = (
-                      <Flex align="center" pt={"0px"}>
-                        {/* <IconButton  
-                          colorScheme='purple' 
-                          icon={<EditIcon />} 
-                          variant='ghost'
-                        /> */}
-                        {row.values.status === "Bóc tách thành công" ? (
+                    data =
+                      row.values.ocR_Status_Code === 1 ? (
+                        <Flex align="center">
                           <IconButton
                             colorScheme="purple"
-                            icon={<MdDelete />}
+                            icon={<ViewIcon />}
                             variant="ghost"
-                            size={"lg"}
-                            onClick={() => {
+                            onClick={async () => {
                               setOverlay(<OverlayTwo />);
+                              // await setFullData(row.original);
+                              // console.log("fullData:", fullData);
+                              // await setOcrData(
+                              //   convertToJson(row.original.jsonData)
+                              // );
+                              // console.log("data", ocrData);
+                              // await setVerifyLink(row.original.verifyLink);
+                              // console.log("verifyLink", verifyLink);
 
-                              setFileName(row.values.name);
+                              await handleStateChange(
+                                row.original,
+                                row.original.jsonData,
+                                row.original.verifyLink
+                              );
                               onOpen();
                             }}
+                            key={size}
                           />
-                        ) : (
+                          {/* {if (cells.)} */}
+                        </Flex>
+                      ) : (
+                        <Flex align="center">
                           <IconButton
                             colorScheme="purple"
-                            icon={<MdDeleteForever />}
+                            icon={<ViewOffIcon />}
                             variant="ghost"
-                            size={"lg"}
                             disabled
                           />
-                        )}
-                        {/* <Progress
-                          variant='table'
-                          colorScheme='brandScheme'
-                          h='8px'
-                          w='108px'
-                          value={cell.value}
-                        /> */}
-                      </Flex>
-                    );
+                        </Flex>
+                      );
                   }
                   return (
                     <Td
                       {...cell.getCellProps()}
                       key={index}
-                      fontSize={{ sm: "16px" }}
-                      minW={{ sm: "120px", md: "160px", lg: "auto" }}
+                      fontSize={{ sm: "14px" }}
+                      minW={{ sm: "150px", md: "200px", lg: "auto" }}
                       borderColor="transparent"
                     >
                       {data}
@@ -263,14 +430,43 @@ export default function ExtrHistoryTable(props) {
             );
           })}
         </Tbody>
-        <NotifyModal
-          isOpen={isOpen}
-          onClose={onClose}
-          overlay={overlay}
-          title="Xóa file"
-          modalContent={`Bạn có chắc chắn muốn xóa file ${ fileName }?`}
-        />
       </Table>
+      <Modal onClose={onClose} size="full" isOpen={isOpen}>
+        {overlay}
+        <ModalContent>
+          <ModalHeader>{modalTitle}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <SimpleGrid columns={{ base: 1, md: 1 }} gap="20px">
+              {ocrData?.map((item, index) => {
+                return (
+                  <>
+                    {typeof item.DATA !== "undefined" &&
+                    item.DATA.length > 0 ? (
+                      item.DATA.map((childItem, index) => {
+                        return (
+                          <ExtractResultCard
+                            type={item?.TYPE}
+                            data={childItem}
+                            icon={IoNewspaperOutline}
+                            verifyLink={verifyLink}
+                            fullData={fullData}
+                          />
+                        );
+                      })
+                    ) : (
+                      <Text>Không có dữ liệu</Text>
+                    )}
+                  </>
+                );
+              })}
+            </SimpleGrid>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Flex justifyContent="space-between" m={4} alignItems="center">
         <Flex>
           <Tooltip label="First Page">
@@ -320,7 +516,7 @@ export default function ExtrHistoryTable(props) {
               <NumberDecrementStepper />
             </NumberInputStepper>
           </NumberInput>
-          <Select
+          {/* <Select
             w={32}
             value={pageSize}
             onChange={(e) => {
@@ -332,7 +528,7 @@ export default function ExtrHistoryTable(props) {
                 Show {pageSize}
               </option>
             ))}
-          </Select>
+          </Select> */}
         </Flex>
 
         <Flex>

@@ -47,6 +47,36 @@ export const columnsDataExtrResultTable = [
     accessor: "action",
   },
 ];
+export const columnsDataExtrHistoryTable = [
+  {
+    Header: "TICKET ID",
+    accessor: "ticket_Id",
+  },
+  {
+    Header: "TÊN FILE",
+    accessor: "hFiles",
+  },
+  // {
+  //   Header: "SỐ TRANG",
+  //   accessor: "pageNumber",
+  // },
+  {
+    Header: "NGƯỜI TẠO",
+    accessor: "username",
+  },
+  {
+    Header: "NGÀY TẠO",
+    accessor: "createTime",
+  },
+  {
+    Header: "TRẠNG THÁI",
+    accessor: "ocR_Status_Code",
+  },
+  // {
+  //   Header: "THAO TÁC",
+  //   accessor: "action",
+  // },
+];
 
 export const columnsDataColumns = [
   {

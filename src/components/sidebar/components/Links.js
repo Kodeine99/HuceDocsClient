@@ -48,7 +48,7 @@ export function SidebarLinks(props) {
       return route.name !== "Đăng nhập"
     }) 
     : routes = routes.filter((route) => {
-      return route.name !== "Đăng nhập" && "Quản lý người dùng"
+      return route.name !== "Đăng nhập" && route.name !== "Quản lý người dùng"
     }) 
 
     return routes.map((route, index) => {
