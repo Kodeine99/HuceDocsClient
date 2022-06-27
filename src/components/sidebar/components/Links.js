@@ -8,8 +8,7 @@ import { userSelector } from "aaRedux/app/userSlice";
 import { Base64 } from "js-base64";
 
 export function SidebarLinks(props) {
-
-  const {token} = useSelector(userSelector);
+  const { token } = useSelector(userSelector);
 
   //   Chakra color mode
   let location = useLocation();
@@ -27,7 +26,6 @@ export function SidebarLinks(props) {
   // check role
   const getTokenRole = (token) => {
     const role = token && JSON.parse(Base64.decode(token.split(".")[1])).typ;
-    console.log("role", role)
     return role;
   };
 
@@ -39,19 +37,20 @@ export function SidebarLinks(props) {
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
   const createLinks = (routes) => {
     const role = getTokenRole(token);
-    // role == "Admin" 
-    // ? routes = routes
-    // : routes =  routes.filter((obj) => {
-    //   return obj.name !== "Quản lý người dùng"
-    // })
-    console.log("Role2", role)
-    if (role !== "Admin") {
-      routes = routes.filter((obj) => {
-        return obj.name !== "Quản lý người dùng"
-      })
-    }
 
-    console.log("routes", routes)
+    // if (role !== "Admin") {
+    //   routes = routes.filter((obj) => {
+    //     return obj.name !== "Quản lý người dùng" && "Đăng nhập";
+    //   });
+    // } 
+
+    role === "Admin" ? routes = routes.filter((route) => {
+      return route.name !== "Đăng nhập"
+    }) 
+    : routes = routes.filter((route) => {
+      return route.name !== "Đăng nhập" && "Quản lý người dùng"
+    }) 
+
     return routes.map((route, index) => {
       if (route.category) {
         return (
@@ -75,7 +74,8 @@ export function SidebarLinks(props) {
           </>
         );
       } else if (
-        (route.isShow === true && route.layout === "") ||
+        route.isShow === true && 
+        route.layout === ""||
         route.layout === "/auth" ||
         route.layout === "/rtl" ||
         route.layout === "/extraction"

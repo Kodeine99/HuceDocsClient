@@ -1,45 +1,26 @@
 // Chakra imports
 import {
-  Avatar,
   Box,
-  Button,
-  Flex,
-  FormLabel,
   Icon,
-  Select,
   SimpleGrid,
   useColorModeValue,
 } from "@chakra-ui/react";
 // Assets
-import Usa from "assets/img/dashboards/usa.png";
 // Custom components
-import MiniCalendar from "components/calendar/MiniCalendar";
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
 import React, { useEffect } from "react";
 import {
-  MdAddTask,
-  MdAttachMoney,
-  MdBarChart,
-  MdFileCopy,
   MdOutlinePeopleOutline,
 } from "react-icons/md";
-import CheckTable from "views/admin/userManage/components/CheckTable";
-import ComplexTable from "views/admin/userManage/components/ComplexTable";
-import DailyTraffic from "views/admin/userManage/components/DailyTraffic";
-import PieCard from "views/admin/userManage/components/PieCard";
-import Tasks from "views/admin/userManage/components/Tasks";
-import TotalSpent from "views/admin/userManage/components/TotalSpent";
-import WeeklyRevenue from "views/admin/userManage/components/WeeklyRevenue";
+
 import { columnsUserManageData } from "views/admin/userManage/variables/columnsData";
-import userTableData from "views/admin/userManage/variables/userTableData.json";
 import UserManageTable from "./components/UserManageTable";
 
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { getAllUsers } from "aaRedux/app/userSlice";
-import { adminUpdateActive } from "aaRedux/app/userSlice";
 
 export default function UserManage() {
   // Chakra Color Mode

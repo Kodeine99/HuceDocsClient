@@ -3,11 +3,8 @@ import React from "react";
 import { Icon } from "@chakra-ui/react";
 import {
   MdBarChart,
-  MdDashboard,
   MdPerson,
-  MdHome,
   MdLock,
-  MdOutlineShoppingCart,
   MdDescription,
   MdBook,
   MdPersonSearch,
@@ -27,8 +24,6 @@ import CCCD from "assets/img/docs/CCCD.png";
 import BaiThiTN from "assets/img/docs/BaithiTN.png";
 import BocTachGiayTo from "assets/img/docs/Boctachgiayto.png";
 import DKKD from "assets/img/docs/DKKD.png";
-import GiayPhepXayDung from "assets/img/docs/Giayphepxaydung.png";
-import HoaDon from "assets/img/docs/HoaDon.png";
 import TheTinDung from "assets/img/docs/TheTinDung.png";
 
 // Auth Imports
@@ -176,7 +171,7 @@ const routes = [
     path: "/sign-in",
     icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
     component: SignInCentered,
-    isShow: true,
+    isShow: false,
     childrens: [],
   }
 ];

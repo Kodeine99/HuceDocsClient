@@ -1,7 +1,6 @@
 import {
   Flex,
   Table,
-  Progress,
   Icon,
   Tbody,
   Td,
@@ -23,7 +22,6 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  SimpleGrid,
   ModalFooter,
   Button,
   useDisclosure,
@@ -41,9 +39,7 @@ import {
 } from "react-table";
 // Icons
 import {
-  ViewIcon,
-  DeleteIcon,
-  EditIcon,
+ 
   UnlockIcon,
   LockIcon,
   ArrowLeftIcon,
@@ -55,17 +51,12 @@ import {
 
 // Custom components
 import Card from "components/card/Card";
-import Menu from "components/menu/MainMenu";
 
 // Assets
 import {
   MdCheckCircle,
-  MdCancel,
   MdOutlineError,
-  MdEdit,
 } from "react-icons/md";
-import { NavLink } from "react-router-dom";
-import ExtractResultCard from "components/card/ExtractResultCard";
 import { matchSorter } from "match-sorter";
 
 import { useDispatch } from "react-redux";
@@ -106,21 +97,21 @@ function GlobalFilter({
   );
 }
 
-function DefaultColumnFilter({
-  column: { filterValue, preFilteredRows, setFilter },
-}) {
-  const count = preFilteredRows.length;
+// function DefaultColumnFilter({
+//   column: { filterValue, preFilteredRows, setFilter },
+// }) {
+//   const count = preFilteredRows.length;
 
-  return (
-    <Input
-      value={filterValue || ""}
-      onChange={(e) => {
-        setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
-      }}
-      placeholder={`Search ${count} records...`}
-    />
-  );
-}
+//   return (
+//     <Input
+//       value={filterValue || ""}
+//       onChange={(e) => {
+//         setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+//       }}
+//       placeholder={`Search ${count} records...`}
+//     />
+//   );
+// }
 
 function fuzzyTextFilterFn(rows, id, filterValue) {
   return matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
@@ -156,13 +147,13 @@ export default function UserManageTable(props) {
     []
   );
 
-  const defaultColumn = useMemo(
-    () => ({
-      // Let's set up our default Filter UI
-      Filter: DefaultColumnFilter,
-    }),
-    []
-  );
+  // const defaultColumn = useMemo(
+  //   () => ({
+  //     // Let's set up our default Filter UI
+  //     Filter: DefaultColumnFilter,
+  //   }),
+  //   []
+  // );
 
   const {
     getTableProps,
@@ -201,7 +192,6 @@ export default function UserManageTable(props) {
   );
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [size, setSize] = useState("md");
   const [renderModal, setRenderModal] = useState(false);
 
   const OverlayTwo = () => (

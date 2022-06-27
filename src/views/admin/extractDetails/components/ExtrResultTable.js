@@ -1,7 +1,6 @@
 import {
   Flex,
   Table,
-  Checkbox,
   Icon,
   IconButton,
   Tbody,
@@ -17,7 +16,6 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Select,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -43,8 +41,6 @@ import { matchSorter } from "match-sorter";
 // Assets
 import {
   ViewIcon,
-  DeleteIcon,
-  EditIcon,
   ArrowLeftIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -53,20 +49,15 @@ import {
 } from "@chakra-ui/icons";
 
 import {
-  MdCheckCircle,
-  MdCancel,
-  MdOutlineError,
   MdOutlinePendingActions,
   MdDomainVerification,
   MdCancelPresentation,
 } from "react-icons/md";
 
-import personalIdentificationCard from "../../../../assets/img/docs/personal-identification-card.png";
 import IoNewspaperOutline from "../../../../assets/img/docs/documentCheck.png";
 
 // Custom components
 import Card from "components/card/Card";
-import Menu from "components/menu/MainMenu";
 import ExtractResultCard from "../../../../components/card/ExtractResultCard";
 
 function GlobalFilter({
@@ -101,21 +92,21 @@ function GlobalFilter({
   );
 }
 
-function DefaultColumnFilter({
-  column: { filterValue, preFilteredRows, setFilter },
-}) {
-  const count = preFilteredRows.length;
+// function DefaultColumnFilter({
+//   column: { filterValue, preFilteredRows, setFilter },
+// }) {
+//   const count = preFilteredRows.length;
 
-  return (
-    <Input
-      value={filterValue || ""}
-      onChange={(e) => {
-        setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
-      }}
-      placeholder={`Search ${count} records...`}
-    />
-  );
-}
+//   return (
+//     <Input
+//       value={filterValue || ""}
+//       onChange={(e) => {
+//         setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+//       }}
+//       placeholder={`Search ${count} records...`}
+//     />
+//   );
+// }
 
 function fuzzyTextFilterFn(rows, id, filterValue) {
   return matchSorter(rows, filterValue, { keys: [(row) => row.values[id]] });
@@ -129,38 +120,38 @@ export default function ExtrResultTable(props) {
   const [ocrData, setOcrData] = useState([]);
   const [fullData, setFullData] = useState();
   const [verifyLink, setVerifyLink] = useState("");
-  const [loadData, setLoadData] = useState(false);
+  //const [loadData, setLoadData] = useState(false);
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
 
-  const filterTypes = useMemo(
-    () => ({
-      // Add a new fuzzyTextFilterFn filter type.
-      fuzzyText: fuzzyTextFilterFn,
-      // Or, override the default text filter to use
-      // "startWith"
-      text: (rows, id, filterValue) => {
-        return rows.filter((row) => {
-          const rowValue = row.values[id];
-          return rowValue !== undefined
-            ? String(rowValue)
-                .toLowerCase()
-                .startsWith(String(filterValue).toLowerCase())
-            : true;
-        });
-      },
-    }),
-    []
-  );
+  // const filterTypes = useMemo(
+  //   () => ({
+  //     // Add a new fuzzyTextFilterFn filter type.
+  //     fuzzyText: fuzzyTextFilterFn,
+  //     // Or, override the default text filter to use
+  //     // "startWith"
+  //     text: (rows, id, filterValue) => {
+  //       return rows.filter((row) => {
+  //         const rowValue = row.values[id];
+  //         return rowValue !== undefined
+  //           ? String(rowValue)
+  //               .toLowerCase()
+  //               .startsWith(String(filterValue).toLowerCase())
+  //           : true;
+  //       });
+  //     },
+  //   }),
+  //   []
+  // );
 
-  const defaultColumn = useMemo(
-    () => ({
-      // Let's set up our default Filter UI
-      Filter: DefaultColumnFilter,
-    }),
-    []
-  );
+  // const defaultColumn = useMemo(
+  //   () => ({
+  //     // Let's set up our default Filter UI
+  //     Filter: DefaultColumnFilter,
+  //   }),
+  //   []
+  // );
 
   const {
     getTableProps,
@@ -178,12 +169,11 @@ export default function ExtrResultTable(props) {
     gotoPage,
     nextPage,
     previousPage,
-    setPageSize,
     visibleColumns,
     state,
     preGlobalFilteredRows,
     setGlobalFilter,
-    state: { pageIndex, pageSize },
+    state: { pageIndex },
   } = useTable(
     {
       columns,

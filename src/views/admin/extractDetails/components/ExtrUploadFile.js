@@ -1,17 +1,7 @@
 // Chakra imports
 import {
-  Box,
   Button,
-  Divider,
   Flex,
-  Icon,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Tab,
   TabList,
   TabPanel,
@@ -19,22 +9,15 @@ import {
   Tabs,
   Text,
   useColorModeValue,
-  useDisclosure,
 } from "@chakra-ui/react";
 // Custom components
 import Card from "components/card/Card.js";
 import React, { useEffect } from "react";
 // Assets
-import { MdUpload } from "react-icons/md";
 import Dropzone from "../components/Dropzone";
 
-import { DeleteIcon } from "@chakra-ui/icons";
-import UploadFileTable from "./UploadFileTable";
-import { ColumnUploadFileTable } from "../variables/columnUploadFileTable";
-import UploadFileTableData from "../variables/uploadFiletableData.json";
 import ExtrResultTable from "./ExtrResultTable";
 import { columnsDataExtrResultTable } from "../variables/columnsDataExtrResultTable";
-import extrResultData from "../variables/extrResultData.json";
 import { useSelector, useDispatch } from "react-redux";
 import { userGetAll } from "aaRedux/app/ocrRequestSlice";
 import { useState } from "react";
@@ -44,26 +27,13 @@ import { Base64 } from "js-base64";
 
 export default function ExtrUploadFile(props) {
   const { used, total, extractType, ...rest } = props;
-  const {userInfor, token} = useSelector(userSelector);
+  const { token } = useSelector(userSelector);
 
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
-  const brandColor = useColorModeValue("brand.500", "white");
-  const textColorSecondary = "gray.400";
 
   const [loadingData, setLoadingData] = useState(false);
   const [ocrRequestData, setOcrRequestData] = useState([]);
-
-
-  const map = extrResultData
-    .map((item) => {
-      return item.jsonData;
-    })
-    .map((child) => {
-      return child;
-    });
-
-  // console.log("map", map);
 
   // check role
   const getTokenRole = async (token) => {
@@ -71,13 +41,10 @@ export default function ExtrUploadFile(props) {
     //   console.log(role)
     // ) : console.log("user")
 
-    const role = token && JSON.parse(Base64.decode(token.split(".")[1])).typ
+    const role = token && JSON.parse(Base64.decode(token.split(".")[1])).typ;
 
     console.log(role);
-  }
-
-
-
+  };
 
   const dispatch = useDispatch();
 
@@ -95,9 +62,10 @@ export default function ExtrUploadFile(props) {
 
     const apiResult = await unwrapResult(actionResult);
 
-    apiResult?.isOk === true ? setOcrRequestData(apiResult.result) :
-    console.log("loi") 
-    console.log("Api Result",apiResult);
+    apiResult?.isOk === true
+      ? setOcrRequestData(apiResult.result)
+      : console.log("loi");
+    console.log("Api Result", apiResult);
   };
 
   useEffect(() => {
@@ -150,8 +118,6 @@ export default function ExtrUploadFile(props) {
                 //     item.jsonData,
                 //   }
                 // })}
-                
-
               />
             </Flex>
           </TabPanel>

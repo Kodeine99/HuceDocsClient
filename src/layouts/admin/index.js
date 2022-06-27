@@ -5,16 +5,13 @@ import Footer from "components/footer/FooterAdmin.js";
 import Navbar from "components/navbar/NavbarAdmin.js";
 import Sidebar from "components/sidebar/Sidebar.js";
 import { SidebarContext } from "contexts/SidebarContext";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  Redirect,
   Route,
   Switch,
-  useRouteMatch,
   useLocation,
 } from "react-router-dom";
 import routes from "../../routes/routes";
-import Extract from "../../views/admin/extraction/index";
 import Profile from "views/admin/profile";
 import DocumentsView from "../../views/admin/documents/index";
 import ExtrHistory from "../../views/admin/extrHistory/index";
@@ -22,12 +19,12 @@ import ExtractDetails from "../../views/admin/extractDetails/index";
 import UserManageView from "../../views/admin/userManage/index";
 import DocumentManage from "views/admin/documentManage";
 import { userSelector } from "aaRedux/app/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 export default function Dashboard(props) {
   const { ...rest } = props;
-  const { url } = useRouteMatch();
+  //const { url } = useRouteMatch();
   const location = useLocation();
   const { userInfor } =
     useSelector(userSelector);
@@ -35,15 +32,14 @@ export default function Dashboard(props) {
   const [fixed] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components
-  const getRoute = () => {
-    return window.location.pathname !== "/full-screen-maps";
-  };
+  // const getRoute = () => {
+  //   return window.location.pathname !== "/full-screen-maps";
+  // };
   const getActiveRoute = (routes) => {
     const urlArray = location.pathname
       .split("/")
       .slice(1)
       .map((url) => `/${url}`);
-    console.log("urlArray", urlArray);
 
     const result = urlArray.map((item) => {
       const index = routes.findIndex((route) => route.path === item);
@@ -163,35 +159,35 @@ export default function Dashboard(props) {
     }
     return activeNavbar;
   };
-  const getRoutes = (routes) => {
-    //console.log(routes);
-    return routes.map((prop, key) => {
-      if (prop.layout === "") {
-        return (
-          <Route path={prop.path} component={prop.component} key={key}>
-            {/* {
-            typeof prop.children !== 'undefined' && prop.children.length > 0 ? 
-            prop.children.map((prop1, index) =>  
-            <Route
-              path={`/${prop.path}/${prop1.path}`}
-              //path="boctach/:slug"
-              component={ExtractionLayout}
-              key={index}
-            />
-            ) : null} */}
-          </Route>
-        );
-      }
-      if (prop.collapse) {
-        return getRoutes(prop.items);
-      }
-      if (prop.category) {
-        return getRoutes(prop.items);
-      } else {
-        return null;
-      }
-    });
-  };
+  // const getRoutes = (routes) => {
+  //   //console.log(routes);
+  //   return routes.map((prop, key) => {
+  //     if (prop.layout === "") {
+  //       return (
+  //         <Route path={prop.path} component={prop.component} key={key}>
+  //           {/* {
+  //           typeof prop.children !== 'undefined' && prop.children.length > 0 ? 
+  //           prop.children.map((prop1, index) =>  
+  //           <Route
+  //             path={`/${prop.path}/${prop1.path}`}
+  //             //path="boctach/:slug"
+  //             component={ExtractionLayout}
+  //             key={index}
+  //           />
+  //           ) : null} */}
+  //         </Route>
+  //       );
+  //     }
+  //     if (prop.collapse) {
+  //       return getRoutes(prop.items);
+  //     }
+  //     if (prop.category) {
+  //       return getRoutes(prop.items);
+  //     } else {
+  //       return null;
+  //     }
+  //   });
+  // };
   document.documentElement.dir = "ltr";
   const { onOpen } = useDisclosure();
   return (

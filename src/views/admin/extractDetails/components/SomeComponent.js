@@ -10,7 +10,6 @@ import {
   Button,
   Flex,
   Grid,
-  Link,
   Text,
   useColorModeValue,
   SimpleGrid,
