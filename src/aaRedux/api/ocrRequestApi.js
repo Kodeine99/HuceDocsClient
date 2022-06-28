@@ -1,3 +1,4 @@
+import axios from "axios";
 import axiosClient from "./axiosClient";
 
 const ocrRequestApi = {
@@ -43,6 +44,16 @@ const ocrRequestApi = {
       reqBody
       )
   },
+
+  changeSaveStatus: (ticket_Id) => {
+    const reqBody = JSON.stringify({
+      ticket_Id: ticket_Id,
+    })
+    return axiosClient.post(`${process.env.REACT_APP_API_URL}/OCR_Request/changeSavestatus`,
+    reqBody
+    )
+    
+  }
 }
 
 export default ocrRequestApi;

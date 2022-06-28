@@ -24,6 +24,8 @@ import { useState } from "react";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { userSelector } from "aaRedux/app/userSlice";
 import { Base64 } from "js-base64";
+import { SpinnerIcon } from "@chakra-ui/icons";
+import { IoReload } from "react-icons/io5";
 
 export default function ExtrUploadFile(props) {
   const { used, total, extractType, ...rest } = props;
@@ -32,8 +34,12 @@ export default function ExtrUploadFile(props) {
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
 
+  const [spinning, setSpinning] = useState(false);
+
   const [loadingData, setLoadingData] = useState(false);
   const [ocrRequestData, setOcrRequestData] = useState([]);
+
+  const [reload, setReload] = useState(0);
 
   // check role
   const getTokenRole = async (token) => {
@@ -75,13 +81,13 @@ export default function ExtrUploadFile(props) {
     };
     loadData();
     // eslint-disable-next-line
-  }, [loadingData]);
+  }, [loadingData, reload]);
 
   // console.log("ocrReqData", ocrRequestData)
 
   return (
     <Card {...rest} mb="10px" align="center" p="10px" w="100%">
-      <Button onClick={() => getTokenRole(token)}>check role</Button>
+      {/* <Button onClick={() => getTokenRole(token)}>check role</Button> */}
       <Tabs variant="line" colorScheme="purple">
         <TabList>
           <Tab>Bóc tách</Tab>
@@ -100,15 +106,33 @@ export default function ExtrUploadFile(props) {
               minH="50%"
               maxH="50%"
             >
-              <Text
-                color={textColorPrimary}
-                fontWeight="bold"
-                textAlign="start"
-                fontSize="2xl"
-                mt={{ base: "5px", "2xl": "10px" }}
-              >
-                Kết quả bóc tách
-              </Text>
+              <Flex px="25px" justify="space-between" mb="10px" align="center">
+                <Text
+                  color={textColorPrimary}
+                  fontWeight="bold"
+                  textAlign="start"
+                  fontSize="2xl"
+                  mt={{ base: "5px", "2xl": "10px" }}
+                >
+                  Kết quả bóc tách
+                </Text>
+                <Button
+                  isLoading={spinning}
+                  spinnerPlacement="start"
+                  onClick={async () => {
+                    setSpinning(true);
+                    setTimeout(async () => {
+                      setReload(reload + 1);
+                      setSpinning(false);
+                    }, 1000);
+                  }}
+                  colorScheme="whatsapp"
+                  rightIcon={<IoReload />}
+                >
+                  Làm mới
+                </Button>
+              </Flex>
+
               <ExtrResultTable
                 columnsData={columnsDataExtrResultTable}
                 // tableData={extrResultData}
@@ -118,6 +142,8 @@ export default function ExtrUploadFile(props) {
                 //     item.jsonData,
                 //   }
                 // })}
+                loadIndex={reload}
+                reload={(loadIndex) => setReload(loadIndex)}
               />
             </Flex>
           </TabPanel>

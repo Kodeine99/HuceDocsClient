@@ -46,6 +46,7 @@ import {
   ChevronRightIcon,
   ArrowRightIcon,
   ViewOffIcon,
+  DownloadIcon,
 } from "@chakra-ui/icons";
 
 import {
@@ -59,6 +60,11 @@ import IoNewspaperOutline from "../../../../assets/img/docs/documentCheck.png";
 // Custom components
 import Card from "components/card/Card";
 import ExtractResultCard from "../../../../components/card/ExtractResultCard";
+import { useDispatch } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { createDocOcr } from "aaRedux/app/docOcrResultSlice";
+import { toast, ToastContainer } from "react-toastify";
+import { changeSaveStatus } from "aaRedux/app/ocrRequestSlice";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -115,15 +121,20 @@ function fuzzyTextFilterFn(rows, id, filterValue) {
 // Let the table remove the filter if the string is empty
 fuzzyTextFilterFn.autoRemove = (val) => !val;
 export default function ExtrResultTable(props) {
-  const { columnsData, tableData, modalTitle } = props;
+  const { columnsData, tableData, modalTitle, reload, loadIndex } = props;
 
   const [ocrData, setOcrData] = useState([]);
   const [fullData, setFullData] = useState();
   const [verifyLink, setVerifyLink] = useState("");
+  const [reloadData, setReloadData] = useState(0);
+
   //const [loadData, setLoadData] = useState(false);
+  const dispatch = useDispatch();
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
+
+  //console.log("data", data);
 
   // const filterTypes = useMemo(
   //   () => ({
@@ -232,290 +243,499 @@ export default function ExtrResultTable(props) {
     return [date.getFullYear(), month, day].join("-");
   }
 
+  //Get documentType
+  const getDocType = (type) => {
+    let documentType = "";
+    switch (type) {
+      case "GIAY_XAC_NHAN_TOEIC":
+        documentType = "GiayXacNhanToeic";
+        break;
+
+      case "BANG_DIEM_TIENG_ANH":
+        documentType = "BangDiemTiengAnh";
+        break;
+
+      case "BANG_DIEM":
+        documentType = "BangDiem";
+        break;
+
+      case "GIAY_CAM_KET_TRA_NO":
+        documentType = "GiayCamKetTraNo";
+        break;
+      default:
+        break;
+    }
+    return documentType;
+  };
+
+  // Save data: type: loai tai lieu
+  // fullData: lay thoong tin ticket, user create,...
+  const saveOcrData = async (
+    data4Save,
+    fullData,
+    markTableData,
+    type,
+    index
+  ) => {
+    const { ticket_Id, createTime, ocR_Status_Code, username } = fullData;
+    let dataSubmit = {};
+    const documentType = getDocType(type);
+
+    typeof markTableData !== "undefined" && markTableData.length > 0
+      ? (dataSubmit = {
+          ...data4Save,
+          MARK_TABLE: JSON.stringify(markTableData),
+          TICKET_ID: ticket_Id,
+          CREATE_DATE: createTime,
+          STATUS: ocR_Status_Code,
+          USER_CREATE: username,
+          HUCEDOCS_TYPE: documentType,
+        })
+      : (dataSubmit = {
+          ...data4Save,
+          TICKET_ID: ticket_Id,
+          CREATE_DATE: createTime,
+          STATUS: ocR_Status_Code,
+          USER_CREATE: username,
+          HUCEDOCS_TYPE: documentType,
+        });
+
+    // dataSubmit: du lieu cuoi cung mang di luu
+    console.log(dataSubmit);
+    console.log("DocumentType", documentType);
+
+    try {
+      const actionResult = await dispatch(createDocOcr(dataSubmit));
+      const saveResult = await unwrapResult(actionResult);
+      console.log("Result", saveResult);
+      (await saveResult) &&
+        saveResult.isOk === true &&
+        toast.success(`Lưu kết quả bóc tách của ticket ${ticket_Id} thành công`, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+
+      return saveResult;
+    } catch (rejectWithValueOrSerializedError) {
+      toast.error(rejectWithValueOrSerializedError.message, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+
+      return rejectWithValueOrSerializedError;
+    }
+  };
+
+  const changeTicketSaveStatus = async (ticket_Id, isSaved) => {
+    try {
+      const actionResult = await dispatch(changeSaveStatus(ticket_Id, isSaved));
+      const changeResult = await unwrapResult(actionResult);
+      console.log("Change result:", changeResult);
+      reload(loadIndex + 1)
+    } catch (rejectWithValueOrSerializedError) {
+      toast.error(rejectWithValueOrSerializedError.message, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  };
+
+  const handleSaveOcrData = async (fullData, saveData) => {
+    console.log("Full data", fullData)
+    console.log("4Save Data", saveData);
+    await saveData?.map(async (blocksData, index) => {
+      typeof blocksData.DATA !== "undefined" && blocksData.DATA.length > 0
+        ? blocksData.DATA.map(async (data4Save, index) => {
+            // Hanlde input data
+            console.log("block data:", data4Save);
+            let { MARK_TABLE, ECM_ID, ...cloneData } = data4Save;
+            const markTableObj = {};
+            console.log("Clone data", cloneData);
+
+            markTableObj["MARK_TABLE"] = data4Save["MARK_TABLE"];
+            const markTableData = markTableObj?.MARK_TABLE;
+            console.log("markTableData:", markTableData);
+
+            // Save Ocr Data
+            await saveOcrData(
+              data4Save,
+              fullData,
+              markTableData,
+              blocksData.TYPE,
+              index
+            );
+            await changeTicketSaveStatus(fullData?.ticket_Id);
+            // lastResult &&
+            //   lastResult.isOk === true &&
+            //   toast.success(
+            //     `Lưu kết quả bóc tách của file ${index} thành công`,
+            //     {
+            //       position: toast.POSITION.TOP_CENTER,
+            //     }
+            //   );
+          })
+        : toast.error("Có lỗi xảy ra khi lưu kết quả, vui lòng thử lại sau", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+
+      // return lastRes;
+      // await lastRes && console.log("lastRes", lastRes);
+    });
+
+    // try {
+
+    // } catch (error) {
+    //   toast.error("Có lỗi xảy ra khi lưu kết quả, vui lòng thử lại sau", {
+    //     position: toast.POSITION.TOP_CENTER,
+    //   });
+    // }
+    console.log("Saving data...");
+  };
+
+  
+
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   return (
-    <Card
-      direction="column"
-      w="100%"
-      px="0px"
-      //overflowX={{ sm: "scroll", lg: "hidden" }}
-    >
-      {/* <Button onClick={() => }>F5</Button> */}
-      <Table {...getTableProps()} variant="simple" color="gray.500">
-        <Thead>
-          {headerGroups.map((headerGroup, index) => (
-            <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
-              {headerGroup.headers.map((column, index) => (
-                <Th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  pe="10px"
-                  key={index}
-                  borderColor={borderColor}
-                >
-                  <Flex
-                    justify="space-between"
-                    align="center"
-                    fontSize={{ sm: "10px", lg: "12px" }}
-                    color="gray.400"
+    <>
+      <ToastContainer />
+      <Card
+        direction="column"
+        w="100%"
+        px="0px"
+        //overflowX={{ sm: "scroll", lg: "hidden" }}
+      >
+        {/* <Button onClick={() => }>F5</Button> */}
+        <Table {...getTableProps()} variant="simple" color="gray.500">
+          <Thead>
+            {headerGroups.map((headerGroup, index) => (
+              <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                {headerGroup.headers.map((column, index) => (
+                  <Th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    pe="10px"
+                    key={index}
+                    borderColor={borderColor}
                   >
-                    {column.render("Header")}
-                  </Flex>
-                </Th>
-              ))}
+                    <Flex
+                      justify="space-between"
+                      align="center"
+                      fontSize={{ sm: "10px", lg: "12px" }}
+                      color="gray.400"
+                    >
+                      {column.render("Header")}
+                    </Flex>
+                  </Th>
+                ))}
+              </Tr>
+            ))}
+            <Tr>
+              <Th
+                colSpan={visibleColumns.length}
+                style={{
+                  textAlign: "left",
+                }}
+              >
+                <GlobalFilter
+                  preGlobalFilteredRows={preGlobalFilteredRows}
+                  globalFilter={state.globalFilter}
+                  setGlobalFilter={setGlobalFilter}
+                />
+              </Th>
             </Tr>
-          ))}
-          <Tr>
-            <Th
-              colSpan={visibleColumns.length}
-              style={{
-                textAlign: "left",
-              }}
-            >
-              <GlobalFilter
-                preGlobalFilteredRows={preGlobalFilteredRows}
-                globalFilter={state.globalFilter}
-                setGlobalFilter={setGlobalFilter}
-              />
-            </Th>
-          </Tr>
-        </Thead>
-        <Tbody {...getTableBodyProps()}>
-          {page.map((row, index) => {
-            prepareRow(row);
-            return (
-              <Tr {...row.getRowProps()} key={index}>
-                {row.cells.map((cell, index) => {
-                  //console.log("rowData", row.original);
-                  let data = "";
-                  if (cell.column.Header === "TICKET ID") {
-                    data = (
-                      <Flex align="center">
-                        <Text color={textColor} fontSize="md" fontWeight="700">
-                          {cell.value}
-                        </Text>
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === "NGƯỜI TẠO") {
-                    data = (
-                      <Flex align="center">
-                        <Text color={textColor} fontSize="md" fontWeight="700">
-                          {cell.value}
-                        </Text>
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === "TÊN FILE") {
-                    data = (
-                      <Flex align="center">
-                        <Text color={textColor} fontSize="md" fontWeight="700">
-                          {/* {cell.value[0].fileName} */}
-                          {/* {console.log("file name cell:", cell.value)} */}
-                          {typeof row.original.hFiles !== "undefined" &&
-                          row.original.hFiles.length > 0 ? (
-                            row.original.hFiles.map((file, index) => {
-                              return `${file.fileName} \r\n`;
-                            })
-                          ) : (
-                            <Text>Chưa có file</Text>
-                          )}
-                        </Text>
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === "TRẠNG THÁI") {
-                    data = (
-                      <Flex align="center">
-                        <Icon
-                          w="24px"
-                          h="24px"
-                          me="5px"
-                          color={
-                            cell.value === 1
-                              ? "green.500"
-                              : cell.value === 2
-                              ? "grey.500"
-                              : cell.value === 0
-                              ? "red.500"
-                              : null
-                          }
-                          as={
-                            cell.value === 1
-                              ? MdDomainVerification
-                              : cell.value === 2
-                              ? MdOutlinePendingActions
-                              : cell.value === 0
-                              ? MdCancelPresentation
-                              : null
-                          }
-                        />
-                        <Text color={textColor} fontSize="md" fontWeight="700">
-                          {cell.value === 1
-                            ? "Bóc tách thành công"
-                            : cell.value === 2
-                            ? "Đang xử lý"
-                            : cell.value === 0
-                            ? "Đã hủy"
-                            : null}
-                        </Text>
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === "SỐ TRANG") {
-                    data = (
-                      <Flex align="center">
-                        <Text color={textColor} fontSize="md" fontWeight="700">
-                          {cell.value}
-                        </Text>
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === "NGÀY TẠO") {
-                    data = (
-                      <Text color={textColor} fontSize="md" fontWeight="700">
-                        {convertDate(cell.value)}
-                      </Text>
-                    );
-                  } else if (cell.column.Header === "THAO TÁC") {
-                    data =
-                      row.values.ocR_Status_Code === 1 ? (
+          </Thead>
+          <Tbody {...getTableBodyProps()}>
+            {page.map((row, index) => {
+              prepareRow(row);
+              return (
+                <Tr {...row.getRowProps()} key={index}>
+                  {row.cells.map((cell, index) => {
+                    // console.log("rowData", row.original);
+                    let data = "";
+                    if (cell.column.Header === "TICKET ID") {
+                      data = (
                         <Flex align="center">
-                          <IconButton
-                            colorScheme="purple"
-                            icon={<ViewIcon />}
-                            variant="ghost"
-                            onClick={async () => {
-                              setOverlay(<OverlayTwo />);
-                              // await setFullData(row.original);
-                              // console.log("fullData:", fullData);
-                              // await setOcrData(
-                              //   convertToJson(row.original.jsonData)
-                              // );
-                              // console.log("data", ocrData);
-                              // await setVerifyLink(row.original.verifyLink);
-                              // console.log("verifyLink", verifyLink);
-
-                              await handleStateChange(
-                                row.original,
-                                row.original.jsonData,
-                                row.original.verifyLink
-                              );
-                              onOpen();
-                            }}
-                            key={size}
-                          />
-                          {/* {if (cells.)} */}
-                        </Flex>
-                      ) : (
-                        <Flex align="center">
-                          <IconButton
-                            colorScheme="purple"
-                            icon={<ViewOffIcon />}
-                            variant="ghost"
-                            disabled
-                          />
+                          <Text
+                            color={textColor}
+                            fontSize="md"
+                            fontWeight="700"
+                          >
+                            {cell.value}
+                          </Text>
                         </Flex>
                       );
-                  }
+                    } else if (cell.column.Header === "NGƯỜI TẠO") {
+                      data = (
+                        <Flex align="center">
+                          <Text
+                            color={textColor}
+                            fontSize="md"
+                            fontWeight="700"
+                          >
+                            {cell.value}
+                          </Text>
+                        </Flex>
+                      );
+                    } else if (cell.column.Header === "TÊN FILE") {
+                      data = (
+                        <Flex align="center">
+                          <Text
+                            color={textColor}
+                            fontSize="md"
+                            fontWeight="700"
+                          >
+                            {/* {cell.value[0].fileName} */}
+                            {/* {console.log("file name cell:", cell.value)} */}
+                            {typeof row.original.hFiles !== "undefined" &&
+                            row.original.hFiles.length > 0 ? (
+                              row.original.hFiles.map((file, index) => {
+                                return `${file.fileName} \r\n`;
+                              })
+                            ) : (
+                              <Text>Chưa có file</Text>
+                            )}
+                          </Text>
+                        </Flex>
+                      );
+                    } else if (cell.column.Header === "TRẠNG THÁI") {
+                      data = (
+                        <Flex align="center">
+                          <Icon
+                            w="24px"
+                            h="24px"
+                            me="5px"
+                            color={
+                              cell.value === 1
+                                ? "green.500"
+                                : cell.value === 2
+                                ? "grey.500"
+                                : cell.value === 0
+                                ? "red.500"
+                                : null
+                            }
+                            as={
+                              cell.value === 1
+                                ? MdDomainVerification
+                                : cell.value === 2
+                                ? MdOutlinePendingActions
+                                : cell.value === 0
+                                ? MdCancelPresentation
+                                : null
+                            }
+                          />
+                          <Text
+                            color={textColor}
+                            fontSize="md"
+                            fontWeight="700"
+                          >
+                            {cell.value === 1
+                              ? "Bóc tách thành công"
+                              : cell.value === 2
+                              ? "Đang xử lý"
+                              : cell.value === 0
+                              ? "Bóc tách thất bại"
+                              : null}
+                          </Text>
+                        </Flex>
+                      );
+                    } else if (cell.column.Header === "SỐ TRANG") {
+                      data = (
+                        <Flex align="center">
+                          <Text
+                            color={textColor}
+                            fontSize="md"
+                            fontWeight="700"
+                          >
+                            {cell.value}
+                          </Text>
+                        </Flex>
+                      );
+                    } else if (cell.column.Header === "NGÀY TẠO") {
+                      data = (
+                        <Text color={textColor} fontSize="md" fontWeight="700">
+                          {convertDate(cell.value)}
+                        </Text>
+                      );
+                    } else if (cell.column.Header === "THAO TÁC") {
+                      data =
+                        row.values.ocR_Status_Code === 1 ? (
+                          <Flex align="center">
+                            <Tooltip label="Xem kết quả" fontSize="md">
+                              <IconButton
+                                colorScheme="purple"
+                                icon={<ViewIcon />}
+                                variant="ghost"
+                                onClick={async () => {
+                                  setOverlay(<OverlayTwo />);
+                                  // await setFullData(row.original);
+                                  // console.log("fullData:", fullData);
+                                  // await setOcrData(
+                                  //   convertToJson(row.original.jsonData)
+                                  // );
+                                  // console.log("data", ocrData);
+                                  // await setVerifyLink(row.original.verifyLink);
+                                  // console.log("verifyLink", verifyLink);
+
+                                  await handleStateChange(
+                                    row.original,
+                                    row.original.jsonData,
+                                    row.original.verifyLink
+                                  );
+                                  onOpen();
+                                }}
+                                key={size}
+                              />
+                            </Tooltip>
+                            {row.original.isSaved === 0 ? (
+                              <Tooltip
+                                label="Lưu kết quả bóc tách"
+                                fontSize="md"
+                              >
+                                <IconButton
+                                
+                                  colorScheme="purple"
+                                  icon={<DownloadIcon />}
+                                  variant="ghost"
+                                  onClick={async () => {
+                                    // await handleStateChange(
+                                    //   row.original,
+                                    //   row.original.jsonData,
+                                    //   row.original.verifyLink
+                                    // );
+                                    const abc = await handleSaveOcrData(
+                                      row.original,
+                                      convertToJson(row.original.jsonData)
+                                    );
+                                    console.log("abc", abc);
+                                  }}
+                                />
+                              </Tooltip>
+                            ) : (
+                              <IconButton
+                                colorScheme="purple"
+                                icon={<DownloadIcon />}
+                                variant="ghost"
+                                disabled
+                              />
+                            )}
+
+                            {/* {if (cells.)} */}
+                          </Flex>
+                        ) : (
+                          <Flex align="center">
+                            <IconButton
+                              colorScheme="purple"
+                              icon={<ViewOffIcon />}
+                              variant="ghost"
+                              disabled
+                            />
+                          </Flex>
+                        );
+                    }
+                    return (
+                      <Td
+                        {...cell.getCellProps()}
+                        key={index}
+                        fontSize={{ sm: "14px" }}
+                        minW={{ sm: "150px", md: "200px", lg: "auto" }}
+                        borderColor="transparent"
+                      >
+                        {data}
+                      </Td>
+                    );
+                  })}
+                </Tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+        <Modal onClose={onClose} size="full" isOpen={isOpen}>
+          {overlay}
+          <ModalContent>
+            <ModalHeader>{modalTitle}</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <SimpleGrid columns={{ base: 1, md: 1 }} gap="20px">
+                {ocrData?.map((item, index) => {
+                  //console.log("item data", item.DATA);
                   return (
-                    <Td
-                      {...cell.getCellProps()}
-                      key={index}
-                      fontSize={{ sm: "14px" }}
-                      minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                      borderColor="transparent"
-                    >
-                      {data}
-                    </Td>
+                    <>
+                      {typeof item.DATA !== "undefined" &&
+                      item.DATA.length > 0 ? (
+                        item.DATA.map((childItem, index) => {
+                          console.log("child:", childItem);
+                          return (
+                            <ExtractResultCard
+                              key={index}
+                              type={item?.TYPE}
+                              data={childItem}
+                              icon={IoNewspaperOutline}
+                              verifyLink={verifyLink}
+                              fullData={fullData}
+                              forSaveData={item.DATA}
+                            />
+                          );
+                        })
+                      ) : (
+                        <Text>Không có dữ liệu</Text>
+                      )}
+                    </>
                   );
                 })}
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
-      <Modal onClose={onClose} size="full" isOpen={isOpen}>
-        {overlay}
-        <ModalContent>
-          <ModalHeader>{modalTitle}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <SimpleGrid columns={{ base: 1, md: 1 }} gap="20px">
-              {ocrData?.map((item, index) => {
-                return (
-                  <>
-                    {typeof item.DATA !== "undefined" &&
-                    item.DATA.length > 0 ? (
-                      item.DATA.map((childItem, index) => {
-                        return (
-                          <ExtractResultCard
-                            type={item?.TYPE}
-                            data={childItem}
-                            icon={IoNewspaperOutline}
-                            verifyLink={verifyLink}
-                            fullData={fullData}
-                          />
-                        );
-                      })
-                    ) : (
-                      <Text>Không có dữ liệu</Text>
-                    )}
-                  </>
-                );
-              })}
-            </SimpleGrid>
-          </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-      <Flex justifyContent="space-between" m={4} alignItems="center">
-        <Flex>
-          <Tooltip label="First Page">
-            <IconButton
-              onClick={() => gotoPage(0)}
-              isDisabled={!canPreviousPage}
-              icon={<ArrowLeftIcon h={3} w={3} />}
-              mr={4}
-            />
-          </Tooltip>
-          <Tooltip label="Previous Page">
-            <IconButton
-              onClick={previousPage}
-              isDisabled={!canPreviousPage}
-              icon={<ChevronLeftIcon h={6} w={6} />}
-            />
-          </Tooltip>
-        </Flex>
+              </SimpleGrid>
+            </ModalBody>
+            <ModalFooter>
+              <Button onClick={onClose}>Close</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+        <Flex justifyContent="space-between" m={4} alignItems="center">
+          <Flex>
+            <Tooltip label="First Page">
+              <IconButton
+                onClick={() => gotoPage(0)}
+                isDisabled={!canPreviousPage}
+                icon={<ArrowLeftIcon h={3} w={3} />}
+                mr={4}
+              />
+            </Tooltip>
+            <Tooltip label="Previous Page">
+              <IconButton
+                onClick={previousPage}
+                isDisabled={!canPreviousPage}
+                icon={<ChevronLeftIcon h={6} w={6} />}
+              />
+            </Tooltip>
+          </Flex>
 
-        <Flex alignItems="center">
-          <Text flexShrink="0" mr={8}>
-            Page{" "}
-            <Text fontWeight="bold" as="span">
-              {pageIndex + 1}
-            </Text>{" "}
-            of{" "}
-            <Text fontWeight="bold" as="span">
-              {pageOptions.length}
+          <Flex alignItems="center">
+            <Text flexShrink="0" mr={8}>
+              Page{" "}
+              <Text fontWeight="bold" as="span">
+                {pageIndex + 1}
+              </Text>{" "}
+              of{" "}
+              <Text fontWeight="bold" as="span">
+                {pageOptions.length}
+              </Text>
             </Text>
-          </Text>
-          <Text flexShrink="0">Go to page:</Text>{" "}
-          <NumberInput
-            ml={2}
-            mr={8}
-            w={28}
-            min={1}
-            max={pageOptions.length}
-            onChange={(value) => {
-              const page = value ? value - 1 : 0;
-              gotoPage(page);
-            }}
-            defaultValue={pageIndex + 1}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-          {/* <Select
+            <Text flexShrink="0">Go to page:</Text>{" "}
+            <NumberInput
+              ml={2}
+              mr={8}
+              w={28}
+              min={1}
+              max={pageOptions.length}
+              onChange={(value) => {
+                const page = value ? value - 1 : 0;
+                gotoPage(page);
+              }}
+              defaultValue={pageIndex + 1}
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+            {/* <Select
             w={32}
             value={pageSize}
             onChange={(e) => {
@@ -528,26 +748,27 @@ export default function ExtrResultTable(props) {
               </option>
             ))}
           </Select> */}
-        </Flex>
+          </Flex>
 
-        <Flex>
-          <Tooltip label="Next Page">
-            <IconButton
-              onClick={nextPage}
-              isDisabled={!canNextPage}
-              icon={<ChevronRightIcon h={6} w={6} />}
-            />
-          </Tooltip>
-          <Tooltip label="Last Page">
-            <IconButton
-              onClick={() => gotoPage(pageCount - 1)}
-              isDisabled={!canNextPage}
-              icon={<ArrowRightIcon h={3} w={3} />}
-              ml={4}
-            />
-          </Tooltip>
+          <Flex>
+            <Tooltip label="Next Page">
+              <IconButton
+                onClick={nextPage}
+                isDisabled={!canNextPage}
+                icon={<ChevronRightIcon h={6} w={6} />}
+              />
+            </Tooltip>
+            <Tooltip label="Last Page">
+              <IconButton
+                onClick={() => gotoPage(pageCount - 1)}
+                isDisabled={!canNextPage}
+                icon={<ArrowRightIcon h={3} w={3} />}
+                ml={4}
+              />
+            </Tooltip>
+          </Flex>
         </Flex>
-      </Flex>
-    </Card>
+      </Card>
+    </>
   );
 }

@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import Card from "components/card/Card";
 // Assets
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { MdCheckCircle, MdUpload } from "react-icons/md";
 import { ColumnUploadFileTable } from "../variables/columnUploadFileTable";
@@ -34,7 +34,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 function Dropzone(props) {
   const { content, extractType, ...rest } = props;
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+  const { acceptedFiles, getRootProps, getInputProps, inputRef } = useDropzone({
     // accept: {
     //   'application/pdf': [],
     //   'img/tiff': [],
@@ -43,6 +43,8 @@ function Dropzone(props) {
     // },
     maxFiles: 5,
   });
+
+  // handle file upload state
 
   const [exType, setExType] = useState(extractType);
 
@@ -73,6 +75,16 @@ function Dropzone(props) {
     //console.log('removeFile...')
     acceptedFiles.splice(acceptedFiles.indexOf(file), 1);
     setLoadListFile(loadListFile + 1);
+    // setReload(reload + 1)
+  };
+
+  const removeAll = () => {
+    console.log("removeAll...");
+    acceptedFiles.length = 0;
+    acceptedFiles.splice(0, acceptedFiles.length);
+    inputRef.current.value = "";
+    console.log(acceptedFiles);
+    setLoadListFile(loadListFile + 1);
   };
 
   const handleExtraction = async (userId, extractType, files) => {
@@ -91,9 +103,12 @@ function Dropzone(props) {
     console.log("extractionResult", extractionResult);
 
     if (extractionResult?.isOk === true) {
-      toast.success("Đang tiến hành bóc tách, vui lòng chờ kết quả", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+      toast.success(
+        "Đang tiến hành bóc tách, vui lòng chuyển qua tab 'Kết quả' để xem kết quả",
+        {
+          position: toast.POSITION.TOP_CENTER,
+        }
+      );
     } else {
       toast.error("Bóc tách thất bại", {
         position: toast.POSITION.TOP_CENTER,
@@ -120,6 +135,7 @@ function Dropzone(props) {
   //     // </ListItem>
   //   )
   // );
+  // useEffect(() => {}, [reload, acceptedFiles]);
   return (
     <>
       <ToastContainer />
@@ -181,13 +197,27 @@ function Dropzone(props) {
               variant={"outline"}
               colorScheme={"teal"}
               onClick={async () => {
+                console.log("accepted file before", acceptedFiles);
                 await handleExtraction(userInfor?.id, exType, acceptedFiles);
-                acceptedFiles.forEach((file) => {
-                  removeFile(file);
-                });
+
+                removeAll();
+                // acceptedFiles.forEach((file) => {
+                //   removeFile(file);
+                //   console.log(file);
+                // });
+
+                // setReload(reload + 1);
               }}
             >
               Bóc tách
+            </Button>
+            <Button
+            ml={'25px'}
+              variant={"outline"}
+              colorScheme={"red"}
+              onClick={() => removeAll()}
+            >
+              Remove All
             </Button>
           </Box>
         </Flex>

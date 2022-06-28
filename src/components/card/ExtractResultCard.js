@@ -53,7 +53,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 
 function ExtractResultCard(props) {
   const dispatch = useDispatch();
-  const { type, data, icon, verifyLink, fullData } = props;
+  const { type, data, icon, verifyLink, fullData, forSaveData } = props;
   let boxBg = useColorModeValue("white !important", "#111c44 !important");
   let secondaryBg = useColorModeValue("gray.300", "whiteAlpha.100");
   let thirdBg = useColorModeValue("gray.100", "whiteAlpha.100");
@@ -65,8 +65,10 @@ function ExtractResultCard(props) {
   console.log("ocrData:", data);
   console.log("verifyLink:", verifyLink);
   console.log("fullData:", fullData);
+  console.log("4SaveData:", forSaveData);
 
   let { MARK_TABLE, ECM_ID, ...cloneData } = data;
+  console.log("cloneData2",cloneData)
   const markTableObj = {};
 
   markTableObj["MARK_TABLE"] = data["MARK_TABLE"];
@@ -257,7 +259,7 @@ function ExtractResultCard(props) {
           )}
         </Box>
         <Flex justifyContent={"space-between"} mt={"15px"}>
-          {fullData?.ocR_Status_Code === 1 ? (
+          {/* {fullData?.ocR_Status_Code === 1 ? (
             <Button
               colorScheme="whatsapp"
               rightIcon={<DownloadIcon />}
@@ -268,7 +270,7 @@ function ExtractResultCard(props) {
           ) : (
             <></>
           )}
-          <Spacer />
+          <Spacer /> */}
           <Flex mt="15px" direction={"row"}>
             <Link href={verifyLink} display={"inherit"}>
               <Text

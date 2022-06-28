@@ -124,6 +124,8 @@ export const addNewUser = createAsyncThunk(
   }
 )
 
+
+
 // Create the slice
 const userSlice = createSlice({
   name: "user",

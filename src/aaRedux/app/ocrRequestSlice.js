@@ -47,6 +47,17 @@ export const userGetAll = createAsyncThunk(
   }
 );
 
+export const changeSaveStatus = createAsyncThunk(
+  "OCR_Request/changeSaveStatus",
+  async (
+    ticket_Id,
+  ) => {
+    const response = await ocrRequestApi.changeSaveStatus(ticket_Id);
+    console.log(response);
+    return response;
+  }
+)
+
 
 const ocrRequestSlice = createSlice({
   name: "ocrRequest",
