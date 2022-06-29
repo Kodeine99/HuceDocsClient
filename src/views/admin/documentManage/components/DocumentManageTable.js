@@ -113,6 +113,8 @@ export default function DocumentManageTable(props) {
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
 
+  // console.log("tableData", tableData)
+
   const filterTypes = useMemo(
     () => ({
       // Add a new fuzzyTextFilterFn filter type.
@@ -191,6 +193,13 @@ export default function DocumentManageTable(props) {
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
+
+  function convertDate(str) {
+    let date = new Date(str),
+      month = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), month, day].join("-");
+  }
   return (
     <Card
       direction="column"
@@ -198,16 +207,7 @@ export default function DocumentManageTable(props) {
       px="0px"
       overflowX={{ sm: "scroll", lg: "hidden" }}
     >
-      <Flex px="25px" justify="space-between" mb="20px" align="center">
-        <Text
-          color={textColor}
-          fontSize="22px"
-          fontWeight="700"
-          lineHeight="100%"
-        >
-          Quản lý tài liệu bóc tách
-        </Text>
-      </Flex>
+      
       <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
         {/* Table Header */}
         <Thead>
@@ -251,7 +251,7 @@ export default function DocumentManageTable(props) {
         <Tbody {...getTableBodyProps()}>
           {page.map((row, indexx) => {
             prepareRow(row);
-
+            console.log("dasd", row.original)
             return (
               <Tr {...row.getRowProps()} key={indexx}>
                 {row.cells.map((cell, index) => {
@@ -287,13 +287,13 @@ export default function DocumentManageTable(props) {
                   } else if (cell.column.Header === "NGÀY TẠO") {
                     data = (
                       <Text color={textColor} fontSize="md" fontWeight="700">
-                        {cell.value}
+                        {convertDate(cell.value)}
                       </Text>
                     );
                   } else if (cell.column.Header === "NGÀY CẬP NHẬT") {
                     data = (
                       <Text color={textColor} fontSize="md" fontWeight="700">
-                        {cell.value}
+                        {convertDate(cell.value)}
                       </Text>
                     );
                   } else if (cell.column.Header === "TRẠNG THÁI") {

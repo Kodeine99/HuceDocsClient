@@ -17,6 +17,21 @@ const docOcrResultApi = {
       )
       
   },
+
+  userGetAll: (reqBody, documentType) => {
+    const requestBody = JSON.stringify(reqBody);
+    return axiosClient.post(
+      `${process.env.REACT_APP_API_URL}/${documentType}/search`,
+      requestBody
+    )
+  },
+
+  adminGetAll: (reqBody, documentType) => {
+    return axiosClient.post(
+      `${process.env.REACT_APP_API_URL}/${documentType}/search-admin`,
+      reqBody
+    )
+  }
 }
 
 export default docOcrResultApi;

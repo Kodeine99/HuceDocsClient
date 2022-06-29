@@ -47,12 +47,14 @@ export default function EditDocumentModal(props) {
   //console.log("initVL:",initialValues);
 
   // setup Yup
-  const yupConfig = Object.keys(cloneDATA).map((key) => ({
-    [key]: Yup.string().required("This field is require."),
-  }));
-  const yupCopnfigToArr = arrayToObject(yupConfig);
+  // const yupConfig = Object.keys(cloneDATA).map((key) => ({
+  //   [key]: Yup.string().required("This field is require."),
+  // }));
 
-  const validationSchema = Yup.object().shape({ ...yupCopnfigToArr });
+
+  // const yupCopnfigToArr = arrayToObject(yupConfig);
+
+  // const validationSchema = Yup.object().shape({ ...yupCopnfigToArr });
 
   const dataKeyValue = Object.entries(cloneDATA).map(([key, value]) => ({
     key,
@@ -72,7 +74,7 @@ export default function EditDocumentModal(props) {
           <SimpleGrid columns={1} gap="20px">
             <Formik
               initialValues={initialValues}
-              validationSchema={validationSchema}
+              // validationSchema={validationSchema}
               // onSubmit = {handleSubmit}
               onSubmit={(values, actions) => {
                 setTimeout(() => {
@@ -99,10 +101,11 @@ export default function EditDocumentModal(props) {
                         <Form>
                           {dataKeyValue.map((dataItem, key) => {
                             return (
-                              <SimpleGrid columns={2} gap={"10px"}>
+                              <SimpleGrid columns={2} gap={"10px"} key={key}                                 key = {key}
+                              >
                                 <FastField
                                   component={DocumentField}
-                                  label={dataItem.key}
+                                  label={dataItem.key.toUpperCase()}
                                   name={dataItem.key}
                                   type={"text"}
                                   placeholder={dataItem.key}

@@ -6,27 +6,27 @@ export const columnsDataDocTable = [
   // },
   {
     Header: "TICKET ID",
-    accessor: "TICKET_ID",
+    accessor: "tickeT_ID",
   },
   {
     Header: "TYPE",
-    accessor: "HUCEDOCS_TYPE",
+    accessor: "hucedocS_TYPE",
   },
   {
     Header: "NGƯỜI TẠO",
-    accessor: "USER_CREATE",
+    accessor: "useR_CREATE",
   },
   {
     Header: "NGÀY TẠO",
-    accessor: "CREATE_DATE",
+    accessor: "creatE_DATE",
   },
   {
     Header: "NGÀY CẬP NHẬT",
-    accessor: "UPDATE_DATE",
+    accessor: "updatE_DATE",
   },
   {
     Header: "TRẠNG THÁI",
-    accessor: "STATUS",
+    accessor: "status",
   },
   {
     Header: "THAO TÁC",

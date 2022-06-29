@@ -81,7 +81,7 @@ export function SidebarLinks(props) {
         route.layout === "/extraction"
       ) {
         return (
-          <NavLink to={route.layout + route.path}>
+          <NavLink to={route.layout + route.path} key={index}>
             {route.icon ? (
               <Box>
                 <HStack
