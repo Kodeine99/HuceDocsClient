@@ -3,10 +3,7 @@ import {
   Icon,
   IconButton,
   Input,
-  Modal,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
+
   ModalOverlay,
   NumberDecrementStepper,
   NumberIncrementStepper,
@@ -37,7 +34,6 @@ import {
 
 // Custom components
 import Card from "components/card/Card";
-import Menu from "components/menu/MainMenu";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -251,7 +247,7 @@ export default function DocumentManageTable(props) {
         <Tbody {...getTableBodyProps()}>
           {page.map((row, indexx) => {
             prepareRow(row);
-            console.log("dasd", row.original)
+            // console.log("dasd", row.original)
             return (
               <Tr {...row.getRowProps()} key={indexx}>
                 {row.cells.map((cell, index) => {

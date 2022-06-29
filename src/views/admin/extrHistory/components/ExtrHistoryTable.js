@@ -219,7 +219,7 @@ export default function ExtrHistoryTable(props) {
     //console.log("fullData:", fullData);
 
     await setOcrData(convertToJson(ocrData));
-    //console.log("ocrData:", ocrData);
+    // console.log("ocrData:", ocrData);
 
     await setVerifyLink(verifyLink);
     //console.log("verifyLink:", verifyLink);
@@ -287,7 +287,8 @@ export default function ExtrHistoryTable(props) {
             return (
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
-                  //console.log("rowData", row.original);
+                  // console.log("rowData", row.original);
+
                   let data = "";
                   if (cell.column.Header === "TICKET ID") {
                     data = (
@@ -391,13 +392,13 @@ export default function ExtrHistoryTable(props) {
                               // console.log("data", ocrData);
                               // await setVerifyLink(row.original.verifyLink);
                               // console.log("verifyLink", verifyLink);
-
                               await handleStateChange(
                                 row.original,
                                 row.original.jsonData,
                                 row.original.verifyLink
                               );
                               onOpen();
+
                             }}
                             key={size}
                           />
@@ -444,6 +445,7 @@ export default function ExtrHistoryTable(props) {
                     {typeof item.DATA !== "undefined" &&
                     item.DATA.length > 0 ? (
                       item.DATA.map((childItem, index) => {
+                        console.log("childItem",childItem)
                         return (
                           <ExtractResultCard
                             type={item?.TYPE}

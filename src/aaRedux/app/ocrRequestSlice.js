@@ -19,7 +19,7 @@ export const adminGetAll = createAsyncThunk(
       toDate,
       ocR_Status_Code
     );
-    console.log(response)
+    // console.log(response)
     return response;
   }
 );
@@ -42,7 +42,7 @@ export const userGetAll = createAsyncThunk(
       toDate,
       ocR_Status_Code
     );
-    console.log(response)
+    // console.log(response)
     return response;
   }
 );
@@ -53,7 +53,7 @@ export const changeSaveStatus = createAsyncThunk(
     ticket_Id,
   ) => {
     const response = await ocrRequestApi.changeSaveStatus(ticket_Id);
-    console.log(response);
+    // console.log(response);
     return response;
   }
 )

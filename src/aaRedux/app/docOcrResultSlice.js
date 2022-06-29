@@ -5,8 +5,8 @@ export const createDocOcr = createAsyncThunk(
   "docOcrResult/create",
   async (data) => {
      const docType = data?.HUCEDOCS_TYPE;
-    console.log("data", data)
-    console.log("type", docType)
+    // console.log("data", data)
+    // console.log("type", docType)
     return await docOcrResultApi.create(data, docType);
   }
 )
@@ -21,8 +21,8 @@ export const updateDocOcr = createAsyncThunk(
 export const userGetAll = createAsyncThunk(
   "docOcrResult/userGetAll",
   async (values) => {
-    console.log("reqBody", values?.payload);
-    console.log("docType", values?.docType);
+    // console.log("reqBody", values?.payload);
+    // console.log("docType", values?.docType);
     return await docOcrResultApi.userGetAll(values.payload, values.docType)
   }
 )
@@ -30,8 +30,8 @@ export const userGetAll = createAsyncThunk(
 export const adminGetAll = createAsyncThunk(
   "docOcrResult/adminGetAll",
   async (values) => {
-    console.log("reqBody", values?.payload);
-    console.log("docType", values?.docType);
+    // console.log("reqBody", values?.payload);
+    // console.log("docType", values?.docType);
     return await docOcrResultApi.adminGetAll(values.payload, values.docType)
   }
 )

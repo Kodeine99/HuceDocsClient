@@ -138,7 +138,7 @@ export default function AdminNavbar(props) {
                 {brandText}
               </BreadcrumbLink>
             </BreadcrumbItem> */}
-            {typeof brandText !== "undefined" &&
+            {typeof(brandText) !== "undefined" &&
               brandText.length > 0 &&
               brandText.map((text, index) => (
                 <BreadcrumbItem color={secondaryText} fontSize="sm" key={index}>

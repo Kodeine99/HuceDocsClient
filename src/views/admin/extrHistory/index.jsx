@@ -49,7 +49,7 @@ export default function ExtrHistory() {
   // check role
   const getRoleByToken = (token) => {
     const role = token && JSON.parse(Base64.decode(token.split(".")[1])).typ;
-    console.log("Role", role);
+    // console.log("Role", role);
     return role;
   };
 
@@ -66,8 +66,10 @@ export default function ExtrHistory() {
       const apiResult = await unwrapResult(actionResult);
       apiResult?.isOk === true
         ? setOcrRequestData(apiResult.result)
-        : console.log("loi");
-      console.log("Api Result", apiResult);
+        : toast.error("Có lỗi khi tải dữ liệu",{
+          position: toast.POSITION.BOTTOM_CENTER
+        })
+      // console.log("Api Result", apiResult);
     } catch (rejectedValueOrSerializedError) {
       toast.error("Có lỗi khi tải dữ liệu, vui lòng thử lại sau", {
         position: toast.POSITION.BOTTOM_CENTER,

@@ -182,12 +182,13 @@ function Dropzone(props) {
 
           <Box mt={"20px"} maxH="100%">
             {acceptedFiles?.map((file, index) => (
+              
               <Project
                 key={index}
                 boxShadow={cardShadow}
                 mb="20px"
                 //image={Project1}
-                fileExtension="1"
+                fileExtension={file.type}
                 filename={file.name}
                 fileLength={bytesToSize(file.size)}
                 onClick={removeFile(file)}

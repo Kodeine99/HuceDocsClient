@@ -230,7 +230,7 @@ export default function ExtrResultTable(props) {
     //console.log("fullData:", fullData);
 
     await setOcrData(convertToJson(ocrData));
-    //console.log("ocrData:", ocrData);
+    console.log("ocrData:", ocrData);
 
     await setVerifyLink(verifyLink);
     //console.log("verifyLink:", verifyLink);

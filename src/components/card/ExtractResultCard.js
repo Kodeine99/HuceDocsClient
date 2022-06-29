@@ -1,33 +1,19 @@
 import {
   Box,
-  chakra,
-  Container,
-  Stack,
+
   Text,
   Image,
   Flex,
-  VStack,
-  Button,
-  Heading,
-  SimpleGrid,
-  StackDivider,
+
   useColorModeValue,
-  VisuallyHidden,
   List,
   ListItem,
-  Avatar,
-  AvatarGroup,
-  Icon,
   Link,
-  Spacer,
   TableContainer,
-  TableCaption,
   Thead,
   Tr,
-  Th,
   Tbody,
   Td,
-  Tfoot,
   Table,
 } from "@chakra-ui/react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
@@ -37,15 +23,8 @@ import React from "react";
 // Chakra imports
 import {} from "@chakra-ui/react";
 // Assets
-import { MdTimer, MdVideoLibrary } from "react-icons/md";
-import { IoNewspaperOutline } from "react-icons/io5";
-import { DownloadIcon, ExternalLinkIcon } from "@chakra-ui/icons";
-import ExtrResultTable from "views/admin/extractDetails/components/ExtrResultTable";
-import { columnsDataExtrResultTable } from "views/admin/extractDetails/variables/columnsDataExtrResultTable";
-import ColumnsTable from "views/admin/dataTables/components/ColumnsTable";
-import tableDataColumns from "../../views/admin/dataTables/variables/tableDataColumns.json";
-import CustomEditable from "components/husky/CustomEditable";
-import TableReal from "components/husky/TableReal";
+import {  MdVideoLibrary } from "react-icons/md";
+import {  ExternalLinkIcon } from "@chakra-ui/icons";
 import { createDocOcr } from "aaRedux/app/docOcrResultSlice";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
@@ -238,7 +217,7 @@ function ExtractResultCard(props) {
                   <Tbody>
                     {markTableData.map((row, index) => {
                       return (
-                        <Tr>
+                        <Tr key={index}>
                           {Object.entries(row)
                             .map(([key, value]) => ({
                               key,

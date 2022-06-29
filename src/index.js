@@ -22,6 +22,8 @@ import NormalRoute from "routes/NormalRoute";
 import { useCookies } from "react-cookie";
 import { userSelector } from "aaRedux/app/userSlice";
 import App from "App";
+
+
 // import { persistStore } from "redux-persist";
 // import { PersistGate } from "redux-persist/integration/react";
 
@@ -35,7 +37,7 @@ ReactDOM.render(
       <Provider store={store}>
         {/* <PersistGate loading={null} persistor={persistor}> */}
           <RoutesProvider>
-            <App></App>
+            <App ></App>
           </RoutesProvider>
         {/* </PersistGate> */}
       </Provider>

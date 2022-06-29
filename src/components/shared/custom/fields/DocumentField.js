@@ -57,7 +57,7 @@ function DocumentField(props) {
           <FormLabel
             mt="5px"
             ms="4px"
-            fontSize="lg"
+            fontSize="md"
             fontWeight="500"
             color={textColor}
             //isRequired={true}
@@ -73,11 +73,11 @@ function DocumentField(props) {
             //isRequired={true}
             ms={{ base: "0px", md: "0px" }}
             {...field}
-            fontSize="lg"
+            fontSize="md"
             placeholder={placeholder}
             color={colorMode === "light" ? "gray.700" : "white"}
             //mb="24px"
-            size="lg"
+            size="md"
             type={type}
             value={value}
             isDisabled={disabled}

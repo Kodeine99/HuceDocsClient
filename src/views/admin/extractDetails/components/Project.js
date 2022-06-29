@@ -23,6 +23,7 @@ export default function Project(props) {
   const textColorSecondary = "gray.400";
   const brandColor = useColorModeValue("brand.500", "white");
   const bg = useColorModeValue("white", "navy.700");
+
   return (
     <Card bg={bg} {...rest} p="10px">
       <Flex align="center" direction={{ base: "column", md: "row" }}>
@@ -50,7 +51,7 @@ export default function Project(props) {
             Định dạng:
             <Text marginX={"4px"} display={"inline-block"} color={brandColor}>
               {" "}
-              .pdf{" "}
+              {fileExtension}{" "}
             </Text>
             • dung lượng:{" "}
             <Text

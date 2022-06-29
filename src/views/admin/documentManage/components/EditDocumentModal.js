@@ -1,6 +1,5 @@
 import {
   Button,
-  FormControl,
   Grid,
   GridItem,
   Modal,
@@ -9,18 +8,16 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  ModalOverlay,
   SimpleGrid,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import Card from "components/card/Card";
-import ExtractResultCard from "components/card/ExtractResultCard";
 import DocumentField from "../../../../components/shared/custom/fields/DocumentField";
-import ProfileField from "../../../../components/shared/custom/fields/ProfileField";
 import { FastField, Form, Formik } from "formik";
 import { useState } from "react";
 import * as Yup from "yup";
+import BasicEditTable from "components/shared/custom/basicTable/BasicEditTable";
 
 export default function EditDocumentModal(props) {
   const { isOpen, onClose, data, modalTitle, overlay, size } = props;
@@ -31,26 +28,62 @@ export default function EditDocumentModal(props) {
       return obj;
     }, {});
   };
-  //console.log(data)
+
+  const convertToJson = (data) => {
+    //console.log("old Data:", data);
+    let dataAfterReplace = JSON.parse(
+      data
+        .replace('\\"', '"')
+        .replace('"[', "[")
+        .replace(']"', "]")
+        .replace("\\", "")
+        .split("\\")
+        .join("")
+    );
+    //console.log("new Data:", dataAfterReplace);
+    //console.log("js",js);
+    return dataAfterReplace;
+  };
+  console.log("Data", data);
   let {
-    ID,
-    TICKET_ID,
-    HUCEDOCS_TYPE,
-    USER_CREATE,
-    CREATE_DATE,
-    UPDATE_DATE,
-    STATUS,
+    id,
+    tickeT_ID,
+    hucedocS_TYPE,
+    useR_CREATE,
+    creatE_DATE,
+    updatE_DATE,
+    status,
     ...cloneDATA
   } = data;
   //console.log("CloneData:", cloneDATA);
   const initialValues = { ...cloneDATA };
-  //console.log("initVL:",initialValues);
+  console.log("initVL:", initialValues);
 
+  let { marK_TABLE, ...cloneData } = data;
+  console.log("cloneData2", cloneData);
+  console.log("marK_TABLE", marK_TABLE);
+
+  // const stringMarkTable = JSON.stringify(marK_TABLE);
+  // console.log("stringMarkTable",stringMarkTable)
+
+  // const markTableData = convertToJson(stringMarkTable);
+
+  // console.log("markTableData",markTableData)
+  // const markTableObj = {};
+
+  // markTableObj["marK_TABLE"] = data["marK_TABLE"];
+  // const markTableData = markTableObj?.marK_TABLE;
+  // console.log("markTableData:", markTableData);
+
+  // const abc = JSON.stringify(markTableData);
+  // console.log("abc", abc)
+
+  // const {marK_TABLE} = data ;
+  // console.log("marK_TABLE", marK_TABLE)
   // setup Yup
   // const yupConfig = Object.keys(cloneDATA).map((key) => ({
   //   [key]: Yup.string().required("This field is require."),
   // }));
-
 
   // const yupCopnfigToArr = arrayToObject(yupConfig);
 
@@ -60,7 +93,7 @@ export default function EditDocumentModal(props) {
     key,
     value,
   }));
-  //console.log("dataKV:", dataKeyValue);
+  console.log("dataKV:", dataKeyValue);
 
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
 
@@ -68,7 +101,7 @@ export default function EditDocumentModal(props) {
     <Modal onClose={onClose} size={size} isOpen={isOpen}>
       {overlay}
       <ModalContent>
-        <ModalHeader>{modalTitle}</ModalHeader>
+        <ModalHeader>{hucedocS_TYPE}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <SimpleGrid columns={1} gap="20px">
@@ -100,21 +133,31 @@ export default function EditDocumentModal(props) {
                         </Text>
                         <Form>
                           {dataKeyValue.map((dataItem, key) => {
-                            return (
-                              <SimpleGrid columns={2} gap={"10px"} key={key}                                 key = {key}
-                              >
-                                <FastField
-                                  component={DocumentField}
-                                  label={dataItem.key.toUpperCase()}
-                                  name={dataItem.key}
-                                  type={"text"}
-                                  placeholder={dataItem.key}
-                                  defaultValue={dataItem.value}
-                                  {...formikProps.getFieldProps(dataItem.key)}
-                                  // {...formikProps.getFieldProps("Username")}
-                                />
-                              </SimpleGrid>
-                            );
+                            // console.log("dataKeyValue",dataKeyValue)
+                            if (dataItem.key !== "marK_TABLE") {
+                              return (
+                                <SimpleGrid columns={2} gap={"10px"} key={key}>
+                                  <FastField
+                                    component={DocumentField}
+                                    label={dataItem.key.toUpperCase()}
+                                    name={dataItem.key}
+                                    type={"text"}
+                                    placeholder={dataItem.key}
+                                    defaultValue={dataItem.value}
+                                    {...formikProps.getFieldProps(dataItem.key)}
+                                    // {...formikProps.getFieldProps("Username")}
+                                  />
+                                </SimpleGrid>
+                              );
+                            } else {
+                              return (
+                                <>
+                                  <BasicEditTable
+                                    markTabledata={dataItem.value}
+                                  />
+                                </>
+                              );
+                            }
                           })}
                         </Form>
                       </Card>
@@ -126,7 +169,9 @@ export default function EditDocumentModal(props) {
           </SimpleGrid>
         </ModalBody>
         <ModalFooter>
-          <Button mr="20px" colorScheme={'whatsapp'} onClick={onClose}>Lưu</Button>
+          <Button mr="20px" colorScheme={"whatsapp"} onClick={onClose}>
+            Lưu
+          </Button>
           <Button onClick={onClose}>Close</Button>
         </ModalFooter>
       </ModalContent>

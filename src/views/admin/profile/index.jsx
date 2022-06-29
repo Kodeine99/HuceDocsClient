@@ -75,7 +75,7 @@ export default function Overview(props) {
   //   Gender: 1
   // };
 
-  console.log("userIn4", userInfor);
+  // console.log("userIn4", userInfor);
 
   const [initialValues, setInitialValues] = useState({
     address: "",
@@ -152,9 +152,9 @@ export default function Overview(props) {
     //console.log(newValues);
     const action = await updateUserInfo(newValues);
     const actionResult = await dispatch(action);
-    console.log("AcResult", actionResult);
+    // console.log("AcResult", actionResult);
     const updateResult = await unwrapResult(actionResult);
-    console.log("UpdateResult", updateResult);
+    // console.log("UpdateResult", updateResult);
     updateResult?.isOk === true
       ? toast.success("Cập nhật thành công", {
           position: toast.POSITION.TOP_CENTER,

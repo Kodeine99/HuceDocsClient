@@ -56,14 +56,14 @@ export default function DocumentManage() {
     return role;
   };
 
-  console.log("InitValue", initialValues);
-  console.log("InitFilter", initFilter);
-  console.log("Token", token);
-  const newValues = {
-    ...initialValues,
-    payload: initFilter,
-  };
-  console.log(newValues);
+  // console.log("InitValue", initialValues);
+  // console.log("InitFilter", initFilter);
+  // console.log("Token", token);
+  // const newValues = {
+  //   ...initialValues,
+  //   payload: initFilter,
+  // };
+  // console.log(newValues);
 
   const loadDocOcrData = async () => {
     const newValues = {
@@ -72,9 +72,9 @@ export default function DocumentManage() {
     };
     const role = getTokenRole(token);
     // console.log("Role", role);
-    console.log("new value:", newValues);
+    // console.log("new value:", newValues);
     try {
-      console.log("new Values", newValues);
+      // console.log("new Values", newValues);
       let actionResult = null;
 
       role && role === "Admin"
@@ -83,7 +83,7 @@ export default function DocumentManage() {
       // const actionResult = await dispatch(userGetAll(initFilter, docType));
 
       const apiResult = await unwrapResult(actionResult);
-      console.log("Api result", apiResult);
+      // console.log("Api result", apiResult);
 
       apiResult.isOk === true && apiResult.result && setTableData(apiResult.result);
     } catch (error) {
@@ -118,28 +118,14 @@ export default function DocumentManage() {
           >
             Quản lý tài liệu bóc tách
           </Text>
-          {/* <Button
-            // isLoading={spinning}
-            // spinnerPlacement="start"
-            onClick={async () => {
-              // setSpinning(true);
-              setTimeout(async () => {
-                // setReload(reload + 1);
-                // setSpinning(false);
-              }, 1000);
-            }}
-            colorScheme="whatsapp"
-            rightIcon={<IoReload />}
-          >
-            Làm mới
-          </Button> */}
+          
           <Formik
             enableReinitialize={true}
             initialValues={initialValues}
             onSubmit={
               async (values, actions) => {
                 await setInitialValues({docType: values.docType})
-                console.log("Init after set", initialValues)
+                // console.log("Init after set", initialValues)
 
               // loadDocOcrData(values, token);
               loadDocOcrData();
