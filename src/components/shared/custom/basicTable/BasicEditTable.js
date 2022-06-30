@@ -167,7 +167,7 @@ function EditTable({ columns, data, updateMyData, skipPageReset, ...props }) {
 }
 
 function BasicEditTable(props) {
-  const { markTableData, documentId, documentType, fieldValues } = props;
+  const { markTableData, documentId, documentType, fieldValues, reload, loadIndex } = props;
 
   const dispatch = useDispatch();
   // Data get tu Db cos type === "string"
@@ -279,32 +279,35 @@ function BasicEditTable(props) {
 
     console.log("dataSubmited", dataSubmited);
 
-    // try {
-    //   const actionResult = await dispatch(
-    //     updateDocOcr(dataSubmited)
-    //   );
-    //   const updateResult = await unwrapResult(actionResult);
+    try {
+      const actionResult = await dispatch(
+        updateDocOcr(dataSubmited)
+      );
+      const updateResult = await unwrapResult(actionResult);
 
-    //   console.log("updateResult", updateResult);
+      console.log("updateResult", updateResult);
+      // reload(loadIndex + 1)
 
-    //   (await updateResult) &&
-    //     updateResult.isOh === true &&
-    //     toast.success("Cập nhật thông tin thành công", {
-    //       position: toast.POSITION.TOP_CENTER,
-    //     });
-    //   return updateResult;
-    // } catch (rejectWithValueOrSerializedError) {
-    //   toast.error("Cập nhật thất bại", {
-    //     position: toast.POSITION.TOP_CENTER,
-    //   });
+      (await updateResult) &&
+        updateResult?.isOk === true &&
+        toast.success("Cập nhật thông tin thành công", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      // return updateResult;
+    } catch (rejectWithValueOrSerializedError) {
+      toast.error("Cập nhật thất bại", {
+        position: toast.POSITION.TOP_CENTER,
+      });
 
-    //   return rejectWithValueOrSerializedError;
-    // }
+      // return rejectWithValueOrSerializedError;
+    }
+    
   };
 
   return (
     // <Styles>
     <>
+    <ToastContainer/>
       <EditTable
         // onClick = {resetData}
         columns={columns}

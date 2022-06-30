@@ -21,7 +21,16 @@ import * as Yup from "yup";
 import BasicEditTable from "components/shared/custom/basicTable/BasicEditTable";
 
 export default function EditDocumentModal(props) {
-  const { isOpen, onClose, data, modalTitle, overlay, size } = props;
+  const {
+    isOpen,
+    onClose,
+    data,
+    modalTitle,
+    overlay,
+    size,
+    reload,
+    loadIndex,
+  } = props;
   const arrayToObject = (arr) => {
     return arr.reduce((obj, item) => {
       const key = Object.keys(item)[0];
@@ -174,6 +183,8 @@ export default function EditDocumentModal(props) {
                                       {...formikProps.getFieldProps(
                                         dataItem.key
                                       )}
+                                      loadIndex={reload}
+                                      reload={(loadIndex) => reload(loadIndex)}
                                     />
                                   </>
                                 );
@@ -197,7 +208,14 @@ export default function EditDocumentModal(props) {
           </SimpleGrid>
         </ModalBody>
         <ModalFooter>
-          <Button onClick={onClose}>Close</Button>
+          <Button
+            onClick={() => {
+              onClose();
+              reload(loadIndex + 1);
+            }}
+          >
+            Close
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

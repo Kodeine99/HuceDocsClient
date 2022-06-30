@@ -111,6 +111,9 @@ export default function DocumentManageTable(props) {
 
   // console.log("tableData", tableData)
 
+  const [loadingData, setLoadingData] = useState(false);
+  const [reload, setReload] = useState(0);
+
   const filterTypes = useMemo(
     () => ({
       // Add a new fuzzyTextFilterFn filter type.
@@ -393,6 +396,8 @@ export default function DocumentManageTable(props) {
           overlay={overlay}
           data={rowData}
           size={"full"}
+          loadIndex={reload}
+          reload={(loadIndex) => setReload(loadIndex)}
         />
       ) : (
         <NotifyModal

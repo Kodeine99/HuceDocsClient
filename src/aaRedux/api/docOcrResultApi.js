@@ -11,7 +11,8 @@ const docOcrResultApi = {
     )
   },
 
-  update: (data, documentType) => {
+  update: (data) => {
+    const documentType  = data?.documentType
       return axiosClient.post(
         `${process.env.REACT_APP_API_URL}/${documentType}/update`,
         data
