@@ -1,5 +1,6 @@
 import {
   Button,
+  FormControl,
   Grid,
   GridItem,
   Modal,
@@ -101,7 +102,9 @@ export default function EditDocumentModal(props) {
     <Modal onClose={onClose} size={size} isOpen={isOpen}>
       {overlay}
       <ModalContent>
-        <ModalHeader>{hucedocS_TYPE}</ModalHeader>
+        <ModalHeader>
+          {hucedocS_TYPE} - Id: {data.id}
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <SimpleGrid columns={1} gap="20px">
@@ -112,6 +115,7 @@ export default function EditDocumentModal(props) {
               onSubmit={(values, actions) => {
                 setTimeout(() => {
                   console.log("Submitted");
+                  console.log("ValueSubmit:", values);
                   actions.setSubmitting(false);
                 }, 1000);
               }}
@@ -132,33 +136,57 @@ export default function EditDocumentModal(props) {
                           {modalTitle}
                         </Text>
                         <Form>
-                          {dataKeyValue.map((dataItem, key) => {
-                            // console.log("dataKeyValue",dataKeyValue)
-                            if (dataItem.key !== "marK_TABLE") {
-                              return (
-                                <SimpleGrid columns={2} gap={"10px"} key={key}>
-                                  <FastField
-                                    component={DocumentField}
-                                    label={dataItem.key.toUpperCase()}
-                                    name={dataItem.key}
-                                    type={"text"}
-                                    placeholder={dataItem.key}
-                                    defaultValue={dataItem.value}
-                                    {...formikProps.getFieldProps(dataItem.key)}
-                                    // {...formikProps.getFieldProps("Username")}
-                                  />
-                                </SimpleGrid>
-                              );
-                            } else {
-                              return (
-                                <>
-                                  <BasicEditTable
-                                    markTabledata={dataItem.value}
-                                  />
-                                </>
-                              );
-                            }
-                          })}
+                          <FormControl>
+                            {dataKeyValue.map((dataItem, key) => {
+                              // console.log("dataKeyValue",dataKeyValue)
+                              if (dataItem.key !== "marK_TABLE") {
+                                console.log("dataItemNormal", dataItem);
+                                return (
+                                  <SimpleGrid
+                                    columns={2}
+                                    gap={"10px"}
+                                    key={key}
+                                  >
+                                    <FastField
+                                      component={DocumentField}
+                                      label={dataItem.key.toUpperCase()}
+                                      name={dataItem.key}
+                                      type={"text"}
+                                      placeholder={dataItem.key}
+                                      defaultValue={dataItem.value}
+                                      {...formikProps.getFieldProps(
+                                        dataItem.key
+                                      )}
+                                      // {...formikProps.getFieldProps("Username")}
+                                    />
+                                  </SimpleGrid>
+                                );
+                              } else {
+                                console.log("dataItemTable", dataItem.value);
+
+                                return (
+                                  <>
+                                    <BasicEditTable
+                                      fieldValues={values}
+                                      documentId={data?.id}
+                                      documentType={hucedocS_TYPE}
+                                      markTableData={dataItem.value}
+                                      {...formikProps.getFieldProps(
+                                        dataItem.key
+                                      )}
+                                    />
+                                  </>
+                                );
+                              }
+                            })}
+                            {/* <Button
+                              mr="20px"
+                              colorScheme={"whatsapp"}
+                              type="submit"
+                            >
+                              Lưu
+                            </Button> */}
+                          </FormControl>
                         </Form>
                       </Card>
                     </GridItem>
@@ -169,9 +197,6 @@ export default function EditDocumentModal(props) {
           </SimpleGrid>
         </ModalBody>
         <ModalFooter>
-          <Button mr="20px" colorScheme={"whatsapp"} onClick={onClose}>
-            Lưu
-          </Button>
           <Button onClick={onClose}>Close</Button>
         </ModalFooter>
       </ModalContent>

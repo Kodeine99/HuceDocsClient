@@ -13,8 +13,8 @@ export const createDocOcr = createAsyncThunk(
 
 export const updateDocOcr = createAsyncThunk(
   "docOcrResult/update",
-  async (data, documentType) => {
-    return await docOcrResultApi.update(data, documentType);
+  async (data) => {
+    return await docOcrResultApi.update(data);
   }
 )
 

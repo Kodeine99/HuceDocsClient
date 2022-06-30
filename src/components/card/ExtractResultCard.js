@@ -53,6 +53,8 @@ function ExtractResultCard(props) {
   markTableObj["MARK_TABLE"] = data["MARK_TABLE"];
   const markTableData = markTableObj?.MARK_TABLE;
   console.log("markTableData:", markTableData);
+  console.log("marktableDataString", JSON.stringify(markTableData))
+
 
   //Get documentType
   const getDocType = (type) => {

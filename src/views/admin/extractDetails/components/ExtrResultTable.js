@@ -352,6 +352,7 @@ export default function ExtrResultTable(props) {
             markTableObj["MARK_TABLE"] = data4Save["MARK_TABLE"];
             const markTableData = markTableObj?.MARK_TABLE;
             console.log("markTableData:", markTableData);
+            console.log("marktableDataString", JSON.stringify(markTableData))
 
             // Save Ocr Data
             await saveOcrData(

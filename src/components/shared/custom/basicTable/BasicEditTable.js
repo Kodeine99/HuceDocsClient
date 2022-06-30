@@ -1,5 +1,7 @@
 import {
   Button,
+  ButtonGroup,
+  Flex,
   Input,
   Table,
   Tbody,
@@ -9,9 +11,15 @@ import {
   Tr,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 // import styled from "styled-components";
 import { useTable, usePagination } from "react-table";
+
+import { useDispatch } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { createDocOcr } from "aaRedux/app/docOcrResultSlice";
+import { toast, ToastContainer } from "react-toastify";
+import { updateDocOcr } from "aaRedux/app/docOcrResultSlice";
 
 // import makeData from "./makeData";
 
@@ -33,46 +41,6 @@ const dummyData = [
     letterGrade: "A",
   },
 ];
-
-// const Styles = styled.div`
-//   padding: 1rem;
-
-//   table {
-//     border-spacing: 0;
-//     border: 1px solid black;
-
-//     tr {
-//       :last-child {
-//         td {
-//           border-bottom: 0;
-//         }
-//       }
-//     }
-
-//     th,
-//     td {
-//       margin: 0;
-//       padding: 0.5rem;
-//       border-bottom: 1px solid black;
-//       border-right: 1px solid black;
-
-//       :last-child {
-//         border-right: 0;
-//       }
-
-//       input {
-//         font-size: 1rem;
-//         padding: 0;
-//         margin: 0;
-//         border: 0;
-//       }
-//     }
-//   }
-
-//   .pagination {
-//     padding: 0.5rem;
-//   }
-// `;
 
 // Create an editable cell renderer
 const EditableCell = ({
@@ -152,14 +120,14 @@ function EditTable({ columns, data, updateMyData, skipPageReset, ...props }) {
     },
     usePagination
   );
-  const {onClick} = props;
+  const { onClick } = props;
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
 
   // Render the UI for your table
   return (
     <>
-    {/* <Button onClick={onClick}>Reset Data</Button> */}
+      {/* <Button onClick={onClick}>Reset Data</Button> */}
       <Table {...getTableProps()}>
         <Thead>
           {headerGroups.map((headerGroup) => (
@@ -194,76 +162,20 @@ function EditTable({ columns, data, updateMyData, skipPageReset, ...props }) {
           })}
         </Tbody>
       </Table>
-      {/* <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {"<<"}
-        </button>{" "}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {"<"}
-        </button>{" "}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {">"}
-        </button>{" "}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {">>"}
-        </button>{" "}
-        <span>
-          Page{" "}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{" "}
-        </span>
-        <span>
-          | Go to page:{" "}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={(e) => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0;
-              gotoPage(page);
-            }}
-            style={{ width: "100px" }}
-          />
-        </span>{" "}
-        <select
-          value={pageSize}
-          onChange={(e) => {
-            setPageSize(Number(e.target.value));
-          }}
-        >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
-      </div> */}
     </>
   );
 }
 
 function BasicEditTable(props) {
-  const {markTableData} = props;
+  const { markTableData, documentId, documentType, fieldValues } = props;
 
-  console.log("markTableData",markTableData)
-  const convertToJson = (data) => {
-    //console.log("old Data:", data);
-    let dataAfterReplace = JSON.parse(
-      data
-        .replace('\\"', '"')
-        .replace('"[', "[")
-        .replace(']"', "]")
-        .replace("\\", "")
-        .split("\\")
-        .join("")
-    );
-    //console.log("new Data:", dataAfterReplace);
-    //console.log("js",js);
-    return dataAfterReplace;
-  };
+  const dispatch = useDispatch();
+  // Data get tu Db cos type === "string"
+  console.log("markTableDataQLTL", markTableData);
+  console.log("documentId", documentId);
+  console.log("documentType", documentType);
+  console.log("fieldValues", fieldValues);
 
-  const lastData = convertToJson(JSON.stringify(markTableData));
-  console.log("lastData", lastData)
   const columns = React.useMemo(
     () => [
       {
@@ -272,27 +184,27 @@ function BasicEditTable(props) {
         columns: [
           {
             Header: "SUBJECT CODE",
-            accessor: "subjectCode",
+            accessor: "SUBJECT_CODE",
           },
           {
             Header: "NAME OF SUBJECTS",
-            accessor: "nameOfSubjects",
+            accessor: "NAME_OF_SUBJECTS",
           },
           {
             Header: "CLASS HOURS",
-            accessor: "classHours",
+            accessor: "CLASS_HOURS",
           },
           {
             Header: "CREDITS",
-            accessor: "credits",
+            accessor: "CREDITS",
           },
           {
             Header: "GRADE POINT",
-            accessor: "gradePoint",
+            accessor: "GRADE_POINT",
           },
           {
             Header: "LETTER GRADE",
-            accessor: "letterGrade",
+            accessor: "LETTER_GRADE",
           },
         ],
       },
@@ -300,7 +212,7 @@ function BasicEditTable(props) {
     []
   );
 
-  const [data, setData] = React.useState(dummyData);
+  const [data, setData] = React.useState(JSON.parse(markTableData));
   const [originalData] = React.useState(data);
   const [skipPageReset, setSkipPageReset] = React.useState(false);
 
@@ -337,11 +249,62 @@ function BasicEditTable(props) {
   // illustrate that flow...
   const resetData = () => setData(originalData);
 
+  // const  {marK_TABLE, ...fieldValueSubmit} = fieldValues;
+  // console.log("fieldValueSubmit",fieldValueSubmit)
+  // console.log("newData", data);
+
   console.log("newData", data);
+
+  const updateData = async (id, documentType, markTableData4Update) => {
+    // get data of normal fields
+    const { marK_TABLE, ...fieldValueSubmit } = fieldValues;
+    console.log("fieldValueSubmit", fieldValueSubmit);
+
+    let dataSubmited = {};
+    // const documentType =
+    typeof data !== "undefined" && data.length > 0
+      ? (dataSubmited = {
+          ...fieldValueSubmit,
+          id: id,
+          status: 1,
+          MARK_TABLE: markTableData4Update,
+          documentType: documentType
+        })
+      : (dataSubmited = {
+          ...fieldValueSubmit,
+          id: id,
+          status: 1,
+          documentType: documentType
+        });
+
+    console.log("dataSubmited", dataSubmited);
+
+    // try {
+    //   const actionResult = await dispatch(
+    //     updateDocOcr(dataSubmited)
+    //   );
+    //   const updateResult = await unwrapResult(actionResult);
+
+    //   console.log("updateResult", updateResult);
+
+    //   (await updateResult) &&
+    //     updateResult.isOh === true &&
+    //     toast.success("Cập nhật thông tin thành công", {
+    //       position: toast.POSITION.TOP_CENTER,
+    //     });
+    //   return updateResult;
+    // } catch (rejectWithValueOrSerializedError) {
+    //   toast.error("Cập nhật thất bại", {
+    //     position: toast.POSITION.TOP_CENTER,
+    //   });
+
+    //   return rejectWithValueOrSerializedError;
+    // }
+  };
+
   return (
     // <Styles>
     <>
-      
       <EditTable
         // onClick = {resetData}
         columns={columns}
@@ -349,7 +312,21 @@ function BasicEditTable(props) {
         updateMyData={updateMyData}
         skipPageReset={skipPageReset}
       />
-      <Button onClick={resetData}>Reset Data</Button>
+      <Flex>
+        <ButtonGroup>
+          <Button
+            colorScheme={"whatsapp"}
+            onClick={() =>
+              updateData(documentId, documentType, JSON.stringify(data))
+            }
+          >
+            Cập nhật dữ liệu
+          </Button>
+          <Button colorScheme={"red"} onClick={() => resetData()}>
+            Reset dữ liệu bảng
+          </Button>
+        </ButtonGroup>
+      </Flex>
     </>
     // </Styles>
   );
