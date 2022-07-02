@@ -36,6 +36,13 @@ export const adminGetAll = createAsyncThunk(
   }
 )
 
+export const deleteDocOcr = createAsyncThunk(
+  "docOcrResult/delete",
+  async (request) => {
+    return await docOcrResultApi.delete(request)
+  }
+)
+
 
 const docOcrResultSlice = createSlice({
   name: "docOcrResult",

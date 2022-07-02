@@ -112,6 +112,7 @@ export default function EditDocumentModal(props) {
         updateResult?.isOk === true &&
         toast.success("Cập nhật thông tin thành công", {
           position: toast.POSITION.TOP_CENTER,
+          onClose: () => onClose()
         });
       // return updateResult;
     } catch (rejectWithValueOrSerializedError) {

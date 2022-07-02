@@ -315,7 +315,7 @@ export default function ExtrResultTable(props) {
 
     // dataSubmit: du lieu cuoi cung mang di luu
     console.log(dataSubmit);
-    console.log("DocumentType", documentType);
+    // console.log("DocumentType", documentType);
 
     try {
       const actionResult = await dispatch(createDocOcr(dataSubmit));
@@ -323,14 +323,20 @@ export default function ExtrResultTable(props) {
       console.log("Result", saveResult);
       (await saveResult) &&
         saveResult.isOk === true &&
-        toast.success(`Lưu kết quả bóc tách của ticket ${ticket_Id} thành công`, {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        toast.success(
+          `Lưu kết quả bóc tách của ticket ${ticket_Id} thành công`,
+          {
+            position: toast.POSITION.TOP_CENTER,
+            toastId: 1
+
+          }
+        );
 
       return saveResult;
     } catch (rejectWithValueOrSerializedError) {
       toast.error(rejectWithValueOrSerializedError.message, {
         position: toast.POSITION.TOP_CENTER,
+        toastId: 1
       });
 
       return rejectWithValueOrSerializedError;
@@ -342,30 +348,31 @@ export default function ExtrResultTable(props) {
       const actionResult = await dispatch(changeSaveStatus(ticket_Id, isSaved));
       const changeResult = await unwrapResult(actionResult);
       console.log("Change result:", changeResult);
-      reload(loadIndex + 1)
+      reload(loadIndex + 1);
     } catch (rejectWithValueOrSerializedError) {
       toast.error(rejectWithValueOrSerializedError.message, {
         position: toast.POSITION.TOP_CENTER,
+        toastId: 1
       });
     }
   };
 
   const handleSaveOcrData = async (fullData, saveData) => {
-    console.log("Full data", fullData)
-    console.log("4Save Data", saveData);
+    // console.log("Full data", fullData);
+    // console.log("4Save Data", saveData);
     await saveData?.map(async (blocksData, index) => {
       typeof blocksData.DATA !== "undefined" && blocksData.DATA.length > 0
         ? blocksData.DATA.map(async (data4Save, index) => {
             // Hanlde input data
-            console.log("block data:", data4Save);
+            // console.log("block data:", data4Save);
             let { MARK_TABLE, ECM_ID, ...cloneData } = data4Save;
             const markTableObj = {};
-            console.log("Clone data", cloneData);
+            // console.log("Clone data", cloneData);
 
             markTableObj["MARK_TABLE"] = data4Save["MARK_TABLE"];
             const markTableData = markTableObj?.MARK_TABLE;
-            console.log("markTableData:", markTableData);
-            console.log("marktableDataString", JSON.stringify(markTableData))
+            // console.log("markTableData:", markTableData);
+            // console.log("marktableDataString", JSON.stringify(markTableData));
 
             // Save Ocr Data
             await saveOcrData(
@@ -387,6 +394,8 @@ export default function ExtrResultTable(props) {
           })
         : toast.error("Có lỗi xảy ra khi lưu kết quả, vui lòng thử lại sau", {
             position: toast.POSITION.TOP_CENTER,
+            toastId: 1
+
           });
 
       // return lastRes;
@@ -400,16 +409,14 @@ export default function ExtrResultTable(props) {
     //     position: toast.POSITION.TOP_CENTER,
     //   });
     // }
-    console.log("Saving data...");
+    // console.log("Saving data...");
   };
-
-  
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   return (
     <>
-      <ToastContainer />
+      <ToastContainer containerId={1} />
       <Card
         direction="column"
         w="100%"
@@ -569,7 +576,8 @@ export default function ExtrResultTable(props) {
                       );
                     } else if (cell.column.Header === "THAO TÁC") {
                       data =
-                        row.values.ocR_Status_Code === 1 || row.values.ocR_Status_Code === 3 ? (
+                        row.values.ocR_Status_Code === 1 ||
+                        row.values.ocR_Status_Code === 3 ? (
                           <Flex align="center">
                             <Tooltip label="Xem kết quả" fontSize="md">
                               <IconButton
@@ -603,7 +611,6 @@ export default function ExtrResultTable(props) {
                                 fontSize="md"
                               >
                                 <IconButton
-                                
                                   colorScheme="purple"
                                   icon={<DownloadIcon />}
                                   variant="ghost"
@@ -617,7 +624,7 @@ export default function ExtrResultTable(props) {
                                       row.original,
                                       convertToJson(row.original.jsonData)
                                     );
-                                    console.log("abc", abc);
+                                    // console.log("abc", abc);
                                   }}
                                 />
                               </Tooltip>
@@ -674,7 +681,7 @@ export default function ExtrResultTable(props) {
                       {typeof item.DATA !== "undefined" &&
                       item.DATA.length > 0 ? (
                         item.DATA.map((childItem, index) => {
-                          console.log("child:", childItem);
+                          // console.log("child:", childItem);
                           return (
                             <ExtractResultCard
                               // ocR_Status_Code = {}

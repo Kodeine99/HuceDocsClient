@@ -97,11 +97,15 @@ function Dropzone(props) {
         "Đang tiến hành bóc tách, vui lòng chờ kết quả bên Tab 'Kết quả' ",
         {
           position: toast.POSITION.TOP_CENTER,
+          toastId: 2
+
         }
       );
     } else {
       toast.error("Bóc tách thất bại", {
         position: toast.POSITION.TOP_CENTER,
+        toastId: 2
+
       });
     }
   };
@@ -128,7 +132,7 @@ function Dropzone(props) {
   // useEffect(() => {}, [reload, acceptedFiles]);
   return (
     <>
-      <ToastContainer />
+      <ToastContainer containerId={2} />
       <Card {...rest} mb="10px" p="10px" w="100%" h="100vh">
         <Flex
           direction={{ base: "column", "2xl": "column" }}

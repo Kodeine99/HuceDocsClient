@@ -33,6 +33,13 @@ const docOcrResultApi = {
       `${process.env.REACT_APP_API_URL}/${documentType}/search-admin`,
       reqBody
     )
+  },
+
+  delete: (reqBody) => {
+    const {docId, documentType} = reqBody;
+    return axiosClient.post(
+      `${process.env.REACT_APP_API_URL}/${documentType}/delete/${docId}`
+    )
   }
 }
 

@@ -25,11 +25,10 @@ import Banner from "views/admin/profile/components/Banner";
 
 // Assets
 import banner from "assets/img/auth/banner.png";
-import avatar from "assets/img/avatars/tungramen.jpg";
+import avatar from "assets/img/avatars/tungramenOk.jpg";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { from } from "stylis";
 import { userSelector } from "aaRedux/app/userSlice";
 import { FastField, Form, Formik } from "formik";
 import { InputSelect } from "components/shared/custom/fields/InputSelect";
@@ -44,7 +43,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { updateUserInfo } from "aaRedux/app/userSlice";
 import { getUserByToken } from "aaRedux/app/userSlice";
-import { clearState } from "aaRedux/app/userSlice";
 import ChangePassword from "./components/ChangePassword";
 
 export default function Overview(props) {

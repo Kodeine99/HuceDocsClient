@@ -1,9 +1,15 @@
 import {
+  Button,
   Flex,
   Icon,
   IconButton,
   Input,
-
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
   ModalOverlay,
   NumberDecrementStepper,
   NumberIncrementStepper,
@@ -46,6 +52,11 @@ import { MdCheckCircle, MdOutlineError } from "react-icons/md";
 import EditDocumentModal from "./EditDocumentModal";
 import NotifyModal from "components/shared/custom/modals/NotifyModal";
 import { matchSorter } from "match-sorter";
+import { useDispatch } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { createDocOcr } from "aaRedux/app/docOcrResultSlice";
+import { toast, ToastContainer } from "react-toastify";
+import { deleteDocOcr } from "aaRedux/app/docOcrResultSlice";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -189,6 +200,7 @@ export default function DocumentManageTable(props) {
   const [overlay, setOverlay] = useState(<OverlayTwo />);
   const [modalTitle, setModalTitle] = useState("");
   const [rowData, setRowData] = useState({});
+  const dispatch = useDispatch();
 
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
@@ -199,6 +211,32 @@ export default function DocumentManageTable(props) {
       day = ("0" + date.getDate()).slice(-2);
     return [date.getFullYear(), month, day].join("-");
   }
+
+  const handleDeleteDoc = async (docId, documentType) => {
+    // const docType = getDocType(documentType);
+    const reqBody = {
+      docId: docId,
+      documentType: documentType,
+    };
+    console.log("reqBody", reqBody);
+
+    try {
+      const actionResult = await dispatch(deleteDocOcr(reqBody));
+      const deleteResult = await unwrapResult(actionResult);
+      console.log("deleteResult", deleteResult);
+
+      (await deleteResult) &&
+        deleteResult.isOk === true &&
+        toast.success("Xoá tài liệu thành công", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+    } catch (rejectWithValueOrSerializedError) {
+      toast.error(rejectWithValueOrSerializedError.message, {
+        position: toast.POSITION.TOP_CENTER,
+        toastId: 1,
+      });
+    }
+  };
   return (
     <Card
       direction="column"
@@ -206,7 +244,7 @@ export default function DocumentManageTable(props) {
       px="0px"
       overflowX={{ sm: "scroll", lg: "hidden" }}
     >
-      
+      <ToastContainer />
       <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
         {/* Table Header */}
         <Thead>
@@ -400,13 +438,43 @@ export default function DocumentManageTable(props) {
           reload={(loadIndex) => setReload(loadIndex)}
         />
       ) : (
-        <NotifyModal
-          isOpen={isOpen}
-          onClose={onClose}
-          overlay={overlay}
-          title="Xóa tài liệu"
-          modalContent={`Bạn có chắc chắn muốn xóa tài liệu này`}
-        />
+        // <NotifyModal
+        //   isOpen={isOpen}
+        //   onClose={onClose}
+        //   overlay={overlay}
+        //   title="Xóa tài liệu"
+        //   modalContent={`Bạn có chắc chắn muốn xóa tài liệu này`}
+        // />
+
+        <Modal onClose={onClose} size="xl" isOpen={isOpen}>
+          {overlay}
+          <ModalContent>
+            <ModalHeader>Delete Extract Document</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Text fontSize={"24px"} fontWeight="bold">
+                {`Bạn có chắc chắn muốn xóa tài liệu này?`}
+              </Text>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                mr={"20px"}
+                colorScheme={"whatsapp"}
+                onClick={async () => {
+                  console.log("data.origin", rowData);
+                  handleDeleteDoc(rowData?.id, rowData?.hucedocS_TYPE);
+
+                  onClose();
+                }}
+              >
+                Yes
+              </Button>
+              <Button colorScheme={"red"} onClick={onClose}>
+                No
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
       )}
 
       <Flex justifyContent="space-between" m={4} alignItems="center">

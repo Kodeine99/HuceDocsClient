@@ -37,20 +37,20 @@ function ExtractResultCard(props) {
   let iconBox = useColorModeValue("gray.100", "whiteAlpha.200");
   let iconColor = useColorModeValue("brand.200", "white");
 
-  console.log("DocType", type);
-  console.log("ocrData:", data);
-  console.log("verifyLink:", verifyLink);
-  console.log("fullData:", fullData);
-  console.log("4SaveData:", forSaveData);
+  // console.log("DocType", type);
+  // console.log("ocrData:", data);
+  // console.log("verifyLink:", verifyLink);
+  // console.log("fullData:", fullData);
+  // console.log("4SaveData:", forSaveData);
 
   let { MARK_TABLE, ECM_ID, ...cloneData } = data;
-  console.log("cloneData2", cloneData);
+  // console.log("cloneData2", cloneData);
   const markTableObj = {};
 
   markTableObj["MARK_TABLE"] = data["MARK_TABLE"];
   const markTableData = markTableObj?.MARK_TABLE;
-  console.log("markTableData:", markTableData);
-  console.log("marktableDataString", JSON.stringify(markTableData));
+  // console.log("markTableData:", markTableData);
+  // console.log("marktableDataString", JSON.stringify(markTableData));
 
   //Get documentType
   const getDocType = (type) => {
@@ -109,13 +109,13 @@ function ExtractResultCard(props) {
 
     console.log(dataSubmit);
 
-    console.log("DocumentType", documentType);
+    // console.log("DocumentType", documentType);
 
-    console.log("Saving data...");
+    // console.log("Saving data...");
 
     const actionResult = await dispatch(createDocOcr(dataSubmit));
     const result = await unwrapResult(actionResult);
-    console.log("Result", result);
+    // console.log("Result", result);
   };
   return (
     <Flex

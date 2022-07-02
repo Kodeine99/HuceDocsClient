@@ -38,17 +38,40 @@ function ChangePassword(props) {
     //   },
     // });
   };
+
+  const successNotify = () => {
+    toast.success("I cannot be duplicated!", {
+      position: toast.POSITION.TOP_CENTER,
+      toastId: 1,
+    });
+  };
+  const errorNotify = (errorMessage) => {
+    toast.success(errorMessage, {
+      position: toast.POSITION.TOP_CENTER,
+      toastId: 2,
+    });
+  };
   const handleSubmit = async (values) => {
-    console.log(values);
-    const actionResult = await dispatch(await changePassword(values));
-    console.log(actionResult);
-    const changeResult = await unwrapResult(actionResult);
-    console.log(changeResult);
-    await changeResult && changeResult.isOk === true && toast.success(
-      "Đổi mật khẩu thành công. Vui lòng đăng nhập lại",
-      {position: toast.POSITION.BOTTOM_CENTER,}
-    )
-    changeResult && changeResult.isOk === true && await logOut();
+    // console.log(values);
+    try {
+      const actionResult = await dispatch(await changePassword(values));
+      // console.log(actionResult);
+      const changeResult = await unwrapResult(actionResult);
+      // console.log(changeResult);
+      (await changeResult) &&
+        changeResult.isOk === true &&
+        toast.success("Đổi mật khẩu thành công. Vui lòng đăng nhập lại", {
+          position: toast.POSITION.TOP_CENTER,
+          onClose: () => logOut(),
+        });
+
+      // changeResult && changeResult.isOk === true && await logOut();
+    } catch (rejectWithValueOrSerializedError) {
+      // toast.error(rejectWithValueOrSerializedError, {
+      // position: toast.POSITION.TOP_CENTER,
+      // });
+      errorNotify(rejectWithValueOrSerializedError);
+    }
   };
 
   useEffect(() => {
@@ -64,18 +87,18 @@ function ChangePassword(props) {
     }
     if (isError) {
       // toast.error(errorMessage);
-      console.log("Error", errorMessage);
-      console.log("typeOf:",typeof(errorMessage))
+      // console.log("Error", errorMessage);
+      // console.log("typeOf:",typeof(errorMessage))
       // typeof(errorMessage) !== 'undefined' && typeof(errorMessage) !== 'string' && errorMessage.length > 0 ?
       // toast.error(errorMessage[0], {position: toast.POSITION.TOP_CENTER}) :
       // errorMessage && toast.error(errorMessage, {position: toast.POSITION.TOP_CENTER});
 
-      if (typeof(errorMessage) === 'string') {
-        toast.error(errorMessage, {position: toast.POSITION.TOP_CENTER});
-
+      if (typeof errorMessage === "string") {
+        toast.error(errorMessage, {
+          position: toast.POSITION.TOP_CENTER,
+        });
       } else {
-        toast.error(errorMessage[0], {position: toast.POSITION.TOP_CENTER})
-
+        toast.error(errorMessage[0], { position: toast.POSITION.TOP_CENTER });
       }
       dispatch(clearState());
     }
@@ -83,7 +106,7 @@ function ChangePassword(props) {
   }, [isSuccess, isError]);
   return (
     <>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

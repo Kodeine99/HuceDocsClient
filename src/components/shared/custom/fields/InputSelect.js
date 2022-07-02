@@ -108,13 +108,13 @@ export function InputSeclectDoc(props) {
         </FormLabel> */}
         <Select type={type} placeholder={placeholder} {...field}  size="lg" >
           {/* <option value="">Choose</option> */}
-          <option value="GiayXacNhanToeic">GiayXacNhanToeic</option>
-          <option value="BangDiemTiengAnh">BangDiemTiengAnh</option>
-          <option value="GiayCamKetTraNo">GiayCamKetTraNo</option>
+          <option value="GiayXacNhanToeic">Giấy xác nhận Toeic</option>
+          <option value="BangDiemTiengAnh">Bảng điểm tiếng anh</option>
+          <option value="GiayCamKetTraNo">Giấy cam kết trả nợ</option>
           <option value="CCCD">CCCD</option>
-          <option value="BangDiem">BangDiem</option>
-          <option value="TheSinhVien">TheSinhVien</option>
-          <option value="GiayXacNhanVayVon">GiayXacNhanVayVon</option>
+          <option value="BangDiem">Bảng điểm</option>
+          <option value="TheSinhVien">Thẻ sinh viên</option>
+          <option value="GiayXacNhanVayVon">Giấy xác nhận vay vốn</option>
         </Select>
         <ErrorMessage
           name={name}

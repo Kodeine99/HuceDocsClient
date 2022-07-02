@@ -147,7 +147,7 @@ export default function HeaderLinks(props) {
                 Xem tài liệu hướng dẫn
               </Button>
             </NavLink>
-            <NavLink w="100%" to="/tailieuhuongdan">
+            {/* <NavLink w="100%" to="/tailieuhuongdan">
               <Button
                 w="100%"
                 h="44px"
@@ -158,7 +158,7 @@ export default function HeaderLinks(props) {
               >
                 See Documentation
               </Button>
-            </NavLink>
+            </NavLink> */}
             {/* <Link
               w='100%'
               href=''>
