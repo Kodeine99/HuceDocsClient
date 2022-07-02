@@ -2,8 +2,8 @@ import axiosClient from "./axiosClient"
 
 
 const docOcrResultApi = {
-  create:(data) => {
-    const docType = data?.documentType
+  create:(data, docType) => {
+    // const docType = data?.documentType
     //console.log("Api url:",`${process.env.REACT_APP_API_URL}/${docType}/update`)
     return axiosClient.post(
       `${process.env.REACT_APP_API_URL}/${docType}/create`,

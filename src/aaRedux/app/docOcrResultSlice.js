@@ -6,7 +6,7 @@ export const createDocOcr = createAsyncThunk(
   async (data) => {
      const docType = data?.HUCEDOCS_TYPE;
     // console.log("data", data)
-    // console.log("type", docType)
+    console.log("type", docType)
     return await docOcrResultApi.create(data, docType);
   }
 )

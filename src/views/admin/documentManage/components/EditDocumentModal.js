@@ -54,7 +54,7 @@ export default function EditDocumentModal(props) {
     //console.log("js",js);
     return dataAfterReplace;
   };
-  console.log("Data", data);
+  // console.log("Data", data);
   let {
     id,
     tickeT_ID,
@@ -67,11 +67,11 @@ export default function EditDocumentModal(props) {
   } = data;
   //console.log("CloneData:", cloneDATA);
   const initialValues = { ...cloneDATA };
-  console.log("initVL:", initialValues);
+  // console.log("initVL:", initialValues);
 
   let { marK_TABLE, ...cloneData } = data;
-  console.log("cloneData2", cloneData);
-  console.log("marK_TABLE", marK_TABLE);
+  // console.log("cloneData2", cloneData);
+  // console.log("marK_TABLE", marK_TABLE);
 
   // const stringMarkTable = JSON.stringify(marK_TABLE);
   // console.log("stringMarkTable",stringMarkTable)
@@ -103,7 +103,7 @@ export default function EditDocumentModal(props) {
     key,
     value,
   }));
-  console.log("dataKV:", dataKeyValue);
+  // console.log("dataKV:", dataKeyValue);
 
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
 
@@ -149,7 +149,7 @@ export default function EditDocumentModal(props) {
                             {dataKeyValue.map((dataItem, key) => {
                               // console.log("dataKeyValue",dataKeyValue)
                               if (dataItem.key !== "marK_TABLE") {
-                                console.log("dataItemNormal", dataItem);
+                                // console.log("dataItemNormal", dataItem);
                                 return (
                                   <SimpleGrid
                                     columns={2}
@@ -171,7 +171,7 @@ export default function EditDocumentModal(props) {
                                   </SimpleGrid>
                                 );
                               } else {
-                                console.log("dataItemTable", dataItem.value);
+                                // console.log("dataItemTable", dataItem.value);
 
                                 return (
                                   <>
