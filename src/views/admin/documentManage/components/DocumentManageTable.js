@@ -254,7 +254,7 @@ export default function DocumentManageTable(props) {
             return (
               <Tr {...row.getRowProps()} key={indexx}>
                 {row.cells.map((cell, index) => {
-                  //console.log(row.values);
+                  // console.log("Row values",row.values);
                   let data = "";
                   if (cell.column.Header === "TICKET ID") {
                     data = (
@@ -323,7 +323,7 @@ export default function DocumentManageTable(props) {
                             fontSize="md"
                             fontWeight="700"
                           >
-                            {"Active"}
+                            {""}
                           </Text>
                         ) : (
                           <Text
@@ -351,7 +351,7 @@ export default function DocumentManageTable(props) {
                             setRowData(row.original);
                             onOpen();
                           }}
-                          isDisabled={row.values.STATUS === 0 ? true : false}
+                          isDisabled={row.values.status === 0 ? true : false}
                         />
                         <IconButton
                           colorScheme="purple"
@@ -365,7 +365,7 @@ export default function DocumentManageTable(props) {
                             setRowData(row.original);
                             onOpen();
                           }}
-                          isDisabled={row.values.STATUS === 0 ? true : false}
+                          isDisabled={row.values.status === 0 ? true : false}
                         />
                       </Flex>
                     );

@@ -20,7 +20,15 @@ import { useState } from "react";
 import * as Yup from "yup";
 import BasicEditTable from "components/shared/custom/basicTable/BasicEditTable";
 
+import { useDispatch } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { createDocOcr } from "aaRedux/app/docOcrResultSlice";
+import { toast, ToastContainer } from "react-toastify";
+import { updateDocOcr } from "aaRedux/app/docOcrResultSlice";
+
 export default function EditDocumentModal(props) {
+  const dispatch = useDispatch();
+  const [spinning, setSpinning] = useState(false);
   const {
     isOpen,
     onClose,
@@ -38,6 +46,8 @@ export default function EditDocumentModal(props) {
       return obj;
     }, {});
   };
+
+  // console.log("old Data:", data);
 
   const convertToJson = (data) => {
     //console.log("old Data:", data);
@@ -73,42 +83,51 @@ export default function EditDocumentModal(props) {
   // console.log("cloneData2", cloneData);
   // console.log("marK_TABLE", marK_TABLE);
 
-  // const stringMarkTable = JSON.stringify(marK_TABLE);
-  // console.log("stringMarkTable",stringMarkTable)
-
-  // const markTableData = convertToJson(stringMarkTable);
-
-  // console.log("markTableData",markTableData)
-  // const markTableObj = {};
-
-  // markTableObj["marK_TABLE"] = data["marK_TABLE"];
-  // const markTableData = markTableObj?.marK_TABLE;
-  // console.log("markTableData:", markTableData);
-
-  // const abc = JSON.stringify(markTableData);
-  // console.log("abc", abc)
-
-  // const {marK_TABLE} = data ;
-  // console.log("marK_TABLE", marK_TABLE)
-  // setup Yup
-  // const yupConfig = Object.keys(cloneDATA).map((key) => ({
-  //   [key]: Yup.string().required("This field is require."),
-  // }));
-
-  // const yupCopnfigToArr = arrayToObject(yupConfig);
-
-  // const validationSchema = Yup.object().shape({ ...yupCopnfigToArr });
-
   const dataKeyValue = Object.entries(cloneDATA).map(([key, value]) => ({
     key,
     value,
   }));
   // console.log("dataKV:", dataKeyValue);
 
+  const handleUpdateDataWithoutTable = async (id, documentType, values) => {
+    // console.log("Values", values);
+
+    const dataSubmited = {
+      ...values,
+      id: id,
+      status: 1,
+      documentType: documentType,
+    };
+
+    console.log("dataSubmited", dataSubmited);
+
+    try {
+      const actionResult = await dispatch(updateDocOcr(dataSubmited));
+      const updateResult = await unwrapResult(actionResult);
+
+      console.log("updateResult", updateResult);
+      // reload(loadIndex + 1)
+
+      (await updateResult) &&
+        updateResult?.isOk === true &&
+        toast.success("Cập nhật thông tin thành công", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      // return updateResult;
+    } catch (rejectWithValueOrSerializedError) {
+      toast.error("Cập nhật thất bại", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+
+      // return rejectWithValueOrSerializedError;
+    }
+  };
+
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
 
   return (
     <Modal onClose={onClose} size={size} isOpen={isOpen}>
+      <ToastContainer />
       {overlay}
       <ModalContent>
         <ModalHeader>
@@ -122,10 +141,12 @@ export default function EditDocumentModal(props) {
               // validationSchema={validationSchema}
               // onSubmit = {handleSubmit}
               onSubmit={(values, actions) => {
+                setSpinning(true);
                 setTimeout(() => {
-                  console.log("Submitted");
-                  console.log("ValueSubmit:", values);
+                  // console.log("ValueSubmit:", values);
+                  handleUpdateDataWithoutTable(id, hucedocS_TYPE, values);
                   actions.setSubmitting(false);
+                  setSpinning(false);
                 }, 1000);
               }}
             >
@@ -190,13 +211,20 @@ export default function EditDocumentModal(props) {
                                 );
                               }
                             })}
-                            {/* <Button
-                              mr="20px"
-                              colorScheme={"whatsapp"}
-                              type="submit"
-                            >
-                              Lưu
-                            </Button> */}
+                            {typeof marK_TABLE === "undefined" ? (
+                              <Button
+                                isLoading={spinning}
+                                spinnerPlacement="start"
+                                mt={"25px"}
+                                mr="20px"
+                                colorScheme={"whatsapp"}
+                                type="submit"
+                              >
+                                Cập nhật dữ liệu
+                              </Button>
+                            ) : (
+                              <></>
+                            )}
                           </FormControl>
                         </Form>
                       </Card>
