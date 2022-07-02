@@ -315,7 +315,7 @@ export default function ExtrHistoryTable(props) {
                           {typeof row.original.hFiles !== "undefined" &&
                           row.original.hFiles.length > 0 ? (
                             row.original.hFiles.map((file, index) => {
-                              return `${file.fileName} \r\n`;
+                              return `${file.fileName}; \n` ;
                             })
                           ) : (
                             <Text>Chưa có file</Text>

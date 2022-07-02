@@ -21,6 +21,9 @@ import { RoutesContext } from "../../../contexts/RoutesContext";
         <Route path={`${path}/thesinhvien`}>
           <ExtractDetailsContent extractType="THE_SINH_VIEN" />
         </Route>
+        <Route path={`${path}/cccd`}>
+          <ExtractDetailsContent extractType="CCCD" />
+        </Route>
         <Route path={`${path}/bangdiem`}>
           <ExtractDetailsContent extractType="BANG_DIEM" />
         </Route>
@@ -39,6 +42,7 @@ import { RoutesContext } from "../../../contexts/RoutesContext";
         <Route path={`${path}/giayxacnhanvayvon`}>
           <ExtractDetailsContent extractType ="GIAY_XAC_NHAN_VAY_VON"/>
         </Route>
+        
       </Switch>
     </>
    );

@@ -1,36 +1,25 @@
 // Chakra imports
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
   Box,
   Button,
-  CloseButton,
   Flex,
   Icon,
   Input,
-  List,
-  ListIcon,
-  ListItem,
-  SimpleGrid,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
 import Card from "components/card/Card";
 // Assets
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { MdCheckCircle, MdUpload } from "react-icons/md";
-import { ColumnUploadFileTable } from "../variables/columnUploadFileTable";
-import UploadFileTable from "./UploadFileTable";
-import UploadFileTableData from "../variables/uploadFiletableData.json";
+
 import Project from "../components/Project";
 import { userSelector } from "aaRedux/app/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { extraction } from "aaRedux/app/extractionSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { toast, ToastContainer } from "react-toastify";
+import { MdUpload } from "react-icons/md";
 
 function Dropzone(props) {
   const { content, extractType, ...rest } = props;
@@ -46,7 +35,7 @@ function Dropzone(props) {
 
   // handle file upload state
 
-  const [exType, setExType] = useState(extractType);
+  const [exType] = useState(extractType);
 
   const bg = useColorModeValue("gray.100", "navy.700");
   const borderColor = useColorModeValue("secondaryGray.100", "whiteAlpha.100");
@@ -58,6 +47,7 @@ function Dropzone(props) {
   );
   const [loadListFile, setLoadListFile] = useState(1);
   const dispatch = useDispatch();
+  const [spinning, setSpinning] = useState(false);
 
   const { userInfor, loading, isSuccess, isError, errorMessage } =
     useSelector(userSelector);
@@ -104,7 +94,7 @@ function Dropzone(props) {
 
     if (extractionResult?.isOk === true) {
       toast.success(
-        "Đang tiến hành bóc tách, vui lòng chuyển qua tab 'Kết quả' để xem kết quả",
+        "Đang tiến hành bóc tách, vui lòng chờ kết quả bên Tab 'Kết quả' ",
         {
           position: toast.POSITION.TOP_CENTER,
         }
@@ -182,7 +172,6 @@ function Dropzone(props) {
 
           <Box mt={"20px"} maxH="100%">
             {acceptedFiles?.map((file, index) => (
-              
               <Project
                 key={index}
                 boxShadow={cardShadow}
@@ -195,12 +184,15 @@ function Dropzone(props) {
               />
             ))}
             <Button
+              isLoading={spinning}
+              spinnerPlacement="start"
               variant={"outline"}
               colorScheme={"teal"}
               onClick={async () => {
+                await setSpinning(true);
                 console.log("accepted file before", acceptedFiles);
                 await handleExtraction(userInfor?.id, exType, acceptedFiles);
-
+                setSpinning(false);
                 removeAll();
                 // acceptedFiles.forEach((file) => {
                 //   removeFile(file);
@@ -213,7 +205,7 @@ function Dropzone(props) {
               Bóc tách
             </Button>
             <Button
-            ml={'25px'}
+              ml={"25px"}
               variant={"outline"}
               colorScheme={"red"}
               onClick={() => removeAll()}

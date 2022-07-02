@@ -114,6 +114,7 @@ export function InputSeclectDoc(props) {
           <option value="CCCD">CCCD</option>
           <option value="BangDiem">BangDiem</option>
           <option value="TheSinhVien">TheSinhVien</option>
+          <option value="GiayXacNhanVayVon">GiayXacNhanVayVon</option>
         </Select>
         <ErrorMessage
           name={name}

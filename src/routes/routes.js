@@ -58,6 +58,15 @@ const routes = [
         category: "Giấy tờ cá nhân"
       },
       {
+        path: "/cccd",
+        name: "CĂN CƯỚC CÔNG DÂN",
+        description:
+          "Nhận diện căn cước công dân, trích xuất thông tin nhanh chóng và chính xác",
+        imgPath: CCCD,
+        component: Extract,
+        category: "Giấy tờ cá nhân"
+      },
+      {
         path: "/bangdiem",
         name: "BẢNG ĐIỂM",
         description:

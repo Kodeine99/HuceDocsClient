@@ -1,10 +1,8 @@
 import {
   Box,
-
   Text,
   Image,
   Flex,
-
   useColorModeValue,
   List,
   ListItem,
@@ -23,12 +21,11 @@ import React from "react";
 // Chakra imports
 import {} from "@chakra-ui/react";
 // Assets
-import {  MdVideoLibrary } from "react-icons/md";
-import {  ExternalLinkIcon } from "@chakra-ui/icons";
+import { MdVideoLibrary } from "react-icons/md";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { createDocOcr } from "aaRedux/app/docOcrResultSlice";
 import { useDispatch } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
-
 
 function ExtractResultCard(props) {
   const dispatch = useDispatch();
@@ -40,46 +37,45 @@ function ExtractResultCard(props) {
   let iconBox = useColorModeValue("gray.100", "whiteAlpha.200");
   let iconColor = useColorModeValue("brand.200", "white");
 
-  console.log("DocType",type)
+  console.log("DocType", type);
   console.log("ocrData:", data);
   console.log("verifyLink:", verifyLink);
   console.log("fullData:", fullData);
   console.log("4SaveData:", forSaveData);
 
   let { MARK_TABLE, ECM_ID, ...cloneData } = data;
-  console.log("cloneData2",cloneData)
+  console.log("cloneData2", cloneData);
   const markTableObj = {};
 
   markTableObj["MARK_TABLE"] = data["MARK_TABLE"];
   const markTableData = markTableObj?.MARK_TABLE;
   console.log("markTableData:", markTableData);
-  console.log("marktableDataString", JSON.stringify(markTableData))
-
+  console.log("marktableDataString", JSON.stringify(markTableData));
 
   //Get documentType
   const getDocType = (type) => {
     let documentType = "";
     switch (type) {
       case "GIAY_XAC_NHAN_TOEIC":
-        documentType = "GiayXacNhanToeic"
-        break;
-      
-      case "BANG_DIEM_TIENG_ANH":
-        documentType = "BangDiemTiengAnh"
+        documentType = "GiayXacNhanToeic";
         break;
 
-      case "BANG_DIEM": 
-        documentType = "BangDiem"
+      case "BANG_DIEM_TIENG_ANH":
+        documentType = "BangDiemTiengAnh";
         break;
-      
+
+      case "BANG_DIEM":
+        documentType = "BangDiem";
+        break;
+
       case "GIAY_CAM_KET_TRA_NO":
-        documentType = "GiayCamKetTraNo"
+        documentType = "GiayCamKetTraNo";
         break;
       default:
         break;
     }
     return documentType;
-  }
+  };
   function convert(str) {
     let date = new Date(str),
       month = ("0" + (date.getMonth() + 1)).slice(-2),
@@ -92,41 +88,34 @@ function ExtractResultCard(props) {
     let dataSubmit = {};
     const documentType = getDocType(type);
 
-    typeof(markTableData) !== "undefined" && markTableData.length > 0 ? 
-    (
-      dataSubmit = {
-        ...data,
-        MARK_TABLE: JSON.stringify(markTableData),
-        TICKET_ID: ticket_Id,
-        CREATE_DATE: createTime,
-        STATUS: ocR_Status_Code,
-        USER_CREATE: username,
-        HUCEDOCS_TYPE: documentType,
-        
-      }
-    ) : (
-      dataSubmit = {
-        ...data,
-        TICKET_ID: ticket_Id,
-        CREATE_DATE: createTime,
-        STATUS: ocR_Status_Code,
-        USER_CREATE: username,
-        HUCEDOCS_TYPE: documentType
+    typeof markTableData !== "undefined" && markTableData.length > 0
+      ? (dataSubmit = {
+          ...data,
+          MARK_TABLE: JSON.stringify(markTableData),
+          TICKET_ID: ticket_Id,
+          CREATE_DATE: createTime,
+          STATUS: ocR_Status_Code,
+          USER_CREATE: username,
+          HUCEDOCS_TYPE: documentType,
+        })
+      : (dataSubmit = {
+          ...data,
+          TICKET_ID: ticket_Id,
+          CREATE_DATE: createTime,
+          STATUS: ocR_Status_Code,
+          USER_CREATE: username,
+          HUCEDOCS_TYPE: documentType,
+        });
 
-      }
-    )
-    
     console.log(dataSubmit);
 
-
-    console.log("DocumentType",documentType);
+    console.log("DocumentType", documentType);
 
     console.log("Saving data...");
-    
-    const actionResult = await dispatch(createDocOcr(dataSubmit))
-    const result = await unwrapResult(actionResult);
-    console.log("Result",result)
 
+    const actionResult = await dispatch(createDocOcr(dataSubmit));
+    const result = await unwrapResult(actionResult);
+    console.log("Result", result);
   };
   return (
     <Flex
@@ -252,25 +241,40 @@ function ExtractResultCard(props) {
             <></>
           )}
           <Spacer /> */}
-          <Flex mt="15px" direction={"row"}>
-            <Link href={verifyLink} display={"inherit"}>
+          {console.log("verifyLink2", verifyLink)}
+          {verifyLink === "" || verifyLink === null || verifyLink === " " ? (
+            <>
               <Text
-                color={mainText}
+                color={'red.300'}
                 fontSize="sm"
                 my="auto"
                 fontWeight="500"
                 mr={"10px"}
               >
-                Chuyển tới trang soát lỗi
+                Tài liệu đã được soát lỗi
               </Text>
-              <ExternalLinkIcon
-                as={MdVideoLibrary}
-                w="20px"
-                h="20px"
-                color="red.500"
-              />
-            </Link>
-          </Flex>
+            </>
+          ) : (
+            <Flex mt="15px" direction={"row"}>
+              <Link href={verifyLink} display={"inherit"}>
+                <Text
+                  color={mainText}
+                  fontSize="sm"
+                  my="auto"
+                  fontWeight="500"
+                  mr={"10px"}
+                >
+                  Chuyển tới trang soát lỗi
+                </Text>
+                <ExternalLinkIcon
+                  as={MdVideoLibrary}
+                  w="20px"
+                  h="20px"
+                  color="red.500"
+                />
+              </Link>
+            </Flex>
+          )}
         </Flex>
       </Flex>
     </Flex>

@@ -110,7 +110,7 @@ export default function ExtrHistory() {
             />
           }
           name="Total Ticket"
-          value="25"
+          value={ocrRequestData.length}
         />
       </SimpleGrid>
       <SimpleGrid

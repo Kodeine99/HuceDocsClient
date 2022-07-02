@@ -251,6 +251,14 @@ export default function ExtrResultTable(props) {
         documentType = "GiayXacNhanToeic";
         break;
 
+      case "THE_SINH_VIEN":
+        documentType = "TheSinhVien";
+        break;
+
+      case "CCCD":
+        documentType = "CCCD";
+        break;
+
       case "BANG_DIEM_TIENG_ANH":
         documentType = "BangDiemTiengAnh";
         break;
@@ -262,6 +270,11 @@ export default function ExtrResultTable(props) {
       case "GIAY_CAM_KET_TRA_NO":
         documentType = "GiayCamKetTraNo";
         break;
+
+      case "GIAY_XAC_NHAN_VAY_VON":
+        documentType = "GiayXacNhanVayVon";
+        break;
+
       default:
         break;
     }
@@ -503,7 +516,7 @@ export default function ExtrResultTable(props) {
                             h="24px"
                             me="5px"
                             color={
-                              cell.value === 1
+                              cell.value === 1 || cell.value === 3
                                 ? "green.500"
                                 : cell.value === 2
                                 ? "grey.500"
@@ -512,7 +525,7 @@ export default function ExtrResultTable(props) {
                                 : null
                             }
                             as={
-                              cell.value === 1
+                              cell.value === 1 || cell.value === 3
                                 ? MdDomainVerification
                                 : cell.value === 2
                                 ? MdOutlinePendingActions
@@ -526,7 +539,7 @@ export default function ExtrResultTable(props) {
                             fontSize="md"
                             fontWeight="700"
                           >
-                            {cell.value === 1
+                            {cell.value === 1 || cell.value === 3
                               ? "Bóc tách thành công"
                               : cell.value === 2
                               ? "Đang xử lý"
@@ -556,7 +569,7 @@ export default function ExtrResultTable(props) {
                       );
                     } else if (cell.column.Header === "THAO TÁC") {
                       data =
-                        row.values.ocR_Status_Code === 1 ? (
+                        row.values.ocR_Status_Code === 1 || row.values.ocR_Status_Code === 3 ? (
                           <Flex align="center">
                             <Tooltip label="Xem kết quả" fontSize="md">
                               <IconButton
@@ -655,7 +668,7 @@ export default function ExtrResultTable(props) {
             <ModalBody>
               <SimpleGrid columns={{ base: 1, md: 1 }} gap="20px">
                 {ocrData?.map((item, index) => {
-                  //console.log("item data", item.DATA);
+                  console.log("item data", item.DATA);
                   return (
                     <>
                       {typeof item.DATA !== "undefined" &&
@@ -664,6 +677,7 @@ export default function ExtrResultTable(props) {
                           console.log("child:", childItem);
                           return (
                             <ExtractResultCard
+                              // ocR_Status_Code = {}
                               key={index}
                               type={item?.TYPE}
                               data={childItem}
