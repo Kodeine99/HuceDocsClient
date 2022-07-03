@@ -132,7 +132,7 @@ function Dropzone(props) {
   // useEffect(() => {}, [reload, acceptedFiles]);
   return (
     <>
-      <ToastContainer containerId={2} />
+      {/* <ToastContainer containerId={2} /> */}
       <Card {...rest} mb="10px" p="10px" w="100%" h="100vh">
         <Flex
           direction={{ base: "column", "2xl": "column" }}

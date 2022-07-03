@@ -26,6 +26,7 @@ import { userSelector } from "aaRedux/app/userSlice";
 import { Base64 } from "js-base64";
 import { SpinnerIcon } from "@chakra-ui/icons";
 import { IoReload } from "react-icons/io5";
+import { ToastContainer } from "react-toastify";
 
 export default function ExtrUploadFile(props) {
   const { used, total, extractType, ...rest } = props;
@@ -86,69 +87,77 @@ export default function ExtrUploadFile(props) {
   // console.log("ocrReqData", ocrRequestData)
 
   return (
-    <Card {...rest} mb="10px" align="center" p="10px" w="100%">
-      {/* <Button onClick={() => getTokenRole(token)}>check role</Button> */}
-      <Tabs variant="line" colorScheme="purple">
-        <TabList>
-          <Tab>Bóc tách</Tab>
-          <Tab>Kết quả</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <Dropzone extractType={extractType} />
-          </TabPanel>
-          <TabPanel>
-            {/* <Divider orientation="horizontal" /> */}
-            <Flex
-              px="25px"
-              mb="20px"
-              direction={{ base: "column", "2xl": "column" }}
-              minH="50%"
-              maxH="50%"
-            >
-              <Flex px="25px" justify="space-between" mb="10px" align="center">
-                <Text
-                  color={textColorPrimary}
-                  fontWeight="bold"
-                  textAlign="start"
-                  fontSize="2xl"
-                  mt={{ base: "5px", "2xl": "10px" }}
+    <>
+      <ToastContainer />
+      <Card {...rest} mb="10px" align="center" p="10px" w="100%">
+        {/* <Button onClick={() => getTokenRole(token)}>check role</Button> */}
+        <Tabs variant="line" colorScheme="purple">
+          <TabList>
+            <Tab>Bóc tách</Tab>
+            <Tab>Kết quả</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Dropzone extractType={extractType} />
+            </TabPanel>
+            <TabPanel>
+              {/* <Divider orientation="horizontal" /> */}
+              <Flex
+                px="25px"
+                mb="20px"
+                direction={{ base: "column", "2xl": "column" }}
+                minH="50%"
+                maxH="50%"
+              >
+                <Flex
+                  px="25px"
+                  justify="space-between"
+                  mb="10px"
+                  align="center"
                 >
-                  Kết quả bóc tách
-                </Text>
-                <Button
-                  isLoading={spinning}
-                  spinnerPlacement="start"
-                  onClick={async () => {
-                    setSpinning(true);
-                    setTimeout(async () => {
-                      setReload(reload + 1);
-                      setSpinning(false);
-                    }, 1000);
-                  }}
-                  colorScheme="whatsapp"
-                  rightIcon={<IoReload />}
-                >
-                  Làm mới
-                </Button>
-              </Flex>
+                  <Text
+                    color={textColorPrimary}
+                    fontWeight="bold"
+                    textAlign="start"
+                    fontSize="2xl"
+                    mt={{ base: "5px", "2xl": "10px" }}
+                  >
+                    Kết quả bóc tách
+                  </Text>
+                  <Button
+                    isLoading={spinning}
+                    spinnerPlacement="start"
+                    onClick={async () => {
+                      setSpinning(true);
+                      setTimeout(async () => {
+                        setReload(reload + 1);
+                        setSpinning(false);
+                      }, 1000);
+                    }}
+                    colorScheme="whatsapp"
+                    rightIcon={<IoReload />}
+                  >
+                    Làm mới
+                  </Button>
+                </Flex>
 
-              <ExtrResultTable
-                columnsData={columnsDataExtrResultTable}
-                // tableData={extrResultData}
-                tableData={ocrRequestData}
-                // ocrData={extrResultData.map((item) => {
-                //   return {
-                //     item.jsonData,
-                //   }
-                // })}
-                loadIndex={reload}
-                reload={(loadIndex) => setReload(loadIndex)}
-              />
-            </Flex>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-    </Card>
+                <ExtrResultTable
+                  columnsData={columnsDataExtrResultTable}
+                  // tableData={extrResultData}
+                  tableData={ocrRequestData}
+                  // ocrData={extrResultData.map((item) => {
+                  //   return {
+                  //     item.jsonData,
+                  //   }
+                  // })}
+                  loadIndex={reload}
+                  reload={(loadIndex) => setReload(loadIndex)}
+                />
+              </Flex>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Card>
+    </>
   );
 }

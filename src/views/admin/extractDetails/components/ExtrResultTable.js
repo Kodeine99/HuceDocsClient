@@ -65,6 +65,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { createDocOcr } from "aaRedux/app/docOcrResultSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { changeSaveStatus } from "aaRedux/app/ocrRequestSlice";
+import moment from "moment";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -275,6 +276,10 @@ export default function ExtrResultTable(props) {
         documentType = "GiayXacNhanVayVon";
         break;
 
+      case "DON_XIN_NHAP_HOC":
+        documentType = "DonXinNhapHoc";
+        break;
+
       default:
         break;
     }
@@ -416,7 +421,7 @@ export default function ExtrResultTable(props) {
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
   return (
     <>
-      <ToastContainer containerId={1} />
+      {/* <ToastContainer containerId={1} /> */}
       <Card
         direction="column"
         w="100%"
@@ -571,7 +576,8 @@ export default function ExtrResultTable(props) {
                     } else if (cell.column.Header === "NGÀY TẠO") {
                       data = (
                         <Text color={textColor} fontSize="md" fontWeight="700">
-                          {convertDate(cell.value)}
+                          {/* {convertDate(cell.value)} */}
+                          {moment(cell.value).format('LLL')}
                         </Text>
                       );
                     } else if (cell.column.Header === "THAO TÁC") {

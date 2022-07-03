@@ -112,7 +112,7 @@ export default function EditDocumentModal(props) {
         updateResult?.isOk === true &&
         toast.success("Cập nhật thông tin thành công", {
           position: toast.POSITION.TOP_CENTER,
-          onClose: () => onClose()
+          onClose: () => onClose(),
         });
       // return updateResult;
     } catch (rejectWithValueOrSerializedError) {
@@ -128,7 +128,7 @@ export default function EditDocumentModal(props) {
 
   return (
     <Modal onClose={onClose} size={size} isOpen={isOpen}>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       {overlay}
       <ModalContent>
         <ModalHeader>
@@ -198,6 +198,7 @@ export default function EditDocumentModal(props) {
                                 return (
                                   <>
                                     <BasicEditTable
+                                      onClose={onClose}
                                       fieldValues={values}
                                       documentId={data?.id}
                                       documentType={hucedocS_TYPE}

@@ -55,7 +55,7 @@ import {
 } from "react-icons/md";
 
 import IoNewspaperOutline from "../../../../assets/img/docs/documentCheck.png";
-
+import moment from "moment"
 // Custom components
 import Card from "components/card/Card";
 import ExtractResultCard from "../../../../components/card/ExtractResultCard";
@@ -371,7 +371,8 @@ export default function ExtrHistoryTable(props) {
                   } else if (cell.column.Header === "NGÀY TẠO") {
                     data = (
                       <Text color={textColor} fontSize="md" fontWeight="700">
-                        {convertDate(cell.value)}
+                        {/* {convertDate(cell.value)} */}
+                        {moment(cell.value).format('LLL')}
                       </Text>
                     );
                   } else if (cell.column.Header === "THAO TÁC") {

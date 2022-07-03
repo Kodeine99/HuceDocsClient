@@ -57,6 +57,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { createDocOcr } from "aaRedux/app/docOcrResultSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { deleteDocOcr } from "aaRedux/app/docOcrResultSlice";
+import moment from "moment";
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -238,327 +239,335 @@ export default function DocumentManageTable(props) {
     }
   };
   return (
-    <Card
-      direction="column"
-      w="100%"
-      px="0px"
-      overflowX={{ sm: "scroll", lg: "hidden" }}
-    >
+    <>
       <ToastContainer />
-      <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
-        {/* Table Header */}
-        <Thead>
-          {headerGroups.map((headerGroup, index) => (
-            <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
-              {headerGroup.headers.map((column, index) => (
-                <Th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  pe="10px"
-                  key={index}
-                  borderColor={borderColor}
-                >
-                  <Flex
-                    justify="space-between"
-                    align="center"
-                    fontSize={{ sm: "10px", lg: "12px" }}
-                    color="gray.400"
+      <Card
+        direction="column"
+        w="100%"
+        px="0px"
+        overflowX={{ sm: "scroll", lg: "hidden" }}
+      >
+        <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
+          {/* Table Header */}
+          <Thead>
+            {headerGroups.map((headerGroup, index) => (
+              <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                {headerGroup.headers.map((column, index) => (
+                  <Th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    pe="10px"
+                    key={index}
+                    borderColor={borderColor}
                   >
-                    {column.render("Header")}
-                  </Flex>
-                </Th>
-              ))}
+                    <Flex
+                      justify="space-between"
+                      align="center"
+                      fontSize={{ sm: "10px", lg: "12px" }}
+                      color="gray.400"
+                    >
+                      {column.render("Header")}
+                    </Flex>
+                  </Th>
+                ))}
+              </Tr>
+            ))}
+            <Tr>
+              <Th
+                colSpan={visibleColumns.length}
+                style={{
+                  textAlign: "left",
+                }}
+              >
+                <GlobalFilter
+                  preGlobalFilteredRows={preGlobalFilteredRows}
+                  globalFilter={state.globalFilter}
+                  setGlobalFilter={setGlobalFilter}
+                />
+              </Th>
             </Tr>
-          ))}
-          <Tr>
-            <Th
-              colSpan={visibleColumns.length}
-              style={{
-                textAlign: "left",
-              }}
-            >
-              <GlobalFilter
-                preGlobalFilteredRows={preGlobalFilteredRows}
-                globalFilter={state.globalFilter}
-                setGlobalFilter={setGlobalFilter}
-              />
-            </Th>
-          </Tr>
-        </Thead>
-        {/* Table Content */}
-        <Tbody {...getTableBodyProps()}>
-          {page.map((row, indexx) => {
-            prepareRow(row);
-            // console.log("dasd", row.original)
-            return (
-              <Tr {...row.getRowProps()} key={indexx}>
-                {row.cells.map((cell, index) => {
-                  // console.log("Row values",row.values);
-                  let data = "";
-                  if (cell.column.Header === "TICKET ID") {
-                    data = (
-                      <Flex align="center">
+          </Thead>
+          {/* Table Content */}
+          <Tbody {...getTableBodyProps()}>
+            {page.map((row, indexx) => {
+              prepareRow(row);
+              // console.log("dasd", row.original)
+              return (
+                <Tr {...row.getRowProps()} key={indexx}>
+                  {row.cells.map((cell, index) => {
+                    // console.log("Row values",row.values);
+                    let data = "";
+                    if (cell.column.Header === "TICKET ID") {
+                      data = (
+                        <Flex align="center">
+                          <Text
+                            color={textColor}
+                            fontSize="md"
+                            fontWeight="700"
+                          >
+                            {cell.value}
+                          </Text>
+                        </Flex>
+                      );
+                    } else if (cell.column.Header === "TYPE") {
+                      data = (
+                        <Flex align="center">
+                          <Text
+                            me="10px"
+                            color={textColor}
+                            fontSize="md"
+                            fontWeight="700"
+                          >
+                            {cell.value}
+                          </Text>
+                        </Flex>
+                      );
+                    } else if (cell.column.Header === "NGƯỜI TẠO") {
+                      data = (
                         <Text color={textColor} fontSize="md" fontWeight="700">
                           {cell.value}
                         </Text>
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === "TYPE") {
-                    data = (
-                      <Flex align="center">
-                        <Text
-                          me="10px"
-                          color={textColor}
-                          fontSize="md"
-                          fontWeight="700"
-                        >
-                          {cell.value}
+                      );
+                    } else if (cell.column.Header === "NGÀY TẠO") {
+                      data = (
+                        <Text color={textColor} fontSize="md" fontWeight="700">
+                          {/* {convertDate(cell.value)} */}
+                          {moment(cell.value).format("LLL")}
                         </Text>
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === "NGƯỜI TẠO") {
-                    data = (
-                      <Text color={textColor} fontSize="md" fontWeight="700">
-                        {cell.value}
-                      </Text>
-                    );
-                  } else if (cell.column.Header === "NGÀY TẠO") {
-                    data = (
-                      <Text color={textColor} fontSize="md" fontWeight="700">
-                        {convertDate(cell.value)}
-                      </Text>
-                    );
-                  } else if (cell.column.Header === "NGÀY CẬP NHẬT") {
-                    data = (
-                      <Text color={textColor} fontSize="md" fontWeight="700">
-                        {convertDate(cell.value)}
-                      </Text>
-                    );
-                  } else if (cell.column.Header === "TRẠNG THÁI") {
-                    data = (
-                      <Flex align="center">
-                        <Icon
-                          w="24px"
-                          h="24px"
-                          me="5px"
-                          color={
-                            cell.value === 1
-                              ? "green.500"
-                              : cell.value === 0
-                              ? "red.500"
-                              : null
-                          }
-                          as={
-                            cell.value === 1
-                              ? MdCheckCircle
-                              : cell.value === 0
-                              ? MdOutlineError
-                              : null
-                          }
-                        />
-                        {cell.value === 1 ? (
-                          <Text
-                            color={textColor}
-                            fontSize="md"
-                            fontWeight="700"
-                          >
-                            {""}
-                          </Text>
-                        ) : (
-                          <Text
-                            color={textColor}
-                            fontSize="md"
-                            fontWeight="700"
-                          >
-                            {"Đã xoá"}
-                          </Text>
-                        )}
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === "THAO TÁC") {
-                    data = (
-                      <Flex align="center">
-                        <IconButton
-                          colorScheme="purple"
-                          icon={<EditIcon />}
-                          variant="ghost"
-                          onClick={() => {
-                            setRenderModal(false);
-                            setOverlay(<OverlayTwo />);
+                      );
+                    } else if (cell.column.Header === "NGÀY CẬP NHẬT") {
+                      data = (
+                        <Text color={textColor} fontSize="md" fontWeight="700">
+                          {/* {convertDate(cell.value)} */}
+                          {moment(cell.value).format("LLL")}
+                        </Text>
+                      );
+                    } else if (cell.column.Header === "TRẠNG THÁI") {
+                      data = (
+                        <Flex align="center">
+                          <Icon
+                            w="24px"
+                            h="24px"
+                            me="5px"
+                            color={
+                              cell.value === 1
+                                ? "green.500"
+                                : cell.value === 0
+                                ? "red.500"
+                                : null
+                            }
+                            as={
+                              cell.value === 1
+                                ? MdCheckCircle
+                                : cell.value === 0
+                                ? MdOutlineError
+                                : null
+                            }
+                          />
+                          {cell.value === 1 ? (
+                            <Text
+                              color={textColor}
+                              fontSize="md"
+                              fontWeight="700"
+                            >
+                              {""}
+                            </Text>
+                          ) : (
+                            <Text
+                              color={textColor}
+                              fontSize="md"
+                              fontWeight="700"
+                            >
+                              {"Đã xoá"}
+                            </Text>
+                          )}
+                        </Flex>
+                      );
+                    } else if (cell.column.Header === "THAO TÁC") {
+                      data = (
+                        <Flex align="center">
+                          <IconButton
+                            colorScheme="purple"
+                            icon={<EditIcon />}
+                            variant="ghost"
+                            onClick={() => {
+                              setRenderModal(false);
+                              setOverlay(<OverlayTwo />);
 
-                            setModalTitle(row.values.HUCEDOCS_TYPE);
-                            setRowData(row.original);
-                            onOpen();
-                          }}
-                          isDisabled={row.values.status === 0 ? true : false}
-                        />
-                        <IconButton
-                          colorScheme="purple"
-                          icon={<DeleteIcon />}
-                          variant="ghost"
-                          onClick={() => {
-                            setRenderModal(true);
-                            setOverlay(<OverlayTwo />);
+                              setModalTitle(row.values.HUCEDOCS_TYPE);
+                              setRowData(row.original);
+                              onOpen();
+                            }}
+                            isDisabled={row.values.status === 0 ? true : false}
+                          />
+                          <IconButton
+                            colorScheme="purple"
+                            icon={<DeleteIcon />}
+                            variant="ghost"
+                            onClick={() => {
+                              setRenderModal(true);
+                              setOverlay(<OverlayTwo />);
 
-                            setModalTitle(row.values.HUCEDOCS_TYPE);
-                            setRowData(row.original);
-                            onOpen();
-                          }}
-                          isDisabled={row.values.status === 0 ? true : false}
-                        />
-                      </Flex>
+                              setModalTitle(row.values.HUCEDOCS_TYPE);
+                              setRowData(row.original);
+                              onOpen();
+                            }}
+                            isDisabled={row.values.status === 0 ? true : false}
+                          />
+                        </Flex>
+                      );
+                    }
+                    return (
+                      <Td
+                        {...cell.getCellProps()}
+                        key={index}
+                        fontSize={{ sm: "14px" }}
+                        minW={{ sm: "150px", md: "200px", lg: "auto" }}
+                        borderColor="transparent"
+                      >
+                        {data}
+                      </Td>
                     );
-                  }
-                  return (
-                    <Td
-                      {...cell.getCellProps()}
-                      key={index}
-                      fontSize={{ sm: "14px" }}
-                      minW={{ sm: "150px", md: "200px", lg: "auto" }}
-                      borderColor="transparent"
-                    >
-                      {data}
-                    </Td>
-                  );
-                })}
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
-      {renderModal === false ? (
-        <EditDocumentModal
-          isOpen={isOpen}
-          onClose={onClose}
-          onOpen={onOpen}
-          modalTitle={modalTitle}
-          overlay={overlay}
-          data={rowData}
-          size={"full"}
-          loadIndex={reload}
-          reload={(loadIndex) => setReload(loadIndex)}
-        />
-      ) : (
-        // <NotifyModal
-        //   isOpen={isOpen}
-        //   onClose={onClose}
-        //   overlay={overlay}
-        //   title="Xóa tài liệu"
-        //   modalContent={`Bạn có chắc chắn muốn xóa tài liệu này`}
-        // />
+                  })}
+                </Tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+        {renderModal === false ? (
+          <EditDocumentModal
+            isOpen={isOpen}
+            onClose={onClose}
+            onOpen={onOpen}
+            modalTitle={modalTitle}
+            overlay={overlay}
+            data={rowData}
+            size={"full"}
+            loadIndex={reload}
+            reload={(loadIndex) => setReload(loadIndex)}
+          />
+        ) : (
+          // <NotifyModal
+          //   isOpen={isOpen}
+          //   onClose={onClose}
+          //   overlay={overlay}
+          //   title="Xóa tài liệu"
+          //   modalContent={`Bạn có chắc chắn muốn xóa tài liệu này`}
+          // />
 
-        <Modal onClose={onClose} size="xl" isOpen={isOpen}>
-          {overlay}
-          <ModalContent>
-            <ModalHeader>Delete Extract Document</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Text fontSize={"24px"} fontWeight="bold">
-                {`Bạn có chắc chắn muốn xóa tài liệu này?`}
+          <Modal onClose={onClose} size="xl" isOpen={isOpen}>
+            {overlay}
+            <ModalContent>
+              <ModalHeader>Delete Extract Document</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Text fontSize={"24px"} fontWeight="bold">
+                  {`Bạn có chắc chắn muốn xóa tài liệu này?`}
+                </Text>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  mr={"20px"}
+                  colorScheme={"whatsapp"}
+                  onClick={async () => {
+                    console.log("data.origin", rowData);
+                    handleDeleteDoc(rowData?.id, rowData?.hucedocS_TYPE);
+
+                    onClose();
+                  }}
+                >
+                  Yes
+                </Button>
+                <Button colorScheme={"red"} onClick={onClose}>
+                  No
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        )}
+
+        <Flex justifyContent="space-between" m={4} alignItems="center">
+          <Flex>
+            <Tooltip label="First Page">
+              <IconButton
+                onClick={() => gotoPage(0)}
+                isDisabled={!canPreviousPage}
+                icon={<ArrowLeftIcon h={3} w={3} />}
+                mr={4}
+              />
+            </Tooltip>
+            <Tooltip label="Previous Page">
+              <IconButton
+                onClick={previousPage}
+                isDisabled={!canPreviousPage}
+                icon={<ChevronLeftIcon h={6} w={6} />}
+              />
+            </Tooltip>
+          </Flex>
+
+          <Flex alignItems="center">
+            <Text flexShrink="0" mr={8}>
+              Page{" "}
+              <Text fontWeight="bold" as="span">
+                {pageIndex + 1}
+              </Text>{" "}
+              of{" "}
+              <Text fontWeight="bold" as="span">
+                {pageOptions.length}
               </Text>
-            </ModalBody>
-            <ModalFooter>
-              <Button
-                mr={"20px"}
-                colorScheme={"whatsapp"}
-                onClick={async () => {
-                  console.log("data.origin", rowData);
-                  handleDeleteDoc(rowData?.id, rowData?.hucedocS_TYPE);
-
-                  onClose();
-                }}
-              >
-                Yes
-              </Button>
-              <Button colorScheme={"red"} onClick={onClose}>
-                No
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      )}
-
-      <Flex justifyContent="space-between" m={4} alignItems="center">
-        <Flex>
-          <Tooltip label="First Page">
-            <IconButton
-              onClick={() => gotoPage(0)}
-              isDisabled={!canPreviousPage}
-              icon={<ArrowLeftIcon h={3} w={3} />}
-              mr={4}
-            />
-          </Tooltip>
-          <Tooltip label="Previous Page">
-            <IconButton
-              onClick={previousPage}
-              isDisabled={!canPreviousPage}
-              icon={<ChevronLeftIcon h={6} w={6} />}
-            />
-          </Tooltip>
-        </Flex>
-
-        <Flex alignItems="center">
-          <Text flexShrink="0" mr={8}>
-            Page{" "}
-            <Text fontWeight="bold" as="span">
-              {pageIndex + 1}
-            </Text>{" "}
-            of{" "}
-            <Text fontWeight="bold" as="span">
-              {pageOptions.length}
             </Text>
-          </Text>
-          <Text flexShrink="0">Go to page:</Text>{" "}
-          <NumberInput
-            ml={2}
-            mr={8}
-            w={28}
-            min={1}
-            max={pageOptions.length}
-            onChange={(value) => {
-              const page = value ? value - 1 : 0;
-              gotoPage(page);
-            }}
-            defaultValue={pageIndex + 1}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-          <Select
-            w={32}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                Show {pageSize}
-              </option>
-            ))}
-          </Select>
-        </Flex>
+            <Text flexShrink="0">Go to page:</Text>{" "}
+            <NumberInput
+              ml={2}
+              mr={8}
+              w={28}
+              min={1}
+              max={pageOptions.length}
+              onChange={(value) => {
+                const page = value ? value - 1 : 0;
+                gotoPage(page);
+              }}
+              defaultValue={pageIndex + 1}
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+            <Select
+              w={32}
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+              }}
+            >
+              {[10, 20, 30, 40, 50].map((pageSize) => (
+                <option key={pageSize} value={pageSize}>
+                  Show {pageSize}
+                </option>
+              ))}
+            </Select>
+          </Flex>
 
-        <Flex>
-          <Tooltip label="Next Page">
-            <IconButton
-              onClick={nextPage}
-              isDisabled={!canNextPage}
-              icon={<ChevronRightIcon h={6} w={6} />}
-            />
-          </Tooltip>
-          <Tooltip label="Last Page">
-            <IconButton
-              onClick={() => gotoPage(pageCount - 1)}
-              isDisabled={!canNextPage}
-              icon={<ArrowRightIcon h={3} w={3} />}
-              ml={4}
-            />
-          </Tooltip>
+          <Flex>
+            <Tooltip label="Next Page">
+              <IconButton
+                onClick={nextPage}
+                isDisabled={!canNextPage}
+                icon={<ChevronRightIcon h={6} w={6} />}
+              />
+            </Tooltip>
+            <Tooltip label="Last Page">
+              <IconButton
+                onClick={() => gotoPage(pageCount - 1)}
+                isDisabled={!canNextPage}
+                icon={<ArrowRightIcon h={3} w={3} />}
+                ml={4}
+              />
+            </Tooltip>
+          </Flex>
         </Flex>
-      </Flex>
-    </Card>
+      </Card>
+    </>
   );
 }

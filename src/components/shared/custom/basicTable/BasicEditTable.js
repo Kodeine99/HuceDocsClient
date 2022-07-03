@@ -167,7 +167,7 @@ function EditTable({ columns, data, updateMyData, skipPageReset, ...props }) {
 }
 
 function BasicEditTable(props) {
-  const { markTableData, documentId, documentType, fieldValues, reload, loadIndex } = props;
+  const { markTableData, documentId, documentType, fieldValues, reload, loadIndex, onClose } = props;
 
   const dispatch = useDispatch();
   // Data get tu Db cos type === "string"
@@ -292,11 +292,13 @@ function BasicEditTable(props) {
         updateResult?.isOk === true &&
         toast.success("Cập nhật thông tin thành công", {
           position: toast.POSITION.TOP_CENTER,
+          onClose: onClose
         });
       // return updateResult;
     } catch (rejectWithValueOrSerializedError) {
       toast.error("Cập nhật thất bại", {
         position: toast.POSITION.TOP_CENTER,
+        // onClose: () => onClose()
       });
 
       // return rejectWithValueOrSerializedError;
@@ -307,7 +309,7 @@ function BasicEditTable(props) {
   return (
     // <Styles>
     <>
-    <ToastContainer/>
+    {/* <ToastContainer/> */}
       <EditTable
         // onClick = {resetData}
         columns={columns}
