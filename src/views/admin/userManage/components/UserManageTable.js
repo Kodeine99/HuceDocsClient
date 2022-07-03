@@ -122,10 +122,12 @@ fuzzyTextFilterFn.autoRemove = (val) => !val;
 
 export default function UserManageTable(props) {
   const dispatch = useDispatch();
-  const { columnsData, tableData } = props;
+  const { columnsData, tableData, reload, loadIndex } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
+
+  // const [reload, setReload] = useState(0);
 
   const filterTypes = useMemo(
     () => ({
@@ -453,8 +455,8 @@ export default function UserManageTable(props) {
             onClose={onClose}
             isOpen={isOpen}
             overlay={overlay}
-            loadIndex={props.reload}
-            reload={(loadIndex) => props.setReload(loadIndex)}
+            loadIndex={reload}
+            reload={(loadIndex) => reload(loadIndex)}
           />
         ) : (
           <Modal onClose={onClose} size="xl" isOpen={isOpen}>

@@ -27,7 +27,7 @@ import { addNewUser } from "aaRedux/app/userSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 
 export default function AddNewUserModal(props) {
-  const { isOpen, onClose, data, title, modalContent, overlay, ...rest } =
+  const { isOpen, onClose, data, title, modalContent, overlay, reload, loadIndex, ...rest } =
     props;
 
   const [cookies, setCookies, removeCookie] = useCookies();
@@ -80,6 +80,7 @@ export default function AddNewUserModal(props) {
         addResult.isOk === true &&
         toast.success("Thêm mới người dùng thành công", {
           position: toast.POSITION.TOP_CENTER,
+          onClose: reload(loadIndex + 1)
         });
 
     } catch (rejectWithValueOrSerializedError) {
@@ -111,7 +112,7 @@ export default function AddNewUserModal(props) {
   }, [isSuccess, isError]);
   return (
     <>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
 
       <Modal onClose={onClose} size="lg" isOpen={isOpen}>
         {overlay}
